@@ -11,3 +11,6 @@ captures/
 .project
 .settings/
 release/
+build.gradle
+gradle.properties
+settings.gradle
