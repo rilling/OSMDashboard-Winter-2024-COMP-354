@@ -49,6 +49,8 @@ public class ThemeSelectionActivity extends AppCompatActivity {
 
         adapter = new ThemeItemAdapter(this, new ArrayList<>(), PreferencesUtils.getMapThemeUri(), onlineMapSelected);
         adapter.add(new FileItem(getString(R.string.default_theme), null));
+        adapter.add(new FileItem("Winter theme", null));
+
 
         new Thread(new MapThemeDirScanner(this)).start();
 
