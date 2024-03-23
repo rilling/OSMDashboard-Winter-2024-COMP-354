@@ -5,10 +5,16 @@
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar" />
 
+    <include layout="@layout/table_runs_chairlifts_taken" android:id="@+id/table_runs_chairlifts_taken"
+        android:layout_width="match_parent"
+        android:layout_height="203dp"
+        android:layout_below="@+id/toolbar"
+        />
+
     <include layout="@layout/map" android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/table_runs_chairlifts_taken"
         />
 
 </RelativeLayout>
