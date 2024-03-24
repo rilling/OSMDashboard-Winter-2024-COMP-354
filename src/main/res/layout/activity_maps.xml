@@ -7,7 +7,7 @@
 
     <include layout="@layout/table_runs_chairlifts_taken" android:id="@+id/table_runs_chairlifts_taken"
         android:layout_width="match_parent"
-        android:layout_height="203dp"
+        android:layout_height="207dp"
         android:layout_below="@+id/toolbar"
         />
 
