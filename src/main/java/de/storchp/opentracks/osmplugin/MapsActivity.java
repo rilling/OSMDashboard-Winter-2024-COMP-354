@@ -26,6 +26,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,6 +78,7 @@ import java.io.FileOutputStream;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -86,6 +89,7 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.opengles.GL10;
 
 import de.storchp.opentracks.osmplugin.dashboardapi.APIConstants;
+import de.storchp.opentracks.osmplugin.dashboardapi.Chairlift;
 import de.storchp.opentracks.osmplugin.dashboardapi.Track;
 import de.storchp.opentracks.osmplugin.dashboardapi.TrackPoint;
 import de.storchp.opentracks.osmplugin.dashboardapi.Waypoint;
@@ -139,6 +143,8 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private int strokeWidth;
     private int protocolVersion = 1;
     private TrackPointsDebug trackPointsDebug;
+    //Dummy data for chairlifts
+    private List<Chairlift> chairLifts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +160,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
         map = binding.map.mapView.map();
         mapPreferences = new MapPreferences(MapsActivity.class.getName(), this);
+
 
         setSupportActionBar(binding.toolbar.mapsToolbar);
 
@@ -199,6 +206,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             readTrackpoints(trackPointsUri, false, protocolVersion);
             readTracks(tracksUri);
             readWaypoints(waypointsUri);
+            //addChairliftsInfo();
         } else if ("geo".equals(intent.getScheme())) {
             Waypoint.fromGeoUri(intent.getData().toString()).ifPresent(waypoint -> {
                 final MarkerItem marker = MapUtils.createTappableMarker(this, waypoint);
@@ -367,8 +375,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             renderer.setPosition(GLViewport.Position.BOTTOM_LEFT);
             renderer.setOffset(5 * CanvasAdapter.getScale(), 0);
             map.layers().add(mapScaleBarLayer);
-
-            map.setTheme(getRenderTheme());
+            renderTheme = map.setTheme(getRenderTheme());
 
         } else if (BuildConfig.offline) {
             new AlertDialog.Builder(this)
@@ -639,6 +646,37 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         }
     }
 
+    // Get info from Group #7
+    private List<Chairlift> getChairlifts() {
+        List<Chairlift> list = new ArrayList<>();
+        Chairlift c1 = new Chairlift("L'Étoile",10, 300, 500, 5.08);
+        Chairlift c2 = new Chairlift("L'Atomic Express",20, 500, 600, 5.08);
+        list.add(c1);
+        list.add(c2);
+        return list;
+    }
+
+    // Add chairlifts info
+    private void addChairliftsInfo() {
+        chairLifts = getChairlifts();
+        for (Chairlift c : chairLifts) {
+            TableLayout layoutChair = (TableLayout) findViewById(R.id.runsChairliftsTableView);
+
+            TableRow tr_head = new TableRow(this);
+            TextView name = new TextView(this);
+            name.setText(c.getName());
+            name.setTextSize(25);
+            name.setPadding(3,3,3,3);
+
+            TableRow infoRow = new TableRow(this);
+            TextView eGain = new TextView(this);
+            name.setText(c.getWaitingTime());
+            name.setTextSize(25);
+            name.setPadding(3,3,3,3);
+        }
+
+    }
+
     private void resetMapData() {
         unregisterContentObserver();
 
@@ -788,6 +826,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         binding.map.statisticsLayout.addView(textView);
         binding.map.statistics.addView(textView);
     }
+
 
     @Override
     public void onResume() {
