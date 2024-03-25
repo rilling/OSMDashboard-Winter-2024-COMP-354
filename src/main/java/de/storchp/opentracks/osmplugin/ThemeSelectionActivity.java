@@ -51,8 +51,6 @@ public class ThemeSelectionActivity extends AppCompatActivity {
         Uri selectedThemeUri = PreferencesUtils.getMapThemeUri();
         adapter = new ThemeItemAdapter(this, new ArrayList<>(), selectedThemeUri, onlineMapSelected);
 
-
-
         Uri winterThemeUri = Uri.parse("src/main/java/res/winter-theme/ele-res/Elevate_Winter.xml");
         adapter.add(new FileItem(getString(R.string.default_theme), winterThemeUri));
         adapter.add(new FileItem("Elevate_Winter", winterThemeUri));
