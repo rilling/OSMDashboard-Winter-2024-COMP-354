@@ -33,8 +33,14 @@ public class ThemeItemAdapter extends ArrayAdapter<FileItem> {
         return false;
     }
 
+//    public boolean isEnabled(int position) {
+//        return !onlineMapSelected || position == 0;
+//    }
+
+
+    @Override
     public boolean isEnabled(int position) {
-        return !onlineMapSelected || position == 0;
+        return true;
     }
 
     @NonNull

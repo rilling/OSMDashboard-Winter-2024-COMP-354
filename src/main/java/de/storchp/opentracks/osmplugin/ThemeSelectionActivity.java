@@ -1,5 +1,6 @@
 package de.storchp.opentracks.osmplugin;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -47,9 +48,16 @@ public class ThemeSelectionActivity extends AppCompatActivity {
             PreferencesUtils.setMapThemeUri(null);
         }
 
-        adapter = new ThemeItemAdapter(this, new ArrayList<>(), PreferencesUtils.getMapThemeUri(), onlineMapSelected);
-        adapter.add(new FileItem(getString(R.string.default_theme), null));
-        adapter.add(new FileItem("Winter theme", null));
+        Uri selectedThemeUri = PreferencesUtils.getMapThemeUri();
+        adapter = new ThemeItemAdapter(this, new ArrayList<>(), selectedThemeUri, onlineMapSelected);
+
+
+
+        Uri winterThemeUri = Uri.parse("src/main/java/res/winter-theme/ele-res/Elevate_Winter.xml");
+        adapter.add(new FileItem(getString(R.string.default_theme), winterThemeUri));
+        adapter.add(new FileItem("Elevate_Winter", winterThemeUri));
+
+
 
 
         new Thread(new MapThemeDirScanner(this)).start();
@@ -156,6 +164,13 @@ public class ThemeSelectionActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    protected void onResume(){
+        super.onResume();
+
+        adapter.setSelectedUri(PreferencesUtils.getMapDirectoryUri());
+        adapter.notifyDataSetChanged();
     }
 
     public void navigateUp() {
