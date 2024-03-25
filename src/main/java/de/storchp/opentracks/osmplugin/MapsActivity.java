@@ -76,6 +76,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.IntBuffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -146,6 +147,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     //Dummy data for chairlifts
     private List<Chairlift> chairLifts;
 
+    private Float scale;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,7 +208,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             readTrackpoints(trackPointsUri, false, protocolVersion);
             readTracks(tracksUri);
             readWaypoints(waypointsUri);
-            //addChairliftsInfo();
+            addChairliftsInfo();
         } else if ("geo".equals(intent.getScheme())) {
             Waypoint.fromGeoUri(intent.getData().toString()).ifPresent(waypoint -> {
                 final MarkerItem marker = MapUtils.createTappableMarker(this, waypoint);
@@ -649,31 +651,72 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     // Get info from Group #7
     private List<Chairlift> getChairlifts() {
         List<Chairlift> list = new ArrayList<>();
-        Chairlift c1 = new Chairlift("L'Étoile",10, 300, 500, 5.08);
-        Chairlift c2 = new Chairlift("L'Atomic Express",20, 500, 600, 5.08);
+        Chairlift c1 = new Chairlift("L'Étoile", 722, 600, 5.08);
+        Chairlift c2 = new Chairlift("Flèche d’Argent",841, 900, 5.08);
+        Chairlift c3 = new Chairlift("L'Express",672, 700, 5.08);
+        Chairlift c4 = new Chairlift("Le Piedmont",755, 600, 5.08);
         list.add(c1);
         list.add(c2);
+        list.add(c3);
+        list.add(c4);
         return list;
+    }
+
+    private TableRow createRowInfo(List<String> infos) {
+        if (scale == null) {
+            scale = getResources().getDisplayMetrics().density;
+        }
+        TableRow tr = new TableRow(this);
+        for (int i = 0; i < infos.size(); i++) {
+            TextView text = new TextView(this);
+            text.setText(infos.get(i));
+            if (i != infos.size() - 1) {
+                text.setPadding(0,0,(int) (10*scale),0);
+            }
+            tr.addView(text);
+        }
+        return tr;
     }
 
     // Add chairlifts info
     private void addChairliftsInfo() {
         chairLifts = getChairlifts();
+        DecimalFormat formatter = new DecimalFormat("#0.00");
+        List<String> headers = new ArrayList<>();
+        headers.add("Speed (m)");
+        headers.add("Wait Time (m:s)");
+        headers.add("Ascent Time (m:s)");
+        headers.add("Distance (m)");
         for (Chairlift c : chairLifts) {
-            TableLayout layoutChair = (TableLayout) findViewById(R.id.runsChairliftsTableView);
+            TableRow chairRow = new TableRow(this);
 
+            TableLayout layoutChair = new TableLayout(this);
+            // Table header
             TableRow tr_head = new TableRow(this);
             TextView name = new TextView(this);
             name.setText(c.getName());
             name.setTextSize(25);
             name.setPadding(3,3,3,3);
+            tr_head.addView(name);
+            layoutChair.addView(tr_head);
 
-            TableRow infoRow = new TableRow(this);
-            TextView eGain = new TextView(this);
-            name.setText(c.getWaitingTime());
-            name.setTextSize(25);
-            name.setPadding(3,3,3,3);
+            // Labels of each value
+            TableRow headerRow = createRowInfo(headers);
+            layoutChair.addView(headerRow);
+
+            // Table info
+            // Speed
+            List<String> info = new ArrayList<>();
+            //info.add(formatter.format(c.getAverageSpeed()) + " m/s");
+            //info.add(Integer.toString(c.getWaitingTime()));
+            //info.add(formatter.format(c.getAscentTime()));
+            //info.add(formatter.format(c.getDistance()) + " m");
+            TableRow infoRow = createRowInfo(info);
+            layoutChair.addView(infoRow);
+            chairRow.addView(layoutChair);
+            binding.tableRunsChairliftsTaken.runsChairliftsTableView.addView(chairRow);
         }
+
 
     }
 
