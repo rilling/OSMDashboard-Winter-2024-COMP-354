@@ -37,9 +37,14 @@ import java.util.ArrayList;
 
         public void createRunPointList() {
             double millisecondsPassed = 0;
-            while (true && (millisecondsPassed / (1000 * 60 * 60)) < this.duration { //modify later so that there is a valid activation time-frame condition in place here.
+            while (true && (millisecondsPassed / (1000 * 60 * 60)) < this.duration) { //modify later so that there is a valid activation time-frame condition in place here.
                 runPointList.add(new RunPoint()); //how to acquire parameters for determining user location and currentSpeed is unknown at this point.
-                Thread.sleep(60000); //wait 60 seconds
+                try {
+                    Thread.sleep(60000); //wait 60 seconds
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 millisecondsPassed += 60000;
             }
         }
