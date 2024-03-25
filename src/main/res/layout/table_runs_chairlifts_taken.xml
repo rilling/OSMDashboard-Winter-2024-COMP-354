@@ -6,7 +6,6 @@
         android:id="@+id/runsChairliftsTableView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="*"
         android:shrinkColumns="*">
 
         <View
@@ -55,7 +54,7 @@
                         android:text="Distance (meters):"
                          />
                 </TableRow>
-                <TableRow>
+                <TableRow
                     android:layout_width="0dp">
                     <TextView
                         android:layout_column="0"
@@ -130,7 +129,7 @@
                         android:text="Distance (meters):"
                          />
                 </TableRow>
-                <TableRow>
+                <TableRow
                     android:layout_width="0dp">
                     <TextView
                         android:layout_column="0"
@@ -205,7 +204,7 @@
                         android:text="Distance (meters):"
                          />
                 </TableRow>
-                <TableRow>
+                <TableRow
                     android:layout_width="0dp">
                     <TextView
                         android:layout_column="0"
@@ -280,7 +279,7 @@
                         android:text="Distance (meters):"
                          />
                 </TableRow>
-                <TableRow>
+                <TableRow
                     android:layout_width="0dp">
                     <TextView
                         android:layout_column="0"
