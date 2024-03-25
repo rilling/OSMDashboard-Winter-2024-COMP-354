@@ -9,16 +9,16 @@ import java.util.ArrayList;
         private int duration;
         private List<Chairlift> chairlifts; //chairlifts relevant to each specific run.
         private boolean selected; //Added a boolean field to track the selection state of the run
-        private ArrayList<RunPoint> runPointList;
+        private ArrayList<TrackPoint> trackPointCollection;
 
         // Constructor
-        public Run(String name, double distance, int duration, List<Chairlift> chairlifts) {
+        public Run(String name, double distance, int duration, List<Chairlift> chairlifts, ArrayList<TrackPoint> trackPointCollection) {
             this.name = name;
             this.distance = distance;
             this.duration = duration;
             this.chairlifts = chairlifts;
             this.selected = false; //Initialize selected state to false
-            this.runPointList = null;
+            this.trackPointCollection = trackPointCollection;
         }
 
         public boolean isSelected() {
@@ -33,20 +33,6 @@ import java.util.ArrayList;
         // Method to mark the run as selected
         public void select() {
             this.selected = true;
-        }
-
-        public void createRunPointList() {
-            double millisecondsPassed = 0;
-            while (true && (millisecondsPassed / (1000 * 60 * 60)) < this.duration) { //modify later so that there is a valid activation time-frame condition in place here.
-                runPointList.add(new RunPoint()); //how to acquire parameters for determining user location and currentSpeed is unknown at this point.
-                try {
-                    Thread.sleep(60000); //wait 60 seconds
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                millisecondsPassed += 60000;
-            }
         }
 
     }
