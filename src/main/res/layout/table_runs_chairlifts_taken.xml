@@ -5,49 +5,70 @@
     <TableLayout
         android:id="@+id/runsChairliftsTableView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="1">
+        android:layout_height="wrap_content">
 
         <View
             android:layout_height="2dip"
             android:background="#FF909090" />
 
-        <TableRow>
+        <TableRow
+            android:layout_weight="1">
             <TableLayout
                 android:layout_weight="1">
-                <TableRow>
+                <TableRow
+                    android:layout_weight="1">
                     <TextView
                         android:layout_column="0"
                         android:layout_span="4"
                         android:padding="3dip"
                         android:hint="Run A"
-                        android:textSize="25sp"
-                        android:layout_weight="1"/>
+                        android:textSize="20sp"
+                        android:layout_weight="1" />
                 </TableRow>
                 <TableRow>
                     <TextView
                         android:layout_column="0"
                         android:padding="3dip"
-                        android:hint="Average Speed"
+                        android:text="Avg Speed (km/h):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="1"
                         android:padding="3dip"
-                        android:hint="Stats 2"
+                        android:text="Max Speed (km/h):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="2"
                         android:padding="3dip"
-                        android:hint="Stats 3"
+                        android:text="Run Time (min:sec):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="3"
                         android:padding="3dip"
-                        android:hint="Stats 4"
-                        android:layout_weight="1"/>
+                        android:text="Distance (meters):"
+                        android:layout_weight="1" />
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_column="0"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="1"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="2"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="3"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
                 </TableRow>
             </TableLayout>
         </TableRow>
@@ -56,42 +77,65 @@
             android:layout_height="2dip"
             android:background="#FF909090" />
 
-        <TableRow>
+        <TableRow
+            android:layout_weight="1">
             <TableLayout
                 android:layout_weight="1">
-                <TableRow>
+                <TableRow
+                    android:layout_weight="1">
                     <TextView
                         android:layout_column="0"
                         android:layout_span="4"
                         android:padding="3dip"
                         android:hint="Chairlift 1"
-                        android:textSize="25sp"
-                        android:layout_weight="1"/>
+                        android:textSize="20sp"
+                        android:layout_weight="1" />
                 </TableRow>
-                <TableRow>
+                <TableRow
+                    android:layout_weight="1">
                     <TextView
                         android:layout_column="0"
                         android:padding="3dip"
-                        android:hint="Average Speed"
+                        android:text="Speed (m/s):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="1"
                         android:padding="3dip"
-                        android:hint="Stats 2"
+                        android:text="Wait Time (min:sec):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="2"
                         android:padding="3dip"
-                        android:hint="Stats 3"
+                        android:text="Ascent Time (min:sec):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="3"
                         android:padding="3dip"
-                        android:hint="Stats 4"
-                        android:layout_weight="1"/>
+                        android:text="Distance (meters):"
+                        android:layout_weight="1" />
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_column="0"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="1"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="2"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="3"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
                 </TableRow>
             </TableLayout>
         </TableRow>
@@ -99,42 +143,66 @@
         <View
             android:layout_height="2dip"
             android:background="#FF909090" />
-        <TableRow>
+
+        <TableRow
+            android:layout_weight="1">
             <TableLayout
                 android:layout_weight="1">
-                <TableRow>
+                <TableRow
+                    android:layout_weight="1">
                     <TextView
                         android:layout_column="0"
                         android:layout_span="4"
                         android:padding="3dip"
                         android:hint="Run B"
-                        android:textSize="25sp"
-                        android:layout_weight="1"/>
+                        android:textSize="20sp"
+                        android:layout_weight="1" />
                 </TableRow>
-                <TableRow>
+                <TableRow
+                    android:layout_weight="1">
                     <TextView
                         android:layout_column="0"
                         android:padding="3dip"
-                        android:hint="Average Speed"
+                        android:text="Avg Speed (km/h):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="1"
                         android:padding="3dip"
-                        android:hint="Stats 2"
+                        android:text="Max Speed (km/h):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="2"
                         android:padding="3dip"
-                        android:hint="Stats 3"
+                        android:text="Run Time (min:sec):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="3"
                         android:padding="3dip"
-                        android:hint="Stats 4"
-                        android:layout_weight="1"/>
+                        android:text="Distance (meters):"
+                        android:layout_weight="1" />
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_column="0"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="1"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="2"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="3"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
                 </TableRow>
             </TableLayout>
         </TableRow>
@@ -143,42 +211,65 @@
             android:layout_height="2dip"
             android:background="#FF909090" />
 
-        <TableRow>
+        <TableRow
+            android:layout_weight="1">
             <TableLayout
                 android:layout_weight="1">
-                <TableRow>
+                <TableRow
+                    android:layout_weight="1">
                     <TextView
                         android:layout_column="0"
                         android:layout_span="4"
                         android:padding="3dip"
                         android:hint="Chairlift 2"
-                        android:textSize="25sp"
-                        android:layout_weight="1"/>
+                        android:textSize="20sp"
+                        android:layout_weight="1" />
                 </TableRow>
-                <TableRow>
+                <TableRow
+                    android:layout_weight="1">
                     <TextView
                         android:layout_column="0"
                         android:padding="3dip"
-                        android:hint="Average Speed"
+                        android:text="Speed (m/s):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="1"
                         android:padding="3dip"
-                        android:hint="Stats 2"
+                        android:text="Wait Time (min:sec):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="2"
                         android:padding="3dip"
-                        android:hint="Stats 3"
+                        android:text="Ascent Time (min:sec):"
                         android:layout_weight="1" />
-
                     <TextView
                         android:layout_column="3"
                         android:padding="3dip"
-                        android:hint="Stats 4"
-                        android:layout_weight="1"/>
+                        android:text="Distance (meters):"
+                        android:layout_weight="1" />
+                </TableRow>
+                <TableRow
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_column="0"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="1"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="2"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_column="3"
+                        android:padding="3dip"
+                        android:hint="input"
+                        android:layout_weight="1" />
                 </TableRow>
             </TableLayout>
         </TableRow>
