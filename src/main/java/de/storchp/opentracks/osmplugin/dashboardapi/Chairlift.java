@@ -5,10 +5,10 @@ import java.util.List;
 public class Chairlift {
     private String name;
     private double distance;
-    private int waitingTime;
+    private long waitingTime;
     private double averageSpeed;
 
-    public Chairlift(String name, int distance, int wTime, double aSpeed) {
+    public Chairlift(String name, int distance, long wTime, double aSpeed) {
         this.name = name;
         this.distance = distance;
         this.waitingTime = wTime;
@@ -23,8 +23,8 @@ public class Chairlift {
         this.name = name;
     }
 
-    public double getAscentTime() {
-        return distance/averageSpeed;
+    public long getAscentTime() {
+        return Math.round(distance/averageSpeed);
     }
 
     public double getDistance() {
@@ -35,11 +35,11 @@ public class Chairlift {
         this.distance = distance;
     }
 
-    public int getWaitingTime() {
+    public long getWaitingTime() {
         return waitingTime;
     }
 
-    public void setWaitingTime(int waitingTime) {
+    public void setWaitingTime(long waitingTime) {
         this.waitingTime = waitingTime;
     }
 

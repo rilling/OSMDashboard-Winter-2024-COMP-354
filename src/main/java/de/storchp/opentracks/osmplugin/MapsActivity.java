@@ -2,8 +2,10 @@ package de.storchp.opentracks.osmplugin;
 
 
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
+import static com.google.android.material.internal.ContextUtils.getActivity;
 import static java.util.Comparator.comparingInt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -18,14 +20,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.GridLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -662,22 +667,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         return list;
     }
 
-    private TableRow createRowInfo(List<String> infos) {
-        if (scale == null) {
-            scale = getResources().getDisplayMetrics().density;
-        }
-        TableRow tr = new TableRow(this);
-        for (int i = 0; i < infos.size(); i++) {
-            TextView text = new TextView(this);
-            text.setText(infos.get(i));
-            if (i != infos.size() - 1) {
-                text.setPadding(0,0,(int) (10*scale),0);
-            }
-            tr.addView(text);
-        }
-        return tr;
-    }
-
     // Add chairlifts info
     private void addChairliftsInfo() {
         chairLifts = getChairlifts();
@@ -689,32 +678,27 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         headers.add("Distance (m)");
         for (Chairlift c : chairLifts) {
             TableRow chairRow = new TableRow(this);
-
-            TableLayout layoutChair = new TableLayout(this);
-            // Table header
-            TableRow tr_head = new TableRow(this);
-            TextView name = new TextView(this);
+            TableLayout existView = (TableLayout) findViewById(R.id.runsChairliftsTableView);
+            View chairliftView = getLayoutInflater()
+                    .inflate(R.layout.chairlift_item, null);
+            TextView name = (TextView) chairliftView.findViewById(R.id.item_Name);
             name.setText(c.getName());
-            name.setTextSize(25);
-            name.setPadding(3,3,3,3);
-            tr_head.addView(name);
-            layoutChair.addView(tr_head);
 
-            // Labels of each value
-            TableRow headerRow = createRowInfo(headers);
-            layoutChair.addView(headerRow);
+            TextView speed = (TextView) chairliftView.findViewById(R.id.speed);
+            speed.setText(formatter.format(c.getAverageSpeed()));
 
-            // Table info
-            // Speed
-            List<String> info = new ArrayList<>();
-            //info.add(formatter.format(c.getAverageSpeed()) + " m/s");
-            //info.add(Integer.toString(c.getWaitingTime()));
-            //info.add(formatter.format(c.getAscentTime()));
-            //info.add(formatter.format(c.getDistance()) + " m");
-            TableRow infoRow = createRowInfo(info);
-            layoutChair.addView(infoRow);
-            chairRow.addView(layoutChair);
-            binding.tableRunsChairliftsTaken.runsChairliftsTableView.addView(chairRow);
+            TextView waitingTime = (TextView) chairliftView.findViewById(R.id.wTime);
+            waitingTime.setText(DateUtils.formatElapsedTime(c.getWaitingTime()));
+
+            TextView aTime = (TextView) chairliftView.findViewById(R.id.aTime);
+            aTime.setText(DateUtils.formatElapsedTime(c.getAscentTime()));
+
+            TextView distance = (TextView) chairliftView.findViewById(R.id.distance);
+            distance.setText(formatter.format(c.getDistance()));
+
+            existView.addView(chairliftView);
+
+
         }
 
 
