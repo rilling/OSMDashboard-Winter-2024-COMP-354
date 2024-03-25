@@ -4,6 +4,7 @@ package de.storchp.opentracks.osmplugin;
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
 import static java.util.Comparator.comparingInt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -11,6 +12,9 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.opengl.GLException;
 import android.opengl.GLSurfaceView;
@@ -37,6 +41,7 @@ import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
 import org.oscim.android.MapPreferences;
+import org.oscim.android.MapView;
 import org.oscim.backend.CanvasAdapter;
 import org.oscim.core.BoundingBox;
 import org.oscim.core.GeoPoint;
@@ -102,6 +107,9 @@ import de.storchp.opentracks.osmplugin.utils.TrackStatistics;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 
+//Add import
+import org.oscim.core.MapPosition;
+
 public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGestureListener<MarkerInterface> {
 
     private static final String TAG = MapsActivity.class.getSimpleName();
@@ -140,6 +148,13 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private int protocolVersion = 1;
     private TrackPointsDebug trackPointsDebug;
 
+    //Add variable
+    private ItemizedLayer userLocationLayer;
+    private MarkerItem userLocationMarker;
+    private MapView mapView;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +189,45 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         if (intent != null) {
             onNewIntent(intent);
         }
+
+        locationManager=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener=new LocationListener() {
+
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                onUserLocationReceived(new GeoPoint(location.getLatitude(), location.getLongitude()));
+            }
+        };
+
+        try{
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+        }catch (SecurityException e){
+            e.printStackTrace();
+
+        }
+
     }
+
+    private void updateUserLocation(GeoPoint userLocation){
+        //delete previous user location marker
+        userLocationLayer.removeAllItems();
+        //set a new user location marker
+        userLocationMarker =new MarkerItem("", "", userLocation);
+        //set a map marker
+        userLocationMarker.setMarker(MapUtils.createMarkerSymbol(this, R.drawable.custom_location_icon,false, MarkerSymbol.HotspotPlace.CENTER));
+        // add the use location marker to the layer
+        userLocationLayer.addItem(userLocationMarker);
+
+        //user location at center
+        MapPosition userPosition=map.getMapPosition().setPosition(userLocation);
+        userPosition.setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
+        map.animator().animateTo(userPosition);
+    }
+
+    private void onUserLocationReceived(GeoPoint userLocation){
+        updateUserLocation(userLocation);
+    }
+
 
     private void switchFullscreen() {
         showFullscreen(!fullscreenMode);
@@ -426,6 +479,10 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     protected void onDestroy() {
         binding.map.mapView.onDestroy();
         super.onDestroy();
+
+        if (locationManager != null && locationListener != null) {
+            locationManager.removeUpdates(locationListener);
+        }
     }
 
     @Override
