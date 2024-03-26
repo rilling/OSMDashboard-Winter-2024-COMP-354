@@ -6,6 +6,7 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 
@@ -29,6 +30,15 @@ public class MainActivity extends BaseActivity {
         if (BuildConfig.offline) {
             binding.offlineMapInfo.setVisibility(View.GONE);
         }
+
+        Button mapButton=findViewById(R.id.button_get_location);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent(MainActivity.this, MapCurrentActivity.class);
+                startActivity(mapIntent);
+            }
+        });
     }
 
     @Override
