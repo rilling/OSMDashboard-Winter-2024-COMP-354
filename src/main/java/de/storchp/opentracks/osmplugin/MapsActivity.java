@@ -99,6 +99,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import de.storchp.opentracks.osmplugin.dashboardapi.APIConstants;
 import de.storchp.opentracks.osmplugin.dashboardapi.Chairlift;
+import de.storchp.opentracks.osmplugin.dashboardapi.Run;
 import de.storchp.opentracks.osmplugin.dashboardapi.Segment;
 import de.storchp.opentracks.osmplugin.dashboardapi.Track;
 import de.storchp.opentracks.osmplugin.dashboardapi.TrackPoint;
@@ -153,6 +154,9 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private int strokeWidth;
     private int protocolVersion = 1;
     private TrackPointsDebug trackPointsDebug;
+
+    //Dummy data for runs
+    private List<Run> runs = new ArrayList<>();
     //Dummy data for chairlifts
     private List<Chairlift> chairLifts = new ArrayList<>();
 
@@ -201,6 +205,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         // setting initial table to runs and chairlifts table
         inflateLayout(R.layout.table_runs_chairlifts_taken);
         addChairliftsInfo();
+        addRunsInfo();
     }
 
     private void switchFullscreen() {
@@ -227,6 +232,9 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             readTracks(tracksUri);
             readWaypoints(waypointsUri);
 
+            // run logic
+            getRuns();
+
             //  chairlift logic
             getChairlifts();
 
@@ -242,6 +250,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             runsChairLiftsButton.setOnClickListener(v -> {
                 inflateLayout(R.layout.table_runs_chairlifts_taken);
                 addChairliftsInfo();
+                addRunsInfo();
             });
 
             segmentsButton.setOnClickListener(v -> {
@@ -693,6 +702,51 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             updateDebugTrackPoints();
         }
     }
+
+    // Get info from Group #7
+    private void getRuns() {
+        Run r1 = new Run("La Plagne",18, 1644, 2000, 30.25);
+        Run r2 = new Run("Jay",26, 931, 1100, 40.7);
+        Run r3 = new Run("Grand Élan",23, 1051, 1200, 27.67);
+        Run r4 = new Run("Tom Barbeau",30, 658, 700, 42.6);
+        runs.add(r1);
+        runs.add(r2);
+        runs.add(r3);
+        runs.add(r4);
+    }
+
+
+    // This method creates a row inside the table in OSMDashboard to display user's data about a specific run.*/
+    private void addRunsInfo() {
+        DecimalFormat formatter = new DecimalFormat("#0.00");
+        List<String> headers = new ArrayList<>();
+        headers.add("Avg Speed (km/h)");
+        headers.add("Max Speed (km/h)");
+        headers.add("Run Time (min:sec)");
+        headers.add("Distance (meters)");
+        for (Run run : runs) {
+            TableRow runRow = new TableRow(this);
+            TableLayout existView = (TableLayout) findViewById(R.id.runsChairliftsTableView);
+            View runView = getLayoutInflater().inflate(R.layout.run_item, null);
+            TextView name = (TextView) runView.findViewById(R.id.item_Name);
+            name.setText(run.getName());
+
+            TextView avgSpeed = (TextView) runView.findViewById(R.id.avgSpeedInput);
+            avgSpeed.setText(formatter.format(run.getAverageSpeed()));
+
+            TextView maxSpeed = (TextView) runView.findViewById(R.id.maxSpeedInput);
+            maxSpeed.setText(formatter.format(run.getMaxSpeed()));
+
+            TextView runTime = (TextView) runView.findViewById(R.id.runTimeInput);
+            runTime.setText(DateUtils.formatElapsedTime(run.getDuration()));
+
+            TextView distance = (TextView) runView.findViewById(R.id.distanceInput);
+            distance.setText(formatter.format(run.getDistance()));
+
+            existView.addView(runView);
+        }
+    }
+
 
     // Get info from Group #7
     private void getChairlifts() {
