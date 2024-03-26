@@ -31,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -209,6 +210,15 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         }catch (SecurityException e){
             e.printStackTrace();
         }
+
+//        Button buttonGetLocation=findViewById(R.id.button_get_location);
+//        buttonGetLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MapsActivity.this, MapCurrentActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     public void updateUserLocation(GeoPoint userLocation){
