@@ -3,6 +3,7 @@ package de.storchp.opentracks.osmplugin.dashboardapi;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * (Collaborated by teams 17 & 18) This class represents a ski run object.
  * It contains methods that are useful in determining a user's statistics
