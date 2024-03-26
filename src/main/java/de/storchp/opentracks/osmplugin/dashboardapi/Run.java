@@ -53,6 +53,27 @@ import javax.swing.JFrame;
             }
         }
         //invoke paintRun
+
+    // Method to display run information in a table
+    // to be replaced with a compatible GUI based table
+    public void displayTable() {
+        System.out.println("+--------------------------------------------------------+");
+        System.out.println("|                        Run Info                        |");
+        System.out.println("+--------------------------------------------------------+");
+        System.out.printf("| %-20s | %-18s |\n", "Name", name);
+        System.out.printf("| %-20s | %-18.2f |\n", "Distance", distance);
+        System.out.printf("| %-20s | %-18d |\n", "Duration", duration);
+        System.out.println("+--------------------------------------------------------+");
+
+        // Display chairlifts information
+        System.out.println("\nChairlifts:");
+        for (Chairlift chairlift : chairlifts) {
+            System.out.printf("- %s (Elevation Gain: %.2f, Waiting Time: %d, Total Time Moving: %d, Average Speed: %.2f)\n",
+                    chairlift.getName(), chairlift.getElevationGain(), chairlift.getWaitingTime(),
+                    chairlift.getTotalTimeMoving(), chairlift.getAverageSpeed());
+        }
+        System.out.println("+--------------------------------------------------------+");
+    }
     }
 
     class drawingRun extends JComponent {
