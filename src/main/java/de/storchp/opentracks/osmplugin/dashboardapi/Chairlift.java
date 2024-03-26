@@ -90,7 +90,7 @@ public class Chairlift {
         }
     }
 
-    //Highlight the chairlifts
+    //Highlight the chairlifts, will be implemented in future sprint.
     /**
      * This code is commented out to avoid any problems with the code.
      *  *    This code will be implemented in future sprints, it gives an idea on how we can make
