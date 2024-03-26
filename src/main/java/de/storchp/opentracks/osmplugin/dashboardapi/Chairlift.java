@@ -12,8 +12,8 @@ public class Chairlift {
 
     private boolean selected; //add variable to allow user to select chairlift
     private ArrayList<TrackPoint> trackPointCollection;
-    private double lat[];
-    private double lon[];
+    private double lat[]; //array to hold lats of chairlifts
+    private double lon[]; //array to hold lons of chairlifts
 
     public Chairlift(String name, double eGain, int wTime, int tTimeMoving, double aSpeed) {
         this.name = name;
