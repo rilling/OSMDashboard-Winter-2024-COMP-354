@@ -80,7 +80,7 @@ public class Chairlift {
         this.selected = true;
     }
 
-    //this method extracts the coordinates for each chairlift, which will allow us to highlight the
+    //this method extracts the coordinates (lat and lon) for each chairlift, which will allow us to highlight the
     //chairlifts in different colors later with the future implementation planned below.
     //
     public void extract_coordinates_chairlifts() {
