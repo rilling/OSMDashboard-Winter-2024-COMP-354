@@ -9,15 +9,15 @@ package de.storchp.opentracks.osmplugin.dashboardapi;
  */
 public class Segment {
     private String name;
-    private double distance; // in meters
+    private double speed; // in meters
 
     private long time; // in seconds
 
     private double slope;
 
-    public Segment(String name, int distance, long time, double slope) {
+    public Segment(String name, double speed, long time, double slope) {
         this.name = name;
-        this.distance = distance;
+        this.speed = speed;
         this.time = time;
         this.slope = slope;
     }
@@ -31,12 +31,12 @@ public class Segment {
     }
 
 
-    public double getDistance() {
-        return distance;
+    public double getSpeed() {
+        return speed;
     }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
+    public void setSpeed(double speed) {
+        this.speed = speed;
     }
 
     public long getTime() {
@@ -53,10 +53,6 @@ public class Segment {
 
     public void setSlope(double slope) {
         this.slope = slope;
-    }
-
-    public double getSpeed() {
-        return this.distance/this.time;
     }
 
 }
