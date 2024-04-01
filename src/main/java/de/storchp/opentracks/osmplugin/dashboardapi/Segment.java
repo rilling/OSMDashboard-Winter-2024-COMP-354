@@ -1,8 +1,4 @@
 package de.storchp.opentracks.osmplugin.dashboardapi;
-
-import java.util.List;
-
-
 /**
  * we need:
  * name: the name of the segment

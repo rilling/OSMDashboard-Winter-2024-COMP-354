@@ -13,6 +13,7 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.net.Uri;
 import android.opengl.GLException;
 import android.opengl.GLSurfaceView;
@@ -164,6 +165,8 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
 
     private FrameLayout containerLayout;
+
+    private TableLayout previousSelectedSegmentView = null;
 
     private Float scale;
     @Override
@@ -804,23 +807,35 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
     private void addSegmentInfo() {
         DecimalFormat formatter = new DecimalFormat("#0.00");
+        TableLayout segmentTable = findViewById(R.id.segmentsTableView);
         for (Segment segment : segments) {
-            TableLayout segmentTable = (TableLayout) findViewById(R.id.segmentsTableView);
             View segmentView = getLayoutInflater().inflate(R.layout.segment_item, null);
-            TextView name = (TextView) segmentView.findViewById(R.id.item_Name);
+
+            TextView name = segmentView.findViewById(R.id.item_Name);
             name.setText(segment.getName());
 
-            TextView speed = (TextView) segmentView.findViewById(R.id.speed);
+            TextView speed = segmentView.findViewById(R.id.speed);
             speed.setText(formatter.format(segment.getSpeed()));
 
-            TextView time = (TextView) segmentView.findViewById(R.id.time);
+            TextView time = segmentView.findViewById(R.id.time);
             time.setText(DateUtils.formatElapsedTime(segment.getTime()));
 
-            TextView slope = (TextView) segmentView.findViewById(R.id.slope);
+            TextView slope = segmentView.findViewById(R.id.slope);
             slope.setText(formatter.format(segment.getSlope()));
 
-            TextView distance = (TextView) segmentView.findViewById(R.id.distance);
+            TextView distance = segmentView.findViewById(R.id.distance);
             distance.setText(formatter.format(segment.getDistance()));
+
+
+            // making the item clickable
+            TableLayout itemLayout = segmentView.findViewById(R.id.segmentView);
+            itemLayout.setOnClickListener(v -> {
+                Toast.makeText(getApplicationContext(), segment.getName() + " Clicked", Toast.LENGTH_SHORT).show();
+                itemLayout.setBackgroundColor(Color.rgb(212, 221, 232));
+                if (previousSelectedSegmentView != null) previousSelectedSegmentView.setBackgroundColor(Color.WHITE);
+                previousSelectedSegmentView = itemLayout;
+            });
+
 
             segmentTable.addView(segmentView);
         }
