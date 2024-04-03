@@ -266,6 +266,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             // button Listeners
             runsChairLiftsButton.setOnClickListener(v -> {
                 //inflateLayout(R.layout.table_runs_chairlifts_taken);
+                //inflateLayout(R.layout.table_runs_chairlifts_taken);
                 runChairliftLayout.setVisibility(View.VISIBLE);
                 segmentLayout.setVisibility(View.GONE);
             });
@@ -679,7 +680,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                                            (pastTrackPoint.getLatLong().getLongitude() - trackPoint.getLatLong().getLongitude());
 
 
-                            segments.add(new Segment("Segment " + trackPointCounter, speed, time, slope));
+                            segments.add(new Segment("Segment " + trackPointCounter, speed, time, slope, pastTrackPoint.getLatLong(), trackPoint.getLatLong()));
                             pastTrackPoint = trackPoint;
                             trackPointCounter++;
 
@@ -824,20 +825,10 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         }
     }
 
-    private void getSegments() {
-        Segment s1 = new Segment("Segment 1", 15, 5, 5);
-        Segment s2 = new Segment("Segment 2",30, 5, 15);
-        Segment s3 = new Segment("Segment 3",20, 5, 28);
-        Segment s4 = new Segment("Segment 4",17, 5, 31);
-        segments.add(s1);
-        segments.add(s2);
-        segments.add(s3);
-        segments.add(s4);
-    }
 
     private void addSegmentInfo() {
         segmentTable = findViewById(R.id.segmentsTableView);
-        adapter = new SegmentAdapter(segments);
+        adapter = new SegmentAdapter(segments, binding.map.mapView);
         segmentLayout.setVisibility(View.GONE);
         segmentTable.setLayoutManager(new LinearLayoutManager(this));
         segmentTable.setAdapter(adapter);

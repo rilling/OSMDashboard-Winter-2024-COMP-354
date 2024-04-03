@@ -12,6 +12,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.oscim.android.MapView;
+import org.oscim.layers.GroupLayer;
+import org.oscim.layers.Layer;
+import org.oscim.layers.PathLayer;
+
+
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -20,13 +26,18 @@ import de.storchp.opentracks.osmplugin.R;
 public class SegmentAdapter extends RecyclerView.Adapter<SegmentAdapter.SegmentViewHolder> {
     private List<Segment> segments;
     private DecimalFormat formatter;
+    private MapView mapView;
 
     private TableLayout previousSegmentView;
 
-    public SegmentAdapter(List<Segment> segments) {
+    private GroupLayer polylinesLayer;
+
+    public SegmentAdapter(List<Segment> segments, MapView mapView) {
         this.segments = segments;
         this.formatter = new DecimalFormat("#0.00");
         previousSegmentView = null;
+        this.mapView = mapView;
+        polylinesLayer = new GroupLayer(mapView.map());
     }
 
     @NonNull
@@ -80,37 +91,25 @@ public class SegmentAdapter extends RecyclerView.Adapter<SegmentAdapter.SegmentV
                 segmentView.setBackgroundColor(Color.rgb(212, 221, 232));
                 if (previousSegmentView != null) previousSegmentView.setBackgroundColor(Color.WHITE);
                 previousSegmentView = segmentView;
+
+                // removing the previous layer if any
+                mapView.map().layers().remove(polylinesLayer);
+
+                for (int i =  0; i < polylinesLayer.map().layers().size(); i++) {
+                    Layer layer = polylinesLayer.map().layers().get(i);
+                    if (layer instanceof PathLayer) {
+                        polylinesLayer.map().layers().remove(i);
+                    }
+                }
+
+                PathLayer line = new PathLayer(mapView.map(), Color.BLUE, 12);
+                // Add points to the PathLayer
+                line.addPoint(segment.getStartPoint());
+                line.addPoint(segment.getEndPoint());
+                // Add the PathLayer to the MapView
+                polylinesLayer.map().layers().add(line);
+                mapView.map().layers().add(polylinesLayer);
             });
         }
     }
 }
-
-/*
-
-View segmentView = getLayoutInflater().inflate(R.layout.segment_item, null);
-
-            TextView name = segmentView.findViewById(R.id.item_Name);
-            name.setText(segment.getName());
-
-            TextView speed = segmentView.findViewById(R.id.speed);
-            speed.setText(formatter.format(segment.getSpeed()));
-
-            TextView time = segmentView.findViewById(R.id.time);
-            time.setText(DateUtils.formatElapsedTime(segment.getTime()));
-
-            TextView slope = segmentView.findViewById(R.id.slope);
-            slope.setText(formatter.format(segment.getSlope()));
-
-            TextView distance = segmentView.findViewById(R.id.distance);
-            distance.setText(formatter.format(segment.getSpeed()));
-
-
-            // making the item clickable
-            TableLayout itemLayout = segmentView.findViewById(R.id.segmentView);
-            itemLayout.setOnClickListener(v -> {
-                Toast.makeText(getApplicationContext(), segment.getName() + " Clicked", Toast.LENGTH_SHORT).show();
-                itemLayout.setBackgroundColor(Color.rgb(212, 221, 232));
-                if (previousSelectedSegmentView != null) previousSelectedSegmentView.setBackgroundColor(Color.WHITE);
-                previousSelectedSegmentView = itemLayout;
-            });
- */

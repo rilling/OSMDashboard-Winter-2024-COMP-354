@@ -1,4 +1,7 @@
 package de.storchp.opentracks.osmplugin.dashboardapi;
+
+import org.oscim.core.GeoPoint;
+
 /**
  * we need:
  * name: the name of the segment
@@ -10,16 +13,18 @@ package de.storchp.opentracks.osmplugin.dashboardapi;
 public class Segment {
     private String name;
     private double speed; // in meters
-
     private long time; // in seconds
-
     private double slope;
+    private GeoPoint startPoint;
+    private GeoPoint endPoint;
 
-    public Segment(String name, double speed, long time, double slope) {
+    public Segment(String name, double speed, long time, double slope, GeoPoint startPoint, GeoPoint endPoint) {
         this.name = name;
         this.speed = speed;
         this.time = time;
         this.slope = slope;
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
     }
 
     public String getName() {
@@ -55,4 +60,19 @@ public class Segment {
         this.slope = slope;
     }
 
+    public GeoPoint getStartPoint() {
+        return startPoint;
+    }
+
+    public void setStartPoint(GeoPoint startPoint) {
+        this.startPoint = startPoint;
+    }
+
+    public GeoPoint getEndPoint() {
+        return endPoint;
+    }
+
+    public void setEndPoint(GeoPoint endPoint) {
+        this.endPoint = endPoint;
+    }
 }
