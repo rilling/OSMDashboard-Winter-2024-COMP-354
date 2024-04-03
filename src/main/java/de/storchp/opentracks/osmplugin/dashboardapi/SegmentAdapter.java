@@ -1,5 +1,10 @@
 package de.storchp.opentracks.osmplugin.dashboardapi;
 
+import static org.oscim.map.Animator.ANIM_FLING;
+import static org.oscim.map.Animator.ANIM_MOVE;
+import static org.oscim.map.Animator.ANIM_SCALE;
+import static org.oscim.map.Animator.ANIM_TILT;
+
 import android.graphics.Color;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -12,18 +17,33 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.oscim.core.BoundingBox;
+import org.oscim.core.Point;
+import org.oscim.layers.marker.ItemizedLayer;
 import org.oscim.android.MapView;
+import org.oscim.core.GeoPoint;
 import org.oscim.layers.GroupLayer;
 import org.oscim.layers.Layer;
 import org.oscim.layers.PathLayer;
+import org.oscim.layers.marker.ItemizedLayer;
+import org.oscim.layers.marker.MarkerInterface;
+import org.oscim.layers.marker.MarkerItem;
+import org.oscim.layers.marker.MarkerSymbol;
+import org.oscim.map.Map;
+import org.oscim.utils.animation.Easing;
 
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.storchp.opentracks.osmplugin.R;
+import de.storchp.opentracks.osmplugin.maps.MovementDirection;
+import de.storchp.opentracks.osmplugin.utils.MapMode;
+import de.storchp.opentracks.osmplugin.utils.MapUtils;
+import de.storchp.opentracks.osmplugin.utils.PreferencesUtils;
 
-public class SegmentAdapter extends RecyclerView.Adapter<SegmentAdapter.SegmentViewHolder> {
+public class SegmentAdapter extends RecyclerView.Adapter<SegmentAdapter.SegmentViewHolder> implements ItemizedLayer.OnItemGestureListener<MarkerInterface> {
     private List<Segment> segments;
     private DecimalFormat formatter;
     private MapView mapView;
@@ -32,12 +52,20 @@ public class SegmentAdapter extends RecyclerView.Adapter<SegmentAdapter.SegmentV
 
     private GroupLayer polylinesLayer;
 
+    private MovementDirection movementDirection;
+
+    private ItemizedLayer waypointsLayer;
+
+
+    private MapMode mapMode;
     public SegmentAdapter(List<Segment> segments, MapView mapView) {
         this.segments = segments;
         this.formatter = new DecimalFormat("#0.00");
         previousSegmentView = null;
         this.mapView = mapView;
         polylinesLayer = new GroupLayer(mapView.map());
+        mapMode = PreferencesUtils.getMapMode();
+        movementDirection = new MovementDirection();
     }
 
     @NonNull
@@ -58,6 +86,15 @@ public class SegmentAdapter extends RecyclerView.Adapter<SegmentAdapter.SegmentV
         return segments.size();
     }
 
+    @Override
+    public boolean onItemSingleTapUp(int index, MarkerInterface item) {
+        return false;
+    }
+
+    @Override
+    public boolean onItemLongPress(int index, MarkerInterface item) {
+        return false;
+    }
 
 
     public class SegmentViewHolder extends RecyclerView.ViewHolder {
@@ -109,7 +146,36 @@ public class SegmentAdapter extends RecyclerView.Adapter<SegmentAdapter.SegmentV
                 // Add the PathLayer to the MapView
                 polylinesLayer.map().layers().add(line);
                 mapView.map().layers().add(polylinesLayer);
+
+                var latLongs = line.getPoints();;
+                Waypoint startWayPoint = new Waypoint(segment.getStartPoint(), "start point");
+                Waypoint endWayPoint = new Waypoint(segment.getEndPoint(), "end point");
+                final MarkerItem startPin = MapUtils.createTappableMarker(mapView.getContext(), startWayPoint);
+                final MarkerItem endPin = MapUtils.createTappableMarker(mapView.getContext(), endWayPoint);
+                var symbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_orange_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                startPin.setMarker(symbol);
+                endPin.setMarker(symbol);
+
+                if (waypointsLayer != null) {
+                    mapView.map().layers().remove(waypointsLayer);
+                }
+                waypointsLayer = createWaypointsLayer();
+                mapView.map().layers().add(waypointsLayer);
+                waypointsLayer.addItem(startPin);
+                waypointsLayer.addItem(endPin);
+
+                BoundingBox boundingBox = new BoundingBox(latLongs);
+                updateMapPositionAndRotation(boundingBox.getCenterPoint());
+                mapView.map().animator().animateTo(500, boundingBox, Easing.Type.LINEAR, ANIM_MOVE);
             });
+        }
+        private ItemizedLayer createWaypointsLayer() {
+            var symbol = MapUtils.createPushpinSymbol(mapView.getContext());
+            return new ItemizedLayer(mapView.map(), symbol);
+        }
+        private void updateMapPositionAndRotation(final GeoPoint myPos) {
+            mapView.map().getMapPosition().setPosition(myPos).setBearing(mapMode.getHeading(movementDirection));
+
         }
     }
 }

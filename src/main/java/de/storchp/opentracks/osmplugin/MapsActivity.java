@@ -2,6 +2,7 @@ package de.storchp.opentracks.osmplugin;
 
 
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
+import static org.oscim.map.Viewport.MIN_ZOOM_LEVEL;
 import static java.util.Comparator.comparingInt;
 
 import android.content.Intent;
@@ -49,6 +50,7 @@ import org.oscim.android.MapPreferences;
 import org.oscim.backend.CanvasAdapter;
 import org.oscim.core.BoundingBox;
 import org.oscim.core.GeoPoint;
+import org.oscim.core.MapPosition;
 import org.oscim.layers.GroupLayer;
 import org.oscim.layers.PathLayer;
 import org.oscim.layers.marker.ItemizedLayer;
@@ -147,6 +149,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private boolean fullscreenMode = false;
     private MovementDirection movementDirection = new MovementDirection();
     private MapMode mapMode;
+    private double mapPosScale;
     private OpenTracksContentObserver contentObserver;
     private Uri tracksUri;
     private Uri trackPointsUri;
@@ -213,7 +216,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         if (intent != null) {
             onNewIntent(intent);
         }
-
+        mapPosScale = map.getMapPosition().getScale();
         // setting initial table to runs and chairlifts table
 
         segmentLayout = findViewById(R.id.segments_layout);
@@ -265,10 +268,20 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
             // button Listeners
             runsChairLiftsButton.setOnClickListener(v -> {
-                //inflateLayout(R.layout.table_runs_chairlifts_taken);
-                //inflateLayout(R.layout.table_runs_chairlifts_taken);
-                runChairliftLayout.setVisibility(View.VISIBLE);
-                segmentLayout.setVisibility(View.GONE);
+                        //inflateLayout(R.layout.table_runs_chairlifts_taken);
+                        //inflateLayout(R.layout.table_runs_chairlifts_taken);
+                    runChairliftLayout.setVisibility(View.VISIBLE);
+                    segmentLayout.setVisibility(View.GONE);
+                    updateMapPositionAndRotation(boundingBox.getCenterPoint());
+                    for (var layer : map.layers()) {
+                        for (int i = 0; i < map.layers().size(); i++) {
+                            if (map.layers().get(i) instanceof ItemizedLayer) {
+                                if (!waypointsLayer.equals(map.layers().get(i))) {
+                                    map.layers().remove(i);
+                                }
+                            }
+                        }
+                    }
             });
 
             segmentsButton.setOnClickListener(v -> {
