@@ -11,7 +11,7 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.opengl.GLException;
 import android.opengl.GLSurfaceView;
@@ -24,13 +24,13 @@ import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -42,6 +42,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.oscim.android.MapPreferences;
 import org.oscim.backend.CanvasAdapter;
@@ -98,6 +100,7 @@ import de.storchp.opentracks.osmplugin.dashboardapi.APIConstants;
 import de.storchp.opentracks.osmplugin.dashboardapi.Chairlift;
 import de.storchp.opentracks.osmplugin.dashboardapi.Run;
 import de.storchp.opentracks.osmplugin.dashboardapi.Segment;
+import de.storchp.opentracks.osmplugin.dashboardapi.SegmentAdapter;
 import de.storchp.opentracks.osmplugin.dashboardapi.Track;
 import de.storchp.opentracks.osmplugin.dashboardapi.TrackPoint;
 import de.storchp.opentracks.osmplugin.dashboardapi.Waypoint;
@@ -160,17 +163,19 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private List<Segment> segments = new ArrayList<>();
 
 
-    private FrameLayout containerLayout;
-
     private TableLayout previousSelectedSegmentView = null;
 
     private TrackPoint pastTrackPoint = null;
 
     private int trackPointCounter = 0;
 
-    TableLayout segmentTable;
+    private ScrollView segmentLayout;
 
-    TableLayout runChairliftTable;
+    private ScrollView runChairliftLayout;
+
+    private RecyclerView segmentTable;
+
+    private SegmentAdapter adapter;
 
     private Float scale;
     @Override
@@ -210,9 +215,10 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         }
 
         // setting initial table to runs and chairlifts table
-        //inflateLayout(R.layout.table_runs_chairlifts_taken);
-        LayoutInflater.from(this).inflate(R.layout.table_runs_chairlifts_taken, containerLayout, true);
-        LayoutInflater.from(this).inflate(R.layout.table_segments, containerLayout, true);
+
+        segmentLayout = findViewById(R.id.segments_layout);
+        runChairliftLayout = findViewById(R.id.runs_chairlifts_layout);
+
         addChairliftsInfo();
         addRunsInfo();
         addSegmentInfo();
@@ -238,9 +244,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             showFullscreen(intent.getBooleanExtra(EXTRAS_SHOW_FULLSCREEN, false));
             isOpenTracksRecordingThisTrack = intent.getBooleanExtra(EXTRAS_OPENTRACKS_IS_RECORDING_THIS_TRACK, false);
 
-            // segments logic
-            getSegments();
-
             readTrackpoints(trackPointsUri, false, protocolVersion);
             readTracks(tracksUri);
             readWaypoints(waypointsUri);
@@ -254,7 +257,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
 
             // navigation Buttons
-            containerLayout = findViewById(R.id.container_layout);
+            LinearLayout containerLayout = findViewById(R.id.container_layout);
             Button runsChairLiftsButton = findViewById(R.id.runsChairLiftsButton);
             Button segmentsButton = findViewById(R.id.segmentsButton);
 
@@ -263,14 +266,14 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             // button Listeners
             runsChairLiftsButton.setOnClickListener(v -> {
                 //inflateLayout(R.layout.table_runs_chairlifts_taken);
-                runChairliftTable.setVisibility(View.VISIBLE);
-                segmentTable.setVisibility(View.GONE);
+                runChairliftLayout.setVisibility(View.VISIBLE);
+                segmentLayout.setVisibility(View.GONE);
             });
 
             segmentsButton.setOnClickListener(v -> {
                 //inflateLayout(R.layout.table_segments);
-                runChairliftTable.setVisibility(View.GONE);
-                segmentTable.setVisibility(View.VISIBLE);
+                runChairliftLayout.setVisibility(View.GONE);
+                segmentLayout.setVisibility(View.VISIBLE);
             });
 
         } else if ("geo".equals(intent.getScheme())) {
@@ -284,12 +287,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     }
 
 
-    /*
-    private void inflateLayout(int layoutId) {
-        containerLayout.removeAllViews();
-        LayoutInflater.from(this).inflate(layoutId, containerLayout, true);
-    }
-    */
     private class OpenTracksContentObserver extends ContentObserver {
 
         private final Uri tracksUri;
@@ -669,6 +666,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                                 polyline = addNewPolyline(trackColor);
                             }
                         }
+
                         // logic to store segment informations and get the real data
                         if (pastTrackPoint == null) {
                             pastTrackPoint = trackPoint;
@@ -676,7 +674,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                         }
                         else {
                             double speed = trackPoint.getSpeed();
-                            long time = Math.abs(trackPoint.getTimeMillis() - pastTrackPoint.getTimeMillis());
+                            long time = Math.abs(trackPoint.getTimeMillis()/1000 - pastTrackPoint.getTimeMillis()/1000);
                             double slope = (pastTrackPoint.getLatLong().getLatitude() - trackPoint.getLatLong().getLatitude()) /
                                            (pastTrackPoint.getLatLong().getLongitude() - trackPoint.getLatLong().getLongitude());
 
@@ -686,6 +684,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                             trackPointCounter++;
 
                         }
+
                         endPos = trackPoint.getLatLong();
                         polyline.addPoint(endPos);
                         movementDirection.updatePos(endPos);
@@ -757,7 +756,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         headers.add("Run Time (min:sec)");
         headers.add("Distance (meters)");
 
-        runChairliftTable = (TableLayout) findViewById(R.id.runsChairliftsTableView);
+        TableLayout runChairliftTable = (TableLayout) findViewById(R.id.runsChairliftsTableView);
         for (Run run : runs) {
             TableRow runRow = new TableRow(this);
             View runView = getLayoutInflater().inflate(R.layout.run_item, null);
@@ -801,7 +800,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         headers.add("Wait Time (m:s)");
         headers.add("Ascent Time (m:s)");
         headers.add("Distance (m)");
-        runChairliftTable = (TableLayout) findViewById(R.id.runsChairliftsTableView);
+        TableLayout runChairliftTable = (TableLayout) findViewById(R.id.runsChairliftsTableView);
 
         for (Chairlift c : chairLifts) {
             TableRow chairRow = new TableRow(this);
@@ -837,39 +836,11 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     }
 
     private void addSegmentInfo() {
-        DecimalFormat formatter = new DecimalFormat("#0.00");
         segmentTable = findViewById(R.id.segmentsTableView);
-        for (Segment segment : segments) {
-            View segmentView = getLayoutInflater().inflate(R.layout.segment_item, null);
-
-            TextView name = segmentView.findViewById(R.id.item_Name);
-            name.setText(segment.getName());
-
-            TextView speed = segmentView.findViewById(R.id.speed);
-            speed.setText(formatter.format(segment.getSpeed()));
-
-            TextView time = segmentView.findViewById(R.id.time);
-            time.setText(DateUtils.formatElapsedTime(segment.getTime()));
-
-            TextView slope = segmentView.findViewById(R.id.slope);
-            slope.setText(formatter.format(segment.getSlope()));
-
-            TextView distance = segmentView.findViewById(R.id.distance);
-            distance.setText(formatter.format(segment.getSpeed()));
-
-
-            // making the item clickable
-            TableLayout itemLayout = segmentView.findViewById(R.id.segmentView);
-            itemLayout.setOnClickListener(v -> {
-                Toast.makeText(getApplicationContext(), segment.getName() + " Clicked", Toast.LENGTH_SHORT).show();
-                itemLayout.setBackgroundColor(Color.rgb(212, 221, 232));
-                if (previousSelectedSegmentView != null) previousSelectedSegmentView.setBackgroundColor(Color.WHITE);
-                previousSelectedSegmentView = itemLayout;
-            });
-
-            segmentTable.setVisibility(View.GONE);
-            segmentTable.addView(segmentView);
-        }
+        adapter = new SegmentAdapter(segments);
+        segmentLayout.setVisibility(View.GONE);
+        segmentTable.setLayoutManager(new LinearLayoutManager(this));
+        segmentTable.setAdapter(adapter);
     }
 
     private void resetMapData() {
