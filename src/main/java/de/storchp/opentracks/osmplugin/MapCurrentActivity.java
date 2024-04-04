@@ -50,7 +50,7 @@ public class MapCurrentActivity extends AppCompatActivity {
         map.setMultiTouchControls(true);
 
 
-        // 初始化定位管理器
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 
