@@ -9,6 +9,7 @@ import android.widget.RadioButton;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.storchp.opentracks.osmplugin.R;

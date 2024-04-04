@@ -3,8 +3,12 @@ package de.storchp.opentracks.osmplugin.settings;
 import static java.util.stream.Collectors.joining;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+
+import de.storchp.opentracks.osmplugin.ThemeSelectionActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.documentfile.provider.DocumentFile;
@@ -15,11 +19,15 @@ import java.util.Objects;
 
 import de.storchp.opentracks.osmplugin.BuildConfig;
 import de.storchp.opentracks.osmplugin.R;
+import de.storchp.opentracks.osmplugin.ThemeSelectionActivity;
 import de.storchp.opentracks.osmplugin.databinding.ActivitySettingsBinding;
 import de.storchp.opentracks.osmplugin.utils.FileUtil;
 import de.storchp.opentracks.osmplugin.utils.PreferencesUtils;
 
+
 public class SettingsActivity extends AppCompatActivity {
+    private static final String TAG = SettingsActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
                 .commit();
 
         setSupportActionBar(binding.toolbar.mapsToolbar);
+
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
@@ -102,11 +111,18 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             var themePreference = findPreference(getString(R.string.APP_PREF_MAP_THEME));
+
             if (themePreference != null) {
                 themePreference.setSummaryProvider((Preference.SummaryProvider<Preference>) preference -> {
                     var themeUri = PreferencesUtils.getMapThemeUri();
+                    //Log.d(TAG, "AAAAAAAAA " +String.valueOf(themeUri));
                     if (themeUri == null) {
                         return getString(R.string.default_theme);
+                    }
+                    int winterThemeResourceId = getActivity().getResources().getIdentifier("elevate_winter", "xml", getActivity().getPackageName());
+                    Uri winterThemeUri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + winterThemeResourceId);
+                    if (themeUri.equals(winterThemeUri)){
+                        return getString(R.string.winter_theme);
                     }
                     var documentFile = FileUtil.getDocumentFileFromTreeUri(getContext(), themeUri);
                     if (documentFile == null) {

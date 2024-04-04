@@ -4,6 +4,9 @@ package de.storchp.opentracks.osmplugin;
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
 import static java.util.Comparator.comparingInt;
 
+import org.oscim.backend.AssetAdapter;
+import org.oscim.theme.IRenderTheme.ThemeException;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -22,6 +25,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Xml;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,17 +66,25 @@ import org.oscim.theme.IRenderTheme;
 import org.oscim.theme.StreamRenderTheme;
 import org.oscim.theme.ThemeFile;
 import org.oscim.theme.VtmThemes;
+import org.oscim.theme.XmlRenderThemeMenuCallback;
+import org.oscim.theme.XmlThemeResourceProvider;
 import org.oscim.theme.ZipRenderTheme;
 import org.oscim.theme.ZipXmlThemeResourceProvider;
 import org.oscim.tiling.source.OkHttpEngine;
 import org.oscim.tiling.source.bitmap.DefaultSources;
 import org.oscim.tiling.source.mapfile.MapFileTileSource;
 import org.oscim.tiling.source.mapfile.MultiMapFileTileSource;
+import org.oscim.theme.ThemeLoader;
+import org.oscim.tiling.TileSource.OpenResult;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,6 +113,9 @@ import de.storchp.opentracks.osmplugin.utils.TrackPointsDebug;
 import de.storchp.opentracks.osmplugin.utils.TrackStatistics;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+
+
+
 
 public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGestureListener<MarkerInterface> {
 
@@ -282,11 +297,23 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         binding.map.mapView.setClickable(true);
     }
 
+
     protected ThemeFile getRenderTheme() {
         Uri mapTheme = PreferencesUtils.getMapThemeUri();
+        int winterThemeResourceId = getResources().getIdentifier("elevate_winter", "xml", getPackageName());
+        Uri winterThemeUri = Uri.parse("android.resource://" + getPackageName() + "/" + winterThemeResourceId);
         if (mapTheme == null) {
             return VtmThemes.DEFAULT;
         }
+
+        else if(mapTheme.equals(winterThemeUri)){
+            //Log.d(TAG, String.valueOf(mapTheme));
+            //Log.d(TAG, "Winter Enter MODE");
+            //Log.d(TAG, String.valueOf(CustomThemes.WINTER));
+            return new StreamRenderTheme("", AssetAdapter.readFileAsStream("elevate_winter.xml"));
+
+        }
+
         try {
             var renderThemeFile = DocumentFile.fromSingleUri(getApplication(), mapTheme);
             assert renderThemeFile != null;
@@ -344,6 +371,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             renderTheme.dispose();
         }
         renderTheme = map.setTheme(VtmThemes.DEFAULT);
+
     }
 
     protected void createLayers() {
