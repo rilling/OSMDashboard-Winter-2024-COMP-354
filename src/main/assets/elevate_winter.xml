@@ -1480,7 +1480,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
             <lineSymbol src="ele_res/s_ridge.svg" position="center" repeat="true" repeat-gap="75" repeat-start="0" display="always" priority="-20" symbol-height="16" />
         </rule>
         <rule e="way" k="natural" v="crater" zoom-min="14">
-            <line stroke="#306E5050" stroke-width="1" stroke-linecap="round" />
+            <line stroke="#306E5050" stroke-width="0.5" stroke-linecap="round" />
             <line stroke="#614646" stroke-width="0.3" stroke-dasharray="1.5,1.5" stroke-linecap="butt" />
         </rule>
         <rule e="way" k="natural" v="earth_bank" closed="no" zoom-min="14">
@@ -2646,21 +2646,21 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                     <rule e="way" k="sac_scale" v="~">
                         <rule e="way" k="surface" v="~">
                             <rule e="way" k="highway" v="path">
-                                <line stroke="#9C6800" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#9C6800" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="highway" v="footway">
-                                <line stroke="#888888" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#888888" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                         </rule>
                         <rule e="way" k="highway" v="path|footway">
                             <rule e="way" k="surface" v="asphalt|smooth_paved|rough_paved|paved">
-                                <line stroke="#888888" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#888888" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="surface" v="compacted|gravel|raw|winter|unpaved">
-                                <line stroke="#9C6800" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#9C6800" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="bicycle" v="bic_yes|bic_permissive|bic_designated|bic_destination|bic_permit">
-                                <line stroke="#3366FF" stroke-width="0.1" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#3366FF" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                         </rule>
                     </rule>
@@ -2668,19 +2668,19 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 <rule e="way" k="trail_visibility" v="excellent|good">
                     <rule e="way" k="highway" v="path|footway">
                         <rule e="way" k="sac_scale" v="T1">
-                            <line stroke="#FFAA00" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                            <line stroke="#FFAA00" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T2">
-                            <line stroke="#3052FF" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                            <line stroke="#3052FF" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T3">
-                            <line stroke="#FF0000" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                            <line stroke="#FF0000" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T4|T5|T6">
-                            <line stroke="#000000" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                            <line stroke="#000000" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T5|T6">
-                            <line stroke="#C0FFFFFF" stroke-width="0.65" stroke-dasharray="0,2,1,2,1,2,1,2,1,2,1,3" stroke-linecap="butt" />
+                            <line stroke="#C0FFFFFF" stroke-width="0.3" stroke-dasharray="0,2,1,2,1,2,1,2,1,2,1,3" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T6">
                             <line stroke="#FFFFFF" stroke-width="0.15" stroke-dasharray="17,1" stroke-linecap="butt" />
@@ -2690,19 +2690,19 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 <rule e="way" k="trail_visibility" v="~">
                     <rule e="way" k="highway" v="path|footway">
                         <rule e="way" k="sac_scale" v="T1">
-                            <line stroke="#FFAA00" stroke-width="0.65" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
+                            <line stroke="#FFAA00" stroke-width="0.3" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T2">
-                            <line stroke="#3052FF" stroke-width="0.65" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
+                            <line stroke="#3052FF" stroke-width="0.3" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T3">
-                            <line stroke="#FF0000" stroke-width="0.65" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
+                            <line stroke="#FF0000" stroke-width="0.3" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T4|T5|T6">
-                            <line stroke="#000000" stroke-width="0.65" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
+                            <line stroke="#000000" stroke-width="0.3" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T5|T6">
-                            <line stroke="#C0FFFFFF" stroke-width="0.65" stroke-dasharray="0,3,1,3,1,9" stroke-linecap="butt" />
+                            <line stroke="#C0FFFFFF" stroke-width="0.3" stroke-dasharray="0,3,1,3,1,9" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T6">
                             <line stroke="#FFFFFF" stroke-width="0.15" stroke-dasharray="11,2,2,2" stroke-linecap="butt" />
@@ -2712,19 +2712,19 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 <rule e="way" k="trail_visibility" v="intermediate">
                     <rule e="way" k="highway" v="path|footway">
                         <rule e="way" k="sac_scale" v="T1">
-                            <line stroke="#FFAA00" stroke-width="0.65" stroke-dasharray="9,7" stroke-linecap="butt" />
+                            <line stroke="#FFAA00" stroke-width="0.3" stroke-dasharray="9,7" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T2">
-                            <line stroke="#3052FF" stroke-width="0.65" stroke-dasharray="9,7" stroke-linecap="butt" />
+                            <line stroke="#3052FF" stroke-width="0.3" stroke-dasharray="9,7" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T3">
-                            <line stroke="#FF0000" stroke-width="0.65" stroke-dasharray="9,7" stroke-linecap="butt" />
+                            <line stroke="#FF0000" stroke-width="0.3" stroke-dasharray="9,7" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T4|T5|T6">
-                            <line stroke="#000000" stroke-width="0.65" stroke-dasharray="9,7" stroke-linecap="butt" />
+                            <line stroke="#000000" stroke-width="0.3" stroke-dasharray="9,7" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T5|T6">
-                            <line stroke="#C0FFFFFF" stroke-width="0.65" stroke-dasharray="0,1,1,2,1,2,1,8" stroke-linecap="butt" />
+                            <line stroke="#C0FFFFFF" stroke-width="0.3" stroke-dasharray="0,1,1,2,1,2,1,8" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T6">
                             <line stroke="#FFFFFF" stroke-width="0.15" stroke-dasharray="9,7" stroke-linecap="butt" />
@@ -2756,42 +2756,42 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 <rule e="way" k="trail_visibility" v="bad|horrible|no">
                     <rule e="way" k="highway" v="path|footway">
                         <rule e="way" k="sac_scale" v="T1">
-                            <line stroke="#FFAA00" stroke-width="0.65" stroke-dasharray="4,6" stroke-linecap="butt" />
+                            <line stroke="#FFAA00" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T2">
-                            <line stroke="#3052FF" stroke-width="0.65" stroke-dasharray="4,6" stroke-linecap="butt" />
+                            <line stroke="#3052FF" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T3">
-                            <line stroke="#FF0000" stroke-width="0.65" stroke-dasharray="4,6" stroke-linecap="butt" />
+                            <line stroke="#FF0000" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T4|T5|T6">
-                            <line stroke="#000000" stroke-width="0.65" stroke-dasharray="4,6" stroke-linecap="butt" />
+                            <line stroke="#000000" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T5|T6">
-                            <line stroke="#C0FFFFFF" stroke-width="0.65" stroke-dasharray="0,1.5,1,7.5" stroke-linecap="butt" />
+                            <line stroke="#C0FFFFFF" stroke-width="0.3" stroke-dasharray="0,1.5,1,7.5" stroke-linecap="butt" />
                         </rule>
                         <rule e="way" k="sac_scale" v="T6">
-                            <line stroke="#FFFFFF" stroke-width="0.15" stroke-dasharray="4,6" stroke-linecap="butt" />
+                            <line stroke="#FFFFFF" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                         </rule>
                     </rule>
                     <rule e="way" k="sac_scale" v="~">
                         <rule e="way" k="surface" v="~">
                             <rule e="way" k="highway" v="path">
-                                <line stroke="#9C6800" stroke-width="0.65" stroke-dasharray="4,6" stroke-linecap="butt" />
+                                <line stroke="#9C6800" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="highway" v="footway">
-                                <line stroke="#888888" stroke-width="0.65" stroke-dasharray="4,6" stroke-linecap="butt" />
+                                <line stroke="#888888" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                             </rule>
                         </rule>
                         <rule e="way" k="highway" v="path|footway">
                             <rule e="way" k="surface" v="asphalt|smooth_paved|rough_paved|paved">
-                                <line stroke="#888888" stroke-width="0.65" stroke-dasharray="4,6" stroke-linecap="butt" />
+                                <line stroke="#888888" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="surface" v="compacted|gravel|raw|winter|unpaved">
-                                <line stroke="#9C6800" stroke-width="0.65" stroke-dasharray="4,6" stroke-linecap="butt" />
+                                <line stroke="#9C6800" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="bicycle" v="bic_yes|bic_permissive|bic_designated|bic_destination|bic_permit">
-                                <line stroke="#3366FF" stroke-width="0.1" stroke-dasharray="4,6" stroke-linecap="butt" />
+                                <line stroke="#3366FF" stroke-width="0.3" stroke-dasharray="4,6" stroke-linecap="butt" />
                             </rule>
                         </rule>
                     </rule>
@@ -2800,19 +2800,19 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                     <rule e="any" k="foot" v="ft_yes|ft_permissive|ft_designated|ft_destination|ft_permit">
                         <rule e="way" k="trail_visibility" v="excellent|good">
                             <rule e="way" k="sac_scale" v="T1">
-                                <line stroke="#FFAA00" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#FFAA00" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T2">
-                                <line stroke="#3052FF" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#3052FF" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T3">
-                                <line stroke="#FF0000" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#FF0000" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T4|T5|T6">
-                                <line stroke="#000000" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                <line stroke="#000000" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T5|T6">
-                                <line stroke="#C0FFFFFF" stroke-width="0.65" stroke-dasharray="0,2,1,2,1,2,1,2,1,2,1,3" stroke-linecap="butt" />
+                                <line stroke="#C0FFFFFF" stroke-width="0.3" stroke-dasharray="0,2,1,2,1,2,1,2,1,2,1,3" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T6">
                                 <line stroke="#FFFFFF" stroke-width="0.15" stroke-dasharray="17,1" stroke-linecap="butt" />
@@ -2820,34 +2820,34 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                         </rule>
                         <rule e="way" k="trail_visibility" v="~">
                             <rule e="way" k="sac_scale" v="T1">
-                                <line stroke="#FFAA00" stroke-width="0.65" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
+                                <line stroke="#FFAA00" stroke-width="0.3" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T2">
-                                <line stroke="#3052FF" stroke-width="0.65" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
+                                <line stroke="#3052FF" stroke-width="0.3" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T3">
-                                <line stroke="#FF0000" stroke-width="0.65" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
+                                <line stroke="#FF0000" stroke-width="0.3" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T4|T5|T6">
-                                <line stroke="#000000" stroke-width="0.65" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
+                                <line stroke="#000000" stroke-width="0.3" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T5|T6">
-                                <line stroke="#C0FFFFFF" stroke-width="0.65" stroke-dasharray="0,3,1,3,1,6" stroke-linecap="butt" />
+                                <line stroke="#C0FFFFFF" stroke-width="0.3" stroke-dasharray="0,3,1,3,1,6" stroke-linecap="butt" />
                             </rule>
                             <rule e="way" k="sac_scale" v="T6">
-                                <line stroke="#FFFFFF" stroke-width="0.15" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
+                                <line stroke="#FFFFFF" stroke-width="0.3" stroke-dasharray="11,1,1,1" stroke-linecap="butt" />
                             </rule>
                         </rule>
                         <rule e="way" k="trail_visibility" v="excellent|good|~">
                             <rule e="way" k="sac_scale" v="~">
                                 <rule e="way" k="surface" v="~">
-                                    <line stroke="#9C6800" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                    <line stroke="#9C6800" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                                 </rule>
                                 <rule e="way" k="surface" v="asphalt|smooth_paved|rough_paved|paved">
-                                    <line stroke="#888888" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                    <line stroke="#888888" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                                 </rule>
                                 <rule e="way" k="surface" v="compacted|gravel|raw|winter|unpaved">
-                                    <line stroke="#9C6800" stroke-width="0.65" stroke-dasharray="17,1" stroke-linecap="butt" />
+                                    <line stroke="#9C6800" stroke-width="0.3" stroke-dasharray="17,1" stroke-linecap="butt" />
                                 </rule>
                                 <rule e="way" k="bicycle" v="bic_yes|bic_permissive|bic_designated|bic_destination|bic_permit">
                                     <line stroke="#3366FF" stroke-width="0.1" stroke-dasharray="17,1" stroke-linecap="butt" />
@@ -4229,7 +4229,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
             </rule>
         </rule>
         <rule e="way" k="piste:difficulty" v="easy">                                <!-- Einfache Piste: blau -->
-            <line stroke="#660000FF" stroke-width="6" dy="-8" scale="none" />
+            <line stroke="#660000FF" stroke-width="2" dy="-8" scale="none" />
             <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                 <lineSymbol src="ele_res/w_skipiste_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-91" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
             </rule>
@@ -4241,7 +4241,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
             </rule>
         </rule>
         <rule e="way" k="piste:difficulty" v="intermediate">                        <!-- Mittelschwere Mittelschwere Piste: rot -->
-            <line stroke="#66FF0000" stroke-width="6" dy="-8" scale="none" />
+            <line stroke="#66FF0000" stroke-width="2" dy="-8" scale="none" />
             <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                 <lineSymbol src="ele_res/w_skipiste_cyan.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-91" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
             </rule>
@@ -4253,7 +4253,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
             </rule>
         </rule>
         <rule e="way" k="piste:difficulty" v="advanced">                            <!-- Schwere Piste: schwarz -->
-            <line stroke="#66000000" stroke-width="6" dy="-8" scale="none" />
+            <line stroke="#66000000" stroke-width="2" dy="-8" scale="none" />
             <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                 <lineSymbol src="ele_res/w_skipiste_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-191" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
             </rule>
@@ -4265,7 +4265,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
             </rule>
         </rule>
         <rule e="way" k="piste:difficulty" v="expert">                              <!-- Sehr schwere Piste: orange mit rotem Rand-->
-            <line stroke="#66FFBB00" stroke-width="6" dy="-8" scale="none" />
+            <line stroke="#66FFBB00" stroke-width="2" dy="-8" scale="none" />
             <line stroke="#88FF0000" stroke-width="1" dy="-5.5" scale="none" />
             <line stroke="#88FF0000" stroke-width="1" dy="-10.5" scale="none" />
             <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
@@ -4279,7 +4279,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
             </rule>
         </rule>
         <rule e="way" k="piste:difficulty" v="freeride">                            <!-- Extreme Piste: gelb mit rotem Rand, mit Achtung-Symbol -->
-            <line stroke="#66FFFF00" stroke-width="6" dy="-8" scale="none" />
+            <line stroke="#66FFFF00" stroke-width="2" dy="-8" scale="none" />
             <line stroke="#88FF0000" stroke-width="1" dy="-5.5" scale="none" />
             <line stroke="#88FF0000" stroke-width="1" dy="-10.5" scale="none" />
             <lineSymbol src="ele_res/w_achtung.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-80" repeat-start="10" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4714,7 +4714,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
         <!-- Einfache Langlauf-Loipe:  blau -->
         <rule e="way" k="piste:difficulty" v="easy">
             <rule e="way" k="piste:grooming" v="~">                                                                 <!-- Loipe, Spur unbekannt -->
-                <line stroke="#AA0000FF" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA0000FF" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFFFF" stroke-width="2" dy="-8" scale="none" stroke-dasharray="5,40" />             <!-- .... weisse Punkte -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4727,7 +4727,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="classic|scooter">                                                   <!-- Klassische Loipe -->
-                <line stroke="#AA0000FF" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA0000FF" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFFFF" stroke-width="2" dy="-8" scale="none" stroke-dasharray="5,5" />              <!-- .... weiss gepunktet -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4740,7 +4740,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="skating">                                                           <!-- Skating Loipe -->
-                <line stroke="#AA0000FF" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA0000FF" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFFFF" stroke-width="2" dy="-8" scale="none" stroke-dasharray="40,5" />             <!-- .... weiss gestrichelt -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_orange.svg" symbol-height="24" symbol-width="24" dy="-8" priority="-111" scale="none" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4753,7 +4753,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="classic+skating|classic;skating">                                   <!-- Klassische und Skating Loipe -->
-                <line stroke="#AA0000FF" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA0000FF" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFFFF" stroke-width="2" dy="-8" scale="none" stroke-dasharray="40,5,5,5,5,5,5,5" /> <!-- .... weiss Strich-Punkt-Punkt -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4770,7 +4770,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
         <!-- Mittelschwere Langlauf-Loipe:  rot -->
         <rule e="way" k="piste:difficulty" v="intermediate">
             <rule e="way" k="piste:grooming" v="~">                                                                 <!-- Loipe, Spur unbekannt -->
-                <line stroke="#AAFF0000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AAFF0000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFFFF" stroke-width="2" dy="-8" scale="none" stroke-dasharray="5,40" />             <!-- .... weisse Punkte -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_cyan.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4783,7 +4783,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="classic|scooter">                                                   <!-- Klassische Loipe -->
-                <line stroke="#AAFF0000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AAFF0000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFFFF" stroke-width="2" dy="-8" scale="none" stroke-dasharray="5,5" />              <!-- .... weiss gepunktet -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_cyan.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4796,7 +4796,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="skating">                                                           <!-- Skating Loipe -->
-                <line stroke="#AAFF0000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AAFF0000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFFFF" stroke-width="2" dy="-8" scale="none" stroke-dasharray="40,5" />             <!-- .... weiss gestrichelt -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_cyan.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4809,7 +4809,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="classic+skating|classic;skating">                                   <!-- Klassische und Skating Loipe -->
-                <line stroke="#AAFF0000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AAFF0000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFFFF" stroke-width="2" dy="-8" scale="none" stroke-dasharray="40,5,5,5,5,5,5,5" /> <!-- .... weiss Strich-Punkt-Punkt -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_cyan.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4826,7 +4826,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
         <!-- Schwere Langlauf-Loipe:  schwarz -->
         <rule e="way" k="piste:difficulty" v="advanced">
             <rule e="way" k="piste:grooming" v="~">                                                                 <!-- Loipe, Spur unbekannt -->
-                <line stroke="#AA000000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA000000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFF00" stroke-width="2" dy="-8" scale="none" stroke-dasharray="5,40" />             <!-- .... gelb gestrichelt -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4839,7 +4839,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="classic|scooter">                                                   <!-- Klassische Loipe -->
-                <line stroke="#AA000000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA000000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFF00" stroke-width="2" dy="-8" scale="none" stroke-dasharray="5,5" />              <!-- .... gelb gepunktet -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4852,7 +4852,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="skating">                                                           <!-- Skating Loipe -->
-                <line stroke="#AA000000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA000000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFF00" stroke-width="2" dy="-8" scale="none" stroke-dasharray="40,5" />             <!-- .... gelb Strichpunkt -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4865,7 +4865,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="classic+skating|classic;skating">                                   <!-- Klassische und Skating Loipe -->
-                <line stroke="#AA000000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA000000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFF00" stroke-width="2" dy="-8" scale="none" stroke-dasharray="40,5,5,5,5,5,5,5" /> <!-- .... gelb Strich-Punkt-Punkt -->
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                     <lineSymbol src="ele_res/w_langlauf_orange.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-111" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
@@ -4882,7 +4882,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
         <!-- Sehr schwere bzw. extreme Langlauf-Loipe:  schwarz (mit Achtung-Symbol) -->
         <rule e="way" k="piste:difficulty" v="expert|freeride">
             <rule e="way" k="piste:grooming" v="~">                                                                 <!-- Loipe, Spur unbekannt -->
-                <line stroke="#AA000000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA000000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFF00" stroke-width="2" dy="-8" scale="none" stroke-dasharray="5,40" />             <!-- .... gelb gestrichelt -->
                 <lineSymbol src="ele_res/w_achtung.svg" symbol-height="24" symbol-width="24" dy="-8" priority="-80" scale="none" repeat-start="10" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
@@ -4896,7 +4896,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="classic|scooter">                                                   <!-- Klassische Loipe -->
-                <line stroke="#AA000000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA000000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFF00" stroke-width="2" dy="-8" scale="none" stroke-dasharray="5,5" />              <!-- .... gelb gepunktet -->
                 <lineSymbol src="ele_res/w_achtung.svg" symbol-height="24" symbol-width="24" dy="-8" priority="-80" scale="none" repeat-start="10" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
@@ -4910,7 +4910,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="skating">                                                           <!-- Skating Loipe -->
-                <line stroke="#AA000000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA000000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFF00" stroke-width="2" dy="-8" scale="none" stroke-dasharray="40,5" />             <!-- .... gelb Strichpunkt -->
                 <lineSymbol src="ele_res/w_achtung.svg" symbol-height="24" symbol-width="24" dy="-8" priority="-80" scale="none" repeat-start="10" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
@@ -4924,7 +4924,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 </rule>
             </rule>
             <rule e="way" k="piste:grooming" v="classic+skating|classic;skating">                                   <!-- Klassische und Skating Loipe -->
-                <line stroke="#AA000000" stroke-width="6" dy="-8" scale="none" />
+                <line stroke="#AA000000" stroke-width="2" dy="-8" scale="none" />
                 <line stroke="#AAFFFF00" stroke-width="2" dy="-8" scale="none" stroke-dasharray="40,5,5,5,5,5,5,5" /> <!-- .... gelb Strich-Punkt-Punkt -->
                 <lineSymbol src="ele_res/w_achtung.svg" symbol-height="24" symbol-width="24" dy="-8" priority="-80" scale="none" repeat-start="10" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
                 <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
@@ -7940,22 +7940,22 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
 
     <!-- Power lines -->
     <rule e="way" k="power" v="line">
-        <rule e="any" k="*" v="*" zoom-max="15" zoom-min="14">
-            <line stroke="#799079" stroke-width="1.3" stroke-dasharray="1,44" stroke-linecap="round" />
+        <rule e="any" k="*" v="*" zoom-max="8" zoom-min="6">
+            <line stroke="#799079" stroke-width="0.8" stroke-dasharray="1,44" stroke-linecap="round" />
             <line stroke="#799079" stroke-width="0.2" stroke-dasharray="1,7,30,7" stroke-linecap="butt" />
         </rule>
-        <rule e="any" k="*" v="*" zoom-min="16" zoom-max="18">
+        <rule e="any" k="*" v="*" zoom-min="10" zoom-max="12">
             <line stroke="#799079" stroke-width="0.7" stroke-dasharray="1,64" stroke-linecap="round" />
             <line stroke="#799079" stroke-width="0.1" stroke-dasharray="1,10,44,10" stroke-linecap="butt" />
         </rule>
-        <rule e="any" k="*" v="*" zoom-min="19">
+        <rule e="any" k="*" v="*" zoom-min="15">
             <line stroke="#799079" stroke-width="0.4" stroke-dasharray="1,84" stroke-linecap="round" />
             <line stroke="#799079" stroke-width="0.05" stroke-dasharray="1,15,54,15" stroke-linecap="butt" />
         </rule>
     </rule>
     <rule e="way" k="power" v="minor_line">
         <rule e="any" k="*" v="*" zoom-max="15" zoom-min="14">
-            <line stroke="#799079" stroke-width="1" stroke-dasharray="1,44" stroke-linecap="round" />
+            <line stroke="#799079" stroke-width="0.5" stroke-dasharray="1,44" stroke-linecap="round" />
             <line stroke="#799079" stroke-width="0.15" stroke-dasharray="1,7,8,3,8,3,8,7" stroke-linecap="butt" />
         </rule>
         <rule e="any" k="*" v="*" zoom-min="16" zoom-max="18">
@@ -7969,426 +7969,426 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
     </rule>
 
     <!-- Hiking waymarks -->
-    <rule cat="waymarks" e="any" k="information" v="guidepost" zoom-min="15">
+    <rule cat="waymarks" e="any" k="information" v="guidepost" zoom-min="8">
         <symbol id="s_guidepost" src="ele_res/s_guidepost.svg" symbol-height="16" />
         <rule e="any" k="*" v="*">
             <caption k="addr:housenumber" priority="15" symbol-id="s_guidepost" display="always" position="right" font-size="10" font-style="bold" fill="#FFFFFF" stroke="#333333" stroke-width="2" />
         </rule>
     </rule>
     <rule cat="waymarks" e="node" k="osmc" v="osmc_yes">
-        <rule e="node" k="*" v="*" zoom-max="14" zoom-min="12">
+        <rule e="node" k="*" v="*" zoom-max="10" zoom-min="8">
             <rule e="node" k="osmc_background" v="wmbg_black|wmbg_black_circle|wmbg_black_frame|wmbg_black_round">
-                <symbol src="ele_res/wmbg_black.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_black.svg" symbol-height="3" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_blue|wmbg_blue_circle|wmbg_blue_frame|wmbg_blue_round">
-                <symbol src="ele_res/wmbg_blue.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_blue.svg" symbol-height="3" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_brown|wmbg_brown_circle|wmbg_brown_frame|wmbg_brown_round">
-                <symbol src="ele_res/wmbg_brown.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_brown.svg" symbol-height="3" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_green|wmbg_green_circle|wmbg_green_frame|wmbg_green_round">
-                <symbol src="ele_res/wmbg_green.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_green.svg" symbol-height="3" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_orange|wmbg_orange_circle|wmbg_orange_frame|wmbg_orange_round">
-                <symbol src="ele_res/wmbg_orange.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_orange.svg" symbol-height="3" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_purple|wmbg_purple_circle|wmbg_purple_frame|wmbg_purple_round">
-                <symbol src="ele_res/wmbg_purple.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_purple.svg" symbol-height="3" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_red|wmbg_red_circle|wmbg_red_frame|wmbg_red_round">
-                <symbol src="ele_res/wmbg_red.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_red.svg" symbol-height="3" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_white|wmbg_white_circle|wmbg_white_frame|wmbg_white_round|~">
-                <symbol src="ele_res/wmbg_white.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_white.svg" symbol-height="3" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_yellow|wmbg_yellow_circle|wmbg_yellow_frame|wmbg_yellow_round">
-                <symbol src="ele_res/wmbg_yellow.svg" symbol-height="6" />
+                <symbol src="ele_res/wmbg_yellow.svg" symbol-height="3" />
             </rule>
         </rule>
-        <rule e="node" k="osmc_foreground" v="*" zoom-min="15">
+        <rule e="node" k="osmc_foreground" v="*" zoom-min="10">
             <rule e="node" k="osmc_foreground" v="wmfg_blue_l">
-                <symbol src="ele_res/wmfg_blue_L.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_L.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_arch">
-                <symbol src="ele_res/wmfg_blue_arch.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_arch.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_bar">
-                <symbol src="ele_res/wmfg_blue_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_bowl">
-                <symbol src="ele_res/wmfg_blue_bowl.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_bowl.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_circle">
-                <symbol src="ele_res/wmfg_blue_circle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_circle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_corner">
-                <symbol src="ele_res/wmfg_blue_corner.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_corner.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_cross">
-                <symbol src="ele_res/wmfg_blue_cross.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_cross.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_diamond">
-                <symbol src="ele_res/wmfg_blue_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_dot">
-                <symbol src="ele_res/wmfg_blue_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_fork">
-                <symbol src="ele_res/wmfg_blue_fork.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_fork.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_lower">
-                <symbol src="ele_res/wmfg_blue_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_pointer">
-                <symbol src="ele_res/wmfg_blue_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_rectangle">
-                <symbol src="ele_res/wmfg_blue_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_right">
-                <symbol src="ele_res/wmfg_blue_right.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_right.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_slash">
-                <symbol src="ele_res/wmfg_blue_slash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_slash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_stripe">
-                <symbol src="ele_res/wmfg_blue_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_triangle">
-                <symbol src="ele_res/wmfg_blue_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_triangle_turned">
-                <symbol src="ele_res/wmfg_blue_triangle_turned.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_triangle_turned.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_turned_t">
-                <symbol src="ele_res/wmfg_blue_turned_T.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_turned_T.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_x">
-                <symbol src="ele_res/wmfg_blue_x.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_x.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_l">
-                <symbol src="ele_res/wmfg_red_L.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_L.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_arch">
-                <symbol src="ele_res/wmfg_red_arch.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_arch.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_backslash">
-                <symbol src="ele_res/wmfg_red_backslash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_backslash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_bar">
-                <symbol src="ele_res/wmfg_red_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_circle">
-                <symbol src="ele_res/wmfg_red_circle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_circle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_corner">
-                <symbol src="ele_res/wmfg_red_corner.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_corner.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_crest">
-                <symbol src="ele_res/wmfg_red_crest.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_crest.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_cross">
-                <symbol src="ele_res/wmfg_red_cross.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_cross.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_diamond">
-                <symbol src="ele_res/wmfg_red_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_dot">
-                <symbol src="ele_res/wmfg_red_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_drop">
-                <symbol src="ele_res/wmfg_red_drop.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_drop.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_drop_line">
-                <symbol src="ele_res/wmfg_red_drop_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_drop_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_fork">
-                <symbol src="ele_res/wmfg_red_fork.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_fork.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_hiker">
-                <symbol src="ele_res/wmfg_red_hiker.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_hiker.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_lower">
-                <symbol src="ele_res/wmfg_red_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_pointer">
-                <symbol src="ele_res/wmfg_red_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_rectangle">
-                <symbol src="ele_res/wmfg_red_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_right">
-                <symbol src="ele_res/wmfg_red_right.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_right.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_slash">
-                <symbol src="ele_res/wmfg_red_slash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_slash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_stripe">
-                <symbol src="ele_res/wmfg_red_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_triangle">
-                <symbol src="ele_res/wmfg_red_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_triangle_turned">
-                <symbol src="ele_res/wmfg_red_triangle_turned.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_triangle_turned.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_turned_t">
-                <symbol src="ele_res/wmfg_red_turned_T.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_turned_T.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_x">
-                <symbol src="ele_res/wmfg_red_x.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_x.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_l">
-                <symbol src="ele_res/wmfg_yellow_L.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_L.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_arch">
-                <symbol src="ele_res/wmfg_yellow_arch.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_arch.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_backslash">
-                <symbol src="ele_res/wmfg_yellow_backslash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_backslash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_bar">
-                <symbol src="ele_res/wmfg_yellow_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_bowl">
-                <symbol src="ele_res/wmfg_yellow_bowl.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_bowl.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_circle">
-                <symbol src="ele_res/wmfg_yellow_circle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_circle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_corner">
-                <symbol src="ele_res/wmfg_yellow_corner.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_corner.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_cross">
-                <symbol src="ele_res/wmfg_yellow_cross.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_cross.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_diamond">
-                <symbol src="ele_res/wmfg_yellow_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_dot">
-                <symbol src="ele_res/wmfg_yellow_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_fork">
-                <symbol src="ele_res/wmfg_yellow_fork.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_fork.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_hiker">
-                <symbol src="ele_res/wmfg_yellow_hiker.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_hiker.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_lower">
-                <symbol src="ele_res/wmfg_yellow_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_pointer">
-                <symbol src="ele_res/wmfg_yellow_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_rectangle">
-                <symbol src="ele_res/wmfg_yellow_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_rectangle_line">
-                <symbol src="ele_res/wmfg_yellow_rectangle_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_rectangle_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_slash">
-                <symbol src="ele_res/wmfg_yellow_slash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_slash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_stripe">
-                <symbol src="ele_res/wmfg_yellow_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_triangle">
-                <symbol src="ele_res/wmfg_yellow_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_turned_t">
-                <symbol src="ele_res/wmfg_yellow_turned_T.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_turned_T.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_yellow_x">
-                <symbol src="ele_res/wmfg_yellow_x.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_yellow_x.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_arch">
-                <symbol src="ele_res/wmfg_black_arch.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_arch.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_bar">
-                <symbol src="ele_res/wmfg_black_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_circle">
-                <symbol src="ele_res/wmfg_black_circle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_circle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_crest">
-                <symbol src="ele_res/wmfg_black_crest.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_crest.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_cross">
-                <symbol src="ele_res/wmfg_black_cross.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_cross.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_diamond">
-                <symbol src="ele_res/wmfg_black_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_dot">
-                <symbol src="ele_res/wmfg_black_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_fork">
-                <symbol src="ele_res/wmfg_black_fork.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_fork.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_horse">
-                <symbol src="ele_res/wmfg_black_horse.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_horse.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_pointer">
-                <symbol src="ele_res/wmfg_black_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_rectangle">
-                <symbol src="ele_res/wmfg_black_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_rectangle_line">
-                <symbol src="ele_res/wmfg_black_rectangle_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_rectangle_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_red_diamond">
-                <symbol src="ele_res/wmfg_black_red_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_red_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_triangle">
-                <symbol src="ele_res/wmfg_black_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_triangle_line">
-                <symbol src="ele_res/wmfg_black_triangle_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_triangle_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_x">
-                <symbol src="ele_res/wmfg_black_x.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_x.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_l">
-                <symbol src="ele_res/wmfg_green_L.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_L.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_arch">
-                <symbol src="ele_res/wmfg_green_arch.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_arch.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_backslash">
-                <symbol src="ele_res/wmfg_green_backslash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_backslash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_bar">
-                <symbol src="ele_res/wmfg_green_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_bowl">
-                <symbol src="ele_res/wmfg_green_bowl.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_bowl.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_circle">
-                <symbol src="ele_res/wmfg_green_circle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_circle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_corner">
-                <symbol src="ele_res/wmfg_green_corner.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_corner.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_cross">
-                <symbol src="ele_res/wmfg_green_cross.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_cross.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_diamond">
-                <symbol src="ele_res/wmfg_green_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_dot">
-                <symbol src="ele_res/wmfg_green_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_drop_line">
-                <symbol src="ele_res/wmfg_green_drop_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_drop_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_fork">
-                <symbol src="ele_res/wmfg_green_fork.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_fork.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_hiker">
-                <symbol src="ele_res/wmfg_green_hiker.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_hiker.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_horse">
-                <symbol src="ele_res/wmfg_green_horse.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_horse.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_lower">
-                <symbol src="ele_res/wmfg_green_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_pointer">
-                <symbol src="ele_res/wmfg_green_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_rectangle">
-                <symbol src="ele_res/wmfg_green_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_right">
-                <symbol src="ele_res/wmfg_green_right.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_right.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_slash">
-                <symbol src="ele_res/wmfg_green_slash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_slash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_stripe">
-                <symbol src="ele_res/wmfg_green_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_triangle">
-                <symbol src="ele_res/wmfg_green_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_triangle_line">
-                <symbol src="ele_res/wmfg_green_triangle_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_triangle_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_triangle_turned">
-                <symbol src="ele_res/wmfg_green_triangle_turned.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_triangle_turned.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_turned_t">
-                <symbol src="ele_res/wmfg_green_turned_T.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_turned_T.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_x">
-                <symbol src="ele_res/wmfg_green_x.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_x.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_arch">
-                <symbol src="ele_res/wmfg_white_arch.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_arch.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_bar">
-                <symbol src="ele_res/wmfg_white_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_circle">
-                <symbol src="ele_res/wmfg_white_circle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_circle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_cross">
-                <symbol src="ele_res/wmfg_white_cross.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_cross.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_diamond">
-                <symbol src="ele_res/wmfg_white_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_diamond_line">
-                <symbol src="ele_res/wmfg_white_diamond_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_diamond_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_dot">
-                <symbol src="ele_res/wmfg_white_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_hiker">
-                <symbol src="ele_res/wmfg_white_hiker.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_hiker.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_lower">
-                <symbol src="ele_res/wmfg_white_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_pointer">
-                <symbol src="ele_res/wmfg_white_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_rectangle">
-                <symbol src="ele_res/wmfg_white_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_rectangle_line">
-                <symbol src="ele_res/wmfg_white_rectangle_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_rectangle_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_red_diamond">
-                <symbol src="ele_res/wmfg_white_red_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_red_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_right">
-                <symbol src="ele_res/wmfg_white_right.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_right.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_slash">
-                <symbol src="ele_res/wmfg_white_slash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_slash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_stripe">
-                <symbol src="ele_res/wmfg_white_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_triangle">
-                <symbol src="ele_res/wmfg_white_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_triangle_line">
-                <symbol src="ele_res/wmfg_white_triangle_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_triangle_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_turned_t">
-                <symbol src="ele_res/wmfg_white_turned_T.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_turned_T.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_x">
-                <symbol src="ele_res/wmfg_white_x.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_x.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_ammonit">
-                <symbol src="ele_res/wmfg_ammonit.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_ammonit.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_bridleway">
-                <symbol src="ele_res/wmfg_bridleway.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_bridleway.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_heart">
                 <symbol src="ele_res/wmfg_heart.svg" display="always" symbol-height="12" />
@@ -8400,175 +8400,175 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 <symbol src="ele_res/wmfg_mine.svg" display="always" symbol-height="12" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_bar">
-                <symbol src="ele_res/wmfg_orange_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_diamond_line">
-                <symbol src="ele_res/wmfg_orange_diamond_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_diamond_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_dot">
-                <symbol src="ele_res/wmfg_orange_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_right">
-                <symbol src="ele_res/wmfg_orange_right.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_right.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_shell">
-                <symbol src="ele_res/wmfg_shell.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_shell.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_shell_modern">
-                <symbol src="ele_res/wmfg_shell_modern.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_shell_modern.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_tower">
-                <symbol src="ele_res/wmfg_tower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_tower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_wolfshook">
-                <symbol src="ele_res/wmfg_wolfshook.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_wolfshook.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_backslash">
-                <symbol src="ele_res/wmfg_black_backslash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_backslash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_corner">
-                <symbol src="ele_res/wmfg_black_corner.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_corner.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_diamond_line">
-                <symbol src="ele_res/wmfg_black_diamond_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_diamond_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_hiker">
-                <symbol src="ele_res/wmfg_black_hiker.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_hiker.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_lower">
-                <symbol src="ele_res/wmfg_black_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_stripe">
-                <symbol src="ele_res/wmfg_black_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_black_turned_T">
-                <symbol src="ele_res/wmfg_black_turned_T.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_black_turned_T.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_backslash">
-                <symbol src="ele_res/wmfg_blue_backslash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_backslash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_hiker">
-                <symbol src="ele_res/wmfg_blue_hiker.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_hiker.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_blue_triangle_line">
-                <symbol src="ele_res/wmfg_blue_triangle_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_blue_triangle_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_bar">
-                <symbol src="ele_res/wmfg_brown_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_diamond">
-                <symbol src="ele_res/wmfg_brown_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_dot">
-                <symbol src="ele_res/wmfg_brown_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_hiker">
-                <symbol src="ele_res/wmfg_brown_hiker.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_hiker.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_lower">
-                <symbol src="ele_res/wmfg_brown_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_pointer">
-                <symbol src="ele_res/wmfg_brown_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_rectangle">
-                <symbol src="ele_res/wmfg_brown_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_stripe">
-                <symbol src="ele_res/wmfg_brown_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_brown_x">
-                <symbol src="ele_res/wmfg_brown_x.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_brown_x.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_gray_bar">
-                <symbol src="ele_res/wmfg_gray_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_gray_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_gray_pointer">
-                <symbol src="ele_res/wmfg_gray_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_gray_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_gray_triangle">
-                <symbol src="ele_res/wmfg_gray_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_gray_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_diamond_line">
-                <symbol src="ele_res/wmfg_green_diamond_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_diamond_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_green_wheel">
-                <symbol src="ele_res/wmfg_green_wheel.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_green_wheel.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_circle">
-                <symbol src="ele_res/wmfg_orange_circle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_circle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_cross">
-                <symbol src="ele_res/wmfg_orange_cross.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_cross.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_diamond">
-                <symbol src="ele_res/wmfg_orange_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_hexagon">
-                <symbol src="ele_res/wmfg_orange_hexagon.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_hexagon.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_hiker">
-                <symbol src="ele_res/wmfg_orange_hiker.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_hiker.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_lower">
-                <symbol src="ele_res/wmfg_orange_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_pointer">
-                <symbol src="ele_res/wmfg_orange_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_rectangle">
-                <symbol src="ele_res/wmfg_orange_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_stripe">
-                <symbol src="ele_res/wmfg_orange_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_orange_triangle">
-                <symbol src="ele_res/wmfg_orange_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_orange_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_bar">
-                <symbol src="ele_res/wmfg_purple_bar.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_bar.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_circle">
-                <symbol src="ele_res/wmfg_purple_circle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_circle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_diamond">
-                <symbol src="ele_res/wmfg_purple_diamond.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_diamond.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_dot">
-                <symbol src="ele_res/wmfg_purple_dot.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_dot.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_lower">
-                <symbol src="ele_res/wmfg_purple_lower.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_lower.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_pointer">
-                <symbol src="ele_res/wmfg_purple_pointer.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_pointer.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_rectangle">
-                <symbol src="ele_res/wmfg_purple_rectangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_rectangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_stripe">
-                <symbol src="ele_res/wmfg_purple_stripe.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_stripe.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_purple_triangle">
-                <symbol src="ele_res/wmfg_purple_triangle.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_purple_triangle.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_diamond_line">
-                <symbol src="ele_res/wmfg_red_diamond_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_diamond_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_shell">
-                <symbol src="ele_res/wmfg_red_shell.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_shell.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_triangle_line">
-                <symbol src="ele_res/wmfg_red_triangle_line.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_triangle_line.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_red_wheel">
-                <symbol src="ele_res/wmfg_red_wheel.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_red_wheel.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_backslash">
-                <symbol src="ele_res/wmfg_white_backslash.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_backslash.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_corner">
-                <symbol src="ele_res/wmfg_white_corner.svg" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmfg_white_corner.svg" display="always" symbol-height="8" />
             </rule>
             <rule e="node" k="osmc_foreground" v="wmfg_white_triangle_turned">
                 <symbol src="ele_res/wmfg_white_triangle_turned.svg" display="always" symbol-height="12" />
@@ -8675,16 +8675,16 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
                 <symbol src="ele_res/wmbg_purple_round.svg" priority="-1" display="always" symbol-height="12" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_red">
-                <symbol src="ele_res/wmbg_red.svg" priority="-1" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmbg_red.svg" priority="-1" display="always" symbol-height="5" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_red_circle">
-                <symbol src="ele_res/wmbg_red_circle.svg" priority="-1" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmbg_red_circle.svg" priority="-1" display="always" symbol-height="5" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_red_frame">
-                <symbol src="ele_res/wmbg_red_frame.svg" priority="-1" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmbg_red_frame.svg" priority="-1" display="always" symbol-height="5" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_red_round">
-                <symbol src="ele_res/wmbg_red_round.svg" priority="-1" display="always" symbol-height="12" />
+                <symbol src="ele_res/wmbg_red_round.svg" priority="-1" display="always" symbol-height="5" />
             </rule>
             <rule e="node" k="osmc_background" v="wmbg_white|~">
                 <symbol src="ele_res/wmbg_white.svg" priority="-1" display="always" symbol-height="12" />
@@ -8882,66 +8882,66 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
             </rule>
             <rule e="way" k="osmc_color" v="*" zoom-max="15" zoom-min="13">
                 <rule e="way" k="osmc_color" v="wmco_yellow">
-                    <line stroke="#EED800" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#EED800" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_green">
-                    <line stroke="#44DD44" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#44DD44" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_red">
-                    <line stroke="#EE4444" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#EE4444" stroke-width="0.4" dy="0.5" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_black">
-                    <line stroke="#000000" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#000000" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_white">
-                    <line stroke="#FFFFFF" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#FFFFFF" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_purple">
-                    <line stroke="#BB55CC" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#BB55CC" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_blue">
-                    <line stroke="#4444EE" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#4444EE" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_orange">
-                    <line stroke="#EB8D00" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#EB8D00" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_brown">
-                    <line stroke="#BC6823" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#BC6823" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_gray">
-                    <line stroke="#AAAAAA" stroke-width="0.9" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
+                    <line stroke="#AAAAAA" stroke-width="0.4" dy="1" stroke-linecap="round" stroke-dasharray="1,5" />
                 </rule>
             </rule>
             <rule e="way" k="osmc_color" v="*" zoom-min="16">
                 <rule e="way" k="osmc_color" v="wmco_yellow">
-                    <line stroke="#EED800" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#EED800" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_green">
-                    <line stroke="#44DD44" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#44DD44" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_red">
-                    <line stroke="#EE4444" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#EE4444" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_black">
-                    <line stroke="#000000" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#000000" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_white">
-                    <line stroke="#FFFFFF" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#FFFFFF" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_purple">
-                    <line stroke="#BB55CC" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#BB55CC" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_blue">
-                    <line stroke="#4444EE" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#4444EE" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_orange">
-                    <line stroke="#EB8D00" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#EB8D00" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_brown">
-                    <line stroke="#BC6823" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#BC6823" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
                 <rule e="way" k="osmc_color" v="wmco_gray">
-                    <line stroke="#AAAAAA" stroke-width="0.6" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
+                    <line stroke="#AAAAAA" stroke-width="0.4" dy="0.8" stroke-linecap="round" stroke-dasharray="1,8" />
                 </rule>
             </rule>
             <rule e="way" k="osmc_color" v="*">
