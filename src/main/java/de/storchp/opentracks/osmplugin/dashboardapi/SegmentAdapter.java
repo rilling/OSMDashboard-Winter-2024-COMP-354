@@ -1,9 +1,6 @@
 package de.storchp.opentracks.osmplugin.dashboardapi;
 
-import static org.oscim.map.Animator.ANIM_FLING;
 import static org.oscim.map.Animator.ANIM_MOVE;
-import static org.oscim.map.Animator.ANIM_SCALE;
-import static org.oscim.map.Animator.ANIM_TILT;
 
 import android.graphics.Color;
 import android.text.format.DateUtils;
@@ -18,23 +15,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.oscim.core.BoundingBox;
-import org.oscim.core.Point;
 import org.oscim.layers.marker.ItemizedLayer;
 import org.oscim.android.MapView;
 import org.oscim.core.GeoPoint;
 import org.oscim.layers.GroupLayer;
 import org.oscim.layers.Layer;
 import org.oscim.layers.PathLayer;
-import org.oscim.layers.marker.ItemizedLayer;
 import org.oscim.layers.marker.MarkerInterface;
 import org.oscim.layers.marker.MarkerItem;
 import org.oscim.layers.marker.MarkerSymbol;
-import org.oscim.map.Map;
 import org.oscim.utils.animation.Easing;
 
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.storchp.opentracks.osmplugin.R;
@@ -152,9 +145,10 @@ public class SegmentAdapter extends RecyclerView.Adapter<SegmentAdapter.SegmentV
                 Waypoint endWayPoint = new Waypoint(segment.getEndPoint(), "end point");
                 final MarkerItem startPin = MapUtils.createTappableMarker(mapView.getContext(), startWayPoint);
                 final MarkerItem endPin = MapUtils.createTappableMarker(mapView.getContext(), endWayPoint);
-                var symbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_orange_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
-                startPin.setMarker(symbol);
-                endPin.setMarker(symbol);
+                var greenSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_green_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                var redSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_red_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                startPin.setMarker(greenSymbol);
+                endPin.setMarker(redSymbol);
 
                 if (waypointsLayer != null) {
                     mapView.map().layers().remove(waypointsLayer);
