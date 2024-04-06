@@ -116,6 +116,12 @@ public class SettingsActivity extends AppCompatActivity {
                 themePreference.setSummaryProvider((Preference.SummaryProvider<Preference>) preference -> {
                     var themeUri = PreferencesUtils.getMapThemeUri();
                     //Log.d(TAG, "AAAAAAAAA " +String.valueOf(themeUri));
+
+                    boolean onlineMapSelected = PreferencesUtils.getMapUris().isEmpty();
+                    if(onlineMapSelected){
+                        return "Online Theme";
+                    }
+
                     if (themeUri == null) {
                         return getString(R.string.default_theme);
                     }

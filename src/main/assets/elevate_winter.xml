@@ -4217,7 +4217,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
         <!-- nur für Test: <caption k="piste:grooming" font-size="6" dy="-12" priority="100" fill="#FF0000" stroke="#E5FFFFFF" stroke-width="3"/> -->
 
         <rule e="way" k="piste:difficulty" v="novice">                              <!-- Anfänger-Piste: grün -->
-            <line stroke="#6600FF00" stroke-width="6" dy="-8" scale="none" />
+            <line stroke="#6600FF00" stroke-width="2" dy="-8" scale="none" />
             <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
                 <lineSymbol src="ele_res/w_skipiste_lila.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-91" repeat-start="0" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" />
             </rule>
@@ -4294,7 +4294,7 @@ Please have a look at read_me_elevate.txt for reuse and licenses of resources us
             </rule>
         </rule>
         <rule e="way" k="piste:difficulty" v="~">                                   <!-- Piste unbekannter Schwierigkeit: lila -->
-            <line stroke="#66FF00FF" stroke-width="6" dy="-8" scale="none" />
+            <line stroke="#66FF00FF" stroke-width="2" dy="-8" scale="none" />
             <!-- kein Symbol, da viele Pisten ohne Angabe -->
             <!-- <lineSymbol src="ele_res/w_unbekannt_cyan.svg" symbol-height="24" symbol-width="24" dy="-8" scale="none" priority="-80" repeat-start="10" repeat-gap="100" align-center="true" repeat="true" symbol-percent="100" /> -->
             <rule cat="winter_symbol" e="way" k="*" v="*" zoom-min="14">
