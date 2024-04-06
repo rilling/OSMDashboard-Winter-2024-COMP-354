@@ -5,16 +5,61 @@
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar" />
 
-    <include layout="@layout/table_runs_chairlifts_taken" android:id="@+id/table_runs_chairlifts_taken"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="203dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttons_layout"
         android:layout_below="@+id/toolbar"
-        />
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+        <Button
+            android:id="@+id/runsChairLiftsButton"
+            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:text="Runs and Chairlifts"
+            />
+
+        <Space
+            android:layout_width="15dp"
+             android:layout_height="wrap_content"/>
+
+
+        <Button
+            android:id="@+id/segmentsButton"
+            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_weight="5"
+            android:text="Segments"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/container_layout"
+        android:layout_width="match_parent"
+        android:layout_height="207dp"
+        android:layout_below="@id/buttons_layout"
+        android:orientation="vertical">
+
+        <include layout="@layout/table_segments" android:id="@+id/segments_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <include layout="@layout/table_runs_chairlifts_taken" android:id="@+id/runs_chairlifts_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
 
     <include layout="@layout/map" android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/table_runs_chairlifts_taken"
+        android:layout_below="@+id/container_layout"
         />
 
 </RelativeLayout>
