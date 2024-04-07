@@ -5,6 +5,8 @@ import static android.util.TypedValue.COMPLEX_UNIT_PT;
 import static java.util.Comparator.comparingInt;
 
 import org.oscim.backend.AssetAdapter;
+import org.oscim.layers.tile.buildings.S3DBLayer;
+import org.oscim.map.Viewport;
 import org.oscim.theme.IRenderTheme.ThemeException;
 
 import android.content.Intent;
@@ -52,9 +54,11 @@ import org.oscim.layers.marker.MarkerItem;
 import org.oscim.layers.marker.MarkerSymbol;
 import org.oscim.layers.tile.bitmap.BitmapTileLayer;
 import org.oscim.layers.tile.buildings.BuildingLayer;
+import org.oscim.layers.tile.buildings.S3DBLayer;
 import org.oscim.layers.tile.vector.VectorTileLayer;
 import org.oscim.layers.tile.vector.labeling.LabelLayer;
 import org.oscim.map.Map;
+import org.oscim.map.Viewport;
 import org.oscim.renderer.BitmapRenderer;
 import org.oscim.renderer.GLViewport;
 import org.oscim.scalebar.DefaultMapScaleBar;
@@ -74,6 +78,8 @@ import org.oscim.tiling.source.OkHttpEngine;
 import org.oscim.tiling.source.bitmap.DefaultSources;
 import org.oscim.tiling.source.mapfile.MapFileTileSource;
 import org.oscim.tiling.source.mapfile.MultiMapFileTileSource;
+import org.oscim.tiling.source.overpass.OverpassTileSource;
+
 import org.oscim.theme.ThemeLoader;
 import org.oscim.tiling.TileSource.OpenResult;
 import org.xmlpull.v1.XmlPullParser;
@@ -413,18 +419,44 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     }
 
     private void setOnlineTileLayer() {
-        var tileSource = DefaultSources.OPENSTREETMAP.build();
+        // TODO: Debug overpass source and why its layers aren't visible
+        var tileSource = OverpassTileSource.builder()
+                /*
+                .zoomMin(17)
+                .zoomMax(15)
+                 */
+                .build();
+
+        var bitmapTileSource = DefaultSources.OPENSTREETMAP
+                /*
+                // TODO: uncomment the following when vector layer is visible:
+                // credit to vtm-android-example for specific fade steps and zoom levels
+                .zoomMax(15)
+                .fadeSteps(new BitmapTileLayer.FadeStep[]{
+                        new BitmapTileLayer.FadeStep(15, 16, 1f, 0f),
+                        new BitmapTileLayer.FadeStep(16, Viewport.MAX_ZOOM_LEVEL, 0f, 0f)
+                })
+                */
+                .build();
         var builder = new OkHttpClient.Builder();
+
+        // Cache http information
         var cacheDirectory = new File(getExternalCacheDir(), "tiles");
         int cacheSize = 10 * 1024 * 1024; // 10 MB
         var cache = new Cache(cacheDirectory, cacheSize);
         builder.cache(cache);
 
-        tileSource.setHttpEngine(new OkHttpEngine.OkHttpFactory(builder));
-        tileSource.setHttpRequestHeaders(Collections.singletonMap("User-Agent", getString(R.string.app_name) + ":" + BuildConfig.APPLICATION_ID));
-
-        BitmapTileLayer bitmapLayer = new BitmapTileLayer(map, tileSource);
+        var okHttpEngine = new OkHttpEngine.OkHttpFactory(builder);
+        bitmapTileSource.setHttpEngine(okHttpEngine);
+        bitmapTileSource.setHttpRequestHeaders(Collections.singletonMap("User-Agent", getString(R.string.app_name) + ":" + BuildConfig.APPLICATION_ID));
+        VectorTileLayer vectorTileLayer = map.setBaseMap(tileSource);
+        BitmapTileLayer bitmapLayer = new BitmapTileLayer(map, bitmapTileSource);
+        S3DBLayer databaseLayer = new S3DBLayer(map, vectorTileLayer);
+        LabelLayer labelLayer = new LabelLayer(map, vectorTileLayer);
         map.layers().add(bitmapLayer);
+        map.layers().add(databaseLayer);
+        map.layers().add(labelLayer);
+
     }
 
     private void showOnlineMapConsent() {
