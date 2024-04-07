@@ -66,7 +66,7 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
     @Override
     public void onBindViewHolder(@NonNull RunAdapter.RunViewHolder holder, int position) {
         Run run = runs.get(position);
-        // holder.bind(run); To be implemented by Farnaz.
+        holder.bind(run);
     }
 
     @Override
@@ -107,56 +107,56 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
             maxSpeed.setText(String.format(Locale.getDefault(), "%.2f km/h", run.getMaxSpeed()));
             runTime.setText(formatDuration(run.getDuration()));
             distance.setText(String.format(Locale.getDefault(), "%.2f meters", run.getDistance()));
-        }
 
-        private String formatDuration(int durationInSeconds) {
-            return DateUtils.formatElapsedTime(durationInSeconds);
-        }
+            runView.setOnClickListener(v -> {
+                Toast.makeText(v.getContext(), run.getName() + " Clicked", Toast.LENGTH_SHORT).show();
+                runView.setBackgroundColor(Color.rgb(212, 221, 232));
 
-//        runView.setOnClickListener(v -> {
-//            Toast.makeText(v.getContext(), run.getName() + " Clicked", Toast.LENGTH_SHORT).show();
-//            runView.setBackgroundColor(Color.rgb(212, 221, 232));
-//
-//            // Removing the previous layer if any
-//            mapView.map().layers().remove(polylinesLayer);
-//
-//            for (int i =  0; i < polylinesLayer.map().layers().size(); i++) {
-//                Layer layer = polylinesLayer.map().layers().get(i);
-//                if (layer instanceof PathLayer) {
-//                    polylinesLayer.map().layers().remove(i);
-//                }
-//            }
-//
-//            PathLayer line = new PathLayer(mapView.map(), Color.BLUE, 12);
-//            // Add points to the PathLayer
-//            line.addPoint(run.getStartPoint());
-//            line.addPoint(run.getEndPoint());
-//            // Add the PathLayer to the MapView
-//            polylinesLayer.map().layers().add(line);
-//            mapView.map().layers().add(polylinesLayer);
-//
-//            List<GeoPoint> latLongs = line.getPoints();
-//            Waypoint startWayPoint = new Waypoint(run.getStartPoint(), "start point");
-//            Waypoint endWayPoint = new Waypoint(run.getEndPoint(), "end point");
-//            final MarkerItem startPin = MapUtils.createTappableMarker(mapView.getContext(), startWayPoint);
-//            final MarkerItem endPin = MapUtils.createTappableMarker(mapView.getContext(), endWayPoint);
-//            MarkerSymbol greenSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_green_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
-//            MarkerSymbol redSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_red_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
-//            startPin.setMarker(greenSymbol);
-//            endPin.setMarker(redSymbol);
-//
-//            if (waypointsLayer != null) {
-//                mapView.map().layers().remove(waypointsLayer);
-//            }
-//            waypointsLayer = createWaypointsLayer();
-//            mapView.map().layers().add(waypointsLayer);
-//            waypointsLayer.addItem(startPin);
-//            waypointsLayer.addItem(endPin);
-//
-//            BoundingBox boundingBox = new BoundingBox(latLongs);
-//            updateMapPositionAndRotation(boundingBox.getCenterPoint());
-//            mapView.map().animator().animateTo(500, boundingBox, Easing.Type.LINEAR, ANIM_MOVE);
-//        });
+                // Removing the previous layer if any
+                mapView.map().layers().remove(polylinesLayer);
+
+                for (int i =  0; i < polylinesLayer.map().layers().size(); i++) {
+                    Layer layer = polylinesLayer.map().layers().get(i);
+                    if (layer instanceof PathLayer) {
+                        polylinesLayer.map().layers().remove(i);
+                    }
+                }
+
+                PathLayer line = new PathLayer(mapView.map(), Color.BLUE, 12);
+                // Add points to the PathLayer
+                line.addPoint(run.getStartPoint());
+                line.addPoint(run.getEndPoint());
+                // Add the PathLayer to the MapView
+                polylinesLayer.map().layers().add(line);
+                mapView.map().layers().add(polylinesLayer);
+
+                List<GeoPoint> latLongs = line.getPoints();
+                Waypoint startWayPoint = new Waypoint(run.getStartPoint(), "start point");
+                Waypoint endWayPoint = new Waypoint(run.getEndPoint(), "end point");
+                final MarkerItem startPin = MapUtils.createTappableMarker(mapView.getContext(), startWayPoint);
+                final MarkerItem endPin = MapUtils.createTappableMarker(mapView.getContext(), endWayPoint);
+                MarkerSymbol greenSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_green_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                MarkerSymbol redSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_red_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                startPin.setMarker(greenSymbol);
+                endPin.setMarker(redSymbol);
+
+                if (waypointsLayer != null) {
+                    mapView.map().layers().remove(waypointsLayer);
+                }
+                waypointsLayer = createWaypointsLayer();
+                mapView.map().layers().add(waypointsLayer);
+                waypointsLayer.addItem(startPin);
+                waypointsLayer.addItem(endPin);
+
+                BoundingBox boundingBox = new BoundingBox(latLongs);
+                updateMapPositionAndRotation(boundingBox.getCenterPoint());
+                mapView.map().animator().animateTo(500, boundingBox, Easing.Type.LINEAR, ANIM_MOVE);
+            });
+        }
+    }
+
+    private String formatDuration(int durationInSeconds) {
+        return DateUtils.formatElapsedTime(durationInSeconds);
     }
 
     private ItemizedLayer createWaypointsLayer() {
