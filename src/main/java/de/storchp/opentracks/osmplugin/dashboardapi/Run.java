@@ -249,7 +249,12 @@ public class Run {
         return distanceSum;
     }
 
-    // Method to get the start point of the run
+    /**
+     * Retrieves the start point of the run.
+     *
+     * @return The GeoPoint representing the start point of the run, or null if no track points are available.
+     * @author FarnaZ
+     */
     public GeoPoint getStartPoint() {
         if (trackPointCollection != null && !trackPointCollection.isEmpty()) {
             return trackPointCollection.get(0).getLatLong();
@@ -258,7 +263,12 @@ public class Run {
         }
     }
 
-    // Method to get the end point of the run
+    /**
+     * Retrieves the end point of the run.
+     *
+     * @return The GeoPoint representing the end point of the run, or null if no track points are available.
+     * @author FarnaZ
+     */
     public GeoPoint getEndPoint() {
         if (trackPointCollection != null && !trackPointCollection.isEmpty()) {
             return trackPointCollection.get(trackPointCollection.size() - 1).getLatLong();
