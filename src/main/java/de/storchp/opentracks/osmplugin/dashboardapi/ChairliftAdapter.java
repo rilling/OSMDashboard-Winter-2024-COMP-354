@@ -52,6 +52,7 @@ public class ChairliftAdapter extends RecyclerView.Adapter<ChairliftAdapter.Chai
         this.mapView = mapView;
         polylinesLayer = new GroupLayer(mapView.map());
         mapMode = PreferencesUtils.getMapMode();
+        movementDirection = new MovementDirection();
     }
 
     @NonNull
@@ -84,19 +85,23 @@ public class ChairliftAdapter extends RecyclerView.Adapter<ChairliftAdapter.Chai
 
     public class ChairliftViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
-        private TextView location;
-        private TableLayout chairliftView;
 
-        // add waiting time
-        // maybe speed
-        // elevation
+        private  TextView waitingTime;
+
+        private TextView avgSpeed;
+
+        private TextView distance;
+
+        private TableLayout chairliftView;
 
         public ChairliftViewHolder(@NonNull View itemView) {
             super(itemView);
-            // name
-            // add waiting time
-            // maybe speed
-            // elevation
+
+            name = itemView.findViewById(R.id.item_Name);
+            waitingTime = itemView.findViewById(R.id.wTime);
+            avgSpeed = itemView.findViewById(R.id.avgSpeedInput);
+            distance = itemView.findViewById(R.id.distance);
+            chairliftView = itemView.findViewById(R.id.chairLiftView);
         }
     }
 }
