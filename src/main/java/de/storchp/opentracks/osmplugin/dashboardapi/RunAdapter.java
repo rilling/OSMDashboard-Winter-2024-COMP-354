@@ -155,10 +155,6 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
         }
     }
 
-    private String formatDuration(int durationInSeconds) {
-        return DateUtils.formatElapsedTime(durationInSeconds);
-    }
-
     private ItemizedLayer createWaypointsLayer() {
         MarkerSymbol symbol = MapUtils.createPushpinSymbol(mapView.getContext());
         return new ItemizedLayer(mapView.map(), symbol);
@@ -167,5 +163,10 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
     private void updateMapPositionAndRotation(final GeoPoint myPos) {
         mapView.map().getMapPosition().setPosition(myPos).setBearing(mapMode.getHeading(movementDirection));
     }
+
+    private String formatDuration(int durationInSeconds) {
+        return DateUtils.formatElapsedTime(durationInSeconds);
+    }
+
 }
 
