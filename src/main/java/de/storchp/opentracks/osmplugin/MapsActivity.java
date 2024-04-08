@@ -229,7 +229,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                 zoomOut();
             }
         });
-        
+
         //Check location permissions and request location updates
         checkLocationPermissionAndRequestUpdate();
 
