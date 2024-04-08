@@ -189,48 +189,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
 
         //zooming in and out of maps
-        mapView=findViewById(R.id.mapView);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        //currentMapPosition=mapView.map().setMapPosition();
-        currentMapPosition = mapView.map().getMapPosition();
-        currentMapPosition.setZoomLevel(100000);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                updateMapPosition(location.getLatitude(), location.getLongitude());
 
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-            }
-        };
-
-
-        //Set the button click thing zoomInButton in the map.xml document
-        binding.map.zoomInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                zoomIn();
-            }
-        });
-
-        binding.map.zoomOutButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View V){
-                zoomOut();
-            }
-        });
-
-        //Check location permissions and request location updates
-        checkLocationPermissionAndRequestUpdate();
 
         //--------------------------------
         binding.map.fullscreenButton.setOnClickListener(v -> switchFullscreen());
@@ -249,60 +208,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
     }
 
-    private void zoomIn() {
-        int currentZoomLevel = currentMapPosition.getZoomLevel();
-        int newZoomLevel = currentMapPosition.zoomLevel + 80000;
-        currentMapPosition.setZoomLevel(newZoomLevel);
-        mapView.map().setMapPosition(currentMapPosition);
-    }
-
-    private void zoomOut(){
-        int currentZoomLevel=currentMapPosition.getZoomLevel();
-        int newZoomLevel= currentMapPosition.zoomLevel-50000;
-        currentMapPosition.setZoomLevel(newZoomLevel);
-        mapView.map().setMapPosition(currentMapPosition);
-    }
-
-    private void checkLocationPermissionAndRequestUpdate() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Request permissions if they have not been granted
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
-        } else {
-            // If permissions have been granted, start requesting location updates
-            requestLocationUpdates();
-        }
-    }
-
-    private void requestLocationUpdates() {
-        // Request a location update
-        if (ActivityCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
-
-
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-    }
-
-    private void updateMapPosition(double latitude, double longitude) {
-        GeoPoint userLocation = new GeoPoint(latitude, longitude);
-        mapView.map().setMapPosition(latitude, longitude, currentMapPosition.zoomLevel);
-    }
-
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                requestLocationUpdates();
-            } else {
-                new AlertDialog.Builder(this)
-                        .setMessage("You have denied location permissions and chosen not to be prompted again. To use this feature, go to Settings to enable location permissions.")
-                        .show();
-            }
-        }
-    }
 
 
 
