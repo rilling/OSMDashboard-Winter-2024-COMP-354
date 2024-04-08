@@ -189,7 +189,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
 
         //zooming in and out of maps
-
+        mapView = findViewById(R.id.mapView);
 
         //--------------------------------
         binding.map.fullscreenButton.setOnClickListener(v -> switchFullscreen());
