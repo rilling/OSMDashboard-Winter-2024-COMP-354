@@ -190,7 +190,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
         //zooming in and out of maps
         mapView = findViewById(R.id.mapView);
-
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //currentMapPosition=mapView.map().setMapPosition();
         currentMapPosition = mapView.map().getMapPosition();
@@ -215,7 +214,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             }
         };
 
-        // 设置按钮点击事zoomInButton 在map.xml文档里
         //Set the button click thing zoomInButton in the map.xml document
         binding.map.zoomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,7 +227,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                 zoomOut();
             }
         });
-        // 检查位置权限并请求位置更新
         //Check location permissions and request location updates
         checkLocationPermissionAndRequestUpdate();
 
