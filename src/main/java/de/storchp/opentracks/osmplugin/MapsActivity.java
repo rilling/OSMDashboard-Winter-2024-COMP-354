@@ -295,7 +295,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // User grants location permissions and begins requesting location updates
                 requestLocationUpdates();
             } else {
                 new AlertDialog.Builder(this)
