@@ -7,6 +7,8 @@ import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import androidx.annotation.NonNull;
 
@@ -205,6 +207,22 @@ public class MainActivity extends BaseActivity {
     protected void onStop() {
         super.onStop();
         handler.removeCallbacks(runnableCode);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean showNotification = sharedPreferences.getBoolean(getString(R.string.SHOW_NOTIFICATION_FRIEND), true);
+
+        if (showNotification) {
+            //logic for sending notification
+            // Assume the notifications are enabled, then make an toast message
+            Toast.makeText(getApplicationContext(), "Friend notification is on", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Friend notification is off", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
