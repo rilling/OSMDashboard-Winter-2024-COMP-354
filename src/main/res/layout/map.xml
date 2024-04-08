@@ -48,6 +48,25 @@
         android:layout_marginEnd="8dp">
 
         <ImageButton
+
+            android:id="@+id/zoomOutButton"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/zoom_out"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            />
+        <ImageButton
+
+            android:id="@+id/zoomInButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/zoom_in"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            />
+
+        <ImageButton
             android:id="@+id/fullscreenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

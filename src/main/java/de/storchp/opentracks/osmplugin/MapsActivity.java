@@ -4,6 +4,7 @@ package de.storchp.opentracks.osmplugin;
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
 import static java.util.Comparator.comparingInt;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
@@ -154,10 +156,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private int protocolVersion = 1;
     private TrackPointsDebug trackPointsDebug;
 
-//    private LocationManager locationManager;
-//    private LocationListener locationListener;
-//    private ItemizedLayer userLocationLayer;
-//    private MarkerItem userLocationMarker;
 
     private MapView mapView;
     private MapPosition currentMapPosition;
@@ -189,6 +187,52 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         createLayers();
         //map.getMapPosition().setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
 
+
+        //zooming in and out of maps
+        mapView=findViewById(R.id.mapView);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //currentMapPosition=mapView.map().setMapPosition();
+        currentMapPosition = mapView.map().getMapPosition();
+        currentMapPosition.setZoomLevel(100000);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                updateMapPosition(location.getLatitude(), location.getLongitude());
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        // 设置按钮点击事zoomInButton 在map.xml文档里
+        //Set the button click thing zoomInButton in the map.xml document
+        binding.map.zoomInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomIn();
+            }
+        });
+
+        binding.map.zoomOutButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View V){
+                zoomOut();
+            }
+        });
+
+        //Check location permissions and request location updates
+        checkLocationPermissionAndRequestUpdate();
+
+        //--------------------------------
         binding.map.fullscreenButton.setOnClickListener(v -> switchFullscreen());
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -205,17 +249,64 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
     }
 
-//    public void updateUserLocation(GeoPoint userLocation){
-//        userLocationLayer.removeAllItems();
-//        userLocationMarker=new MarkerItem("", "", userLocation);
-//        userLocationMarker.setMarker(MapUtils.createMarkerSymbol(this, R.drawable.custom_location_icon, false, MarkerSymbol.HotspotPlace.CENTER)
-//        );
-//        userLocationLayer.addItem(userLocationMarker);
-//
-//        MapPosition userPosition=map.getMapPosition().setPosition(userLocation);
-//        userPosition.setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
-//        map.animator().animateTo(userPosition);
-//    }
+    private void zoomIn() {
+        int currentZoomLevel = currentMapPosition.getZoomLevel();
+        int newZoomLevel = currentMapPosition.zoomLevel + 80000;
+        currentMapPosition.setZoomLevel(newZoomLevel);
+        mapView.map().setMapPosition(currentMapPosition);
+    }
+
+    private void zoomOut(){
+        int currentZoomLevel=currentMapPosition.getZoomLevel();
+        int newZoomLevel= currentMapPosition.zoomLevel-50000;
+        currentMapPosition.setZoomLevel(newZoomLevel);
+        mapView.map().setMapPosition(currentMapPosition);
+    }
+
+    private void checkLocationPermissionAndRequestUpdate() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Request permissions if they have not been granted
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+        } else {
+            // If permissions have been granted, start requesting location updates
+            requestLocationUpdates();
+        }
+    }
+
+    private void requestLocationUpdates() {
+        // Request a location update
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+
+
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+    }
+
+    private void updateMapPosition(double latitude, double longitude) {
+        GeoPoint userLocation = new GeoPoint(latitude, longitude);
+        mapView.map().setMapPosition(latitude, longitude, currentMapPosition.zoomLevel);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // User grants location permissions and begins requesting location updates
+                requestLocationUpdates();
+            } else {
+                new AlertDialog.Builder(this)
+                        .setMessage("You have denied location permissions and chosen not to be prompted again. To use this feature, go to Settings to enable location permissions.")
+                        .show();
+            }
+        }
+    }
+
+
 
 
     private void switchFullscreen() {
