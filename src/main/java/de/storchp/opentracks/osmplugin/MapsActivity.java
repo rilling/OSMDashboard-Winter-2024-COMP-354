@@ -2,6 +2,7 @@ package de.storchp.opentracks.osmplugin;
 
 
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
+import static org.oscim.map.Viewport.MIN_ZOOM_LEVEL;
 import static java.util.Comparator.comparingInt;
 
 import android.content.Intent;
@@ -45,10 +46,13 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.oscim.android.MapPreferences;
 import org.oscim.backend.CanvasAdapter;
 import org.oscim.core.BoundingBox;
 import org.oscim.core.GeoPoint;
+import org.oscim.core.MapPosition;
 import org.oscim.layers.GroupLayer;
 import org.oscim.layers.PathLayer;
 import org.oscim.layers.marker.ItemizedLayer;
@@ -147,6 +151,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private boolean fullscreenMode = false;
     private MovementDirection movementDirection = new MovementDirection();
     private MapMode mapMode;
+    private double mapPosScale;
     private OpenTracksContentObserver contentObserver;
     private Uri tracksUri;
     private Uri trackPointsUri;
@@ -213,7 +218,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         if (intent != null) {
             onNewIntent(intent);
         }
-
+        mapPosScale = map.getMapPosition().getScale();
         // setting initial table to runs and chairlifts table
 
         segmentLayout = findViewById(R.id.segments_layout);
@@ -244,15 +249,34 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             showFullscreen(intent.getBooleanExtra(EXTRAS_SHOW_FULLSCREEN, false));
             isOpenTracksRecordingThisTrack = intent.getBooleanExtra(EXTRAS_OPENTRACKS_IS_RECORDING_THIS_TRACK, false);
 
+            //Dummy data
+            for (int i = 1; i <= 4; i++) {
+                try {
+                    JSONObject c = new JSONObject(getIntent().getStringExtra("c"+i));
+                    chairLifts.add(new Chairlift(c.getString("name"),
+                            Integer.parseInt(c.getString("distance")),
+                            Long.parseLong(c.getString("wtime")),
+                            Double.parseDouble(c.getString("speed"))));
+                    JSONObject r = new JSONObject(getIntent().getStringExtra("r"+i));
+                    runs.add(new Run(r.getString("name"),
+                            Double.parseDouble(r.getString("speed")),
+                            Double.parseDouble(r.getString("distance")),
+                            Integer.parseInt(r.getString("duration")),
+                            Double.parseDouble(r.getString("maxSpeed"))));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
             readTrackpoints(trackPointsUri, false, protocolVersion);
             readTracks(tracksUri);
             readWaypoints(waypointsUri);
 
             // run logic
-            getRuns();
+            //getRuns();
 
             //  chairlift logic
-            getChairlifts();
+            //getChairlifts();
 
 
 
@@ -265,10 +289,20 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
             // button Listeners
             runsChairLiftsButton.setOnClickListener(v -> {
-                //inflateLayout(R.layout.table_runs_chairlifts_taken);
-                //inflateLayout(R.layout.table_runs_chairlifts_taken);
-                runChairliftLayout.setVisibility(View.VISIBLE);
-                segmentLayout.setVisibility(View.GONE);
+                        //inflateLayout(R.layout.table_runs_chairlifts_taken);
+                        //inflateLayout(R.layout.table_runs_chairlifts_taken);
+                    runChairliftLayout.setVisibility(View.VISIBLE);
+                    segmentLayout.setVisibility(View.GONE);
+                    updateMapPositionAndRotation(boundingBox.getCenterPoint());
+                    for (var layer : map.layers()) {
+                        for (int i = 0; i < map.layers().size(); i++) {
+                            if (map.layers().get(i) instanceof ItemizedLayer) {
+                                if (!waypointsLayer.equals(map.layers().get(i))) {
+                                    map.layers().remove(i);
+                                }
+                            }
+                        }
+                    }
             });
 
             segmentsButton.setOnClickListener(v -> {
@@ -782,16 +816,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
 
     // Get info from Group #7
-    private void getChairlifts() {
-        Chairlift c1 = new Chairlift("L'Étoile", 722, 600, 5.08);
-        Chairlift c2 = new Chairlift("Flèche d’Argent",841, 900, 5.08);
-        Chairlift c3 = new Chairlift("L'Express",672, 700, 5.08);
-        Chairlift c4 = new Chairlift("Le Piedmont",755, 600, 5.08);
-        chairLifts.add(c1);
-        chairLifts.add(c2);
-        chairLifts.add(c3);
-        chairLifts.add(c4);
-    }
 
     // Add chairlifts info
     private void addChairliftsInfo() {
