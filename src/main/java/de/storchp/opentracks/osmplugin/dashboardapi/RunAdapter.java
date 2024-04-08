@@ -124,8 +124,9 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
 
                 PathLayer line = new PathLayer(mapView.map(), Color.BLUE, 12);
                 // Add points to the PathLayer
-                line.addPoint(run.getStartPoint());
-                line.addPoint(run.getEndPoint());
+                for (int i = 0; i < run.getTrackPointCollection().size(); i++) {
+                    line.addPoint(run.getPoint(i));
+                }
                 // Add the PathLayer to the MapView
                 polylinesLayer.map().layers().add(line);
                 mapView.map().layers().add(polylinesLayer);
