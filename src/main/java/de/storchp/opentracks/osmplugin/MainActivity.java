@@ -13,31 +13,19 @@ import androidx.annotation.NonNull;
 import static android.app.PendingIntent.getActivity;
 
 import android.Manifest;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import org.oscim.core.GeoPoint;
 
@@ -50,48 +38,13 @@ public class MainActivity extends BaseActivity {
 
 /***********************************************************************************/
     //Mock data
-
-    static class User {
-        String name;
-        GeoPoint location;
-        String currentResort;
-        Boolean isAlert;
-
-        public User(String name, GeoPoint location, String currentResort) {
-            this.name = name;
-            this.location = location;
-            this.currentResort = currentResort;
-            this.isAlert = false;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getCurrentResort() {
-            return currentResort;
-        }
-
-        public String getLocation() {
-            return location.getLatitude()+", " + location.getLongitude()+"";
-        }
-
-        public Boolean getIsAlert() {
-            return isAlert;
-        }
-
-        public void wasAlerted() {
-            isAlert = true;
-        }
-    }
-
-    User user;                  //mock current user
-    List<User> FriendList;      //mock friend list
+    MockUser mockUser;                  //mock current user
+    List<MockUser> FriendList;      //mock friend list
 
     int counterNotificationId = 1;
 
     /***********************************************************************************/
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +73,8 @@ public class MainActivity extends BaseActivity {
 
         //When app first opens, check if there are any friends in the same resort
         FriendsAlertOnOpen();
+
+
     }
 
 //create mock user and friends data
@@ -128,27 +83,26 @@ public class MainActivity extends BaseActivity {
         double p2 = -74.142798;
         GeoPoint point = new GeoPoint(p1, p2);
 
-        user = new User("Bob", point, "Saint-Sauveur");
+        mockUser = new MockUser("Bob", point, "Saint-Sauveur");
 
         p1 = 65.456322;
         p2 = 52.123456;
         GeoPoint point1 = new GeoPoint(p1,p2);
-        User friend1 = new User("Annie", point1, "Saint-Sauveur");
+        MockUser friend1 = new MockUser("Annie", point1, "Saint-Sauveur");
 
         p1 = -31.065421;
         p2 = 52.123456;
         GeoPoint point2 = new GeoPoint(p1,p2);
-        User friend2 = new User("John", point2, "Mont-Tremblant");
+        MockUser friend2 = new MockUser("John", point2, "Mont-Tremblant");
 
         FriendList = new ArrayList<>();
 
         FriendList.add(friend1);
         FriendList.add(friend2);
     }
-    
-//When the app is running, check if their friends are also in the same resort
+
+    //When the app is running, check if their friends are also in the same resort
     //If they are in the same resort, send a notification
-    //Jennifer Hann Team 19
     public void FriendsAlertOnOpen() {
 
         //Mock data while the other teams implement their code
@@ -161,27 +115,35 @@ public class MainActivity extends BaseActivity {
             activityResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "My notification");
 
                 //go through list of user's friends
-                for (User friend : FriendList) {
+                for (MockUser friend : FriendList) {
+
+                    //channel and manager to send notification
+                    NotificationManager notification;
+                    String ChannelID = "Friend Alert";
+                    String ChannelName = "Friend Notification";
+                    notification = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    NotificationChannel notificationChannel = new NotificationChannel(ChannelID,
+                            ChannelName,
+                            NotificationManager.IMPORTANCE_DEFAULT);
+                    notification.createNotificationChannel(notificationChannel);
 
                     //check if they are in the same resort
-                    if(friend.getCurrentResort().equals(user.getCurrentResort()) && !friend.getIsAlert()) {
+                    if(friend.getCurrentResort().equals(mockUser.getCurrentResort()) && !friend.getIsAlert()) {
 
                         //save that friend has been notified
                         friend.wasAlerted();
 
                         //create the notification
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, ChannelID);
                         builder.setSmallIcon(R.drawable.ic_logo_color_24dp);
                         builder.setContentTitle(friend.getName() + " is in the same resort!");
                         builder.setContentText(friend.getName() + " is also in " + friend.getCurrentResort() + " at this location: (" + friend.getLocation() +")");
-                        builder.setChannelId("Friends Alert");
 
                         //send the notification
-                        Notification notification = builder.build();
-                        NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
-                        notificationManagerCompat.notify(counterNotificationId, notification);
+                        notification.notify(counterNotificationId, builder.build());
                         counterNotificationId++;
 
                     }
@@ -201,26 +163,33 @@ public class MainActivity extends BaseActivity {
             }
         }
     });
-    
-//Periodic check if there are new friends that are in the same resort
+
+    //simulate new friend arrive in the same resort
+    private void MockNewFriendFound() {
+        double p1 = 65.456322;
+        double p2 = 52.123456;
+        GeoPoint point1 = new GeoPoint(p1,p2);
+        MockUser friend1 = new MockUser("Nelly", point1, "Saint-Sauveur");
+        FriendList.add(friend1);
+    }
+
+    //Periodic check if there are new friends that are in the same resort
     private Handler handler = new Handler();
     private Runnable runnableCode = new Runnable() {
         @Override
         public void run() {
             // Mock code when a new friend is in the same resort
             if(!FriendList.isEmpty()) {
-                double p1 = 65.456322;
-                double p2 = 52.123456;
-                GeoPoint point1 = new GeoPoint(p1,p2);
-                User friend1 = new User("Nelly", point1, "Saint-Sauveur");
-                FriendList.add(friend1);
+
+                //fake new friend is now in the same resort
+                MockNewFriendFound();
 
                 // Check to see if a friend is in the same resort and send a notification
                 FriendsAlertOnOpen();
             }
 
             // Check every 5 min if there is a new friend in same resort
-            handler.postDelayed(this, 300000); // 1000 milliseconds = 1 second
+            handler.postDelayed(this, 3000000); // 1000 milliseconds = 1 second
         }
     };
 
@@ -237,7 +206,7 @@ public class MainActivity extends BaseActivity {
         super.onStop();
         handler.removeCallbacks(runnableCode);
     }
-    
+
     @Override
     protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
