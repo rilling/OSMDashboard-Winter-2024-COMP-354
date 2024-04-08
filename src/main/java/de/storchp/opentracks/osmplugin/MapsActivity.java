@@ -214,7 +214,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             }
         };
 
-        // 设置按钮点击事zoomInButton 在map.xml文档里
+
         //Set the button click thing zoomInButton in the map.xml document
         binding.map.zoomInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -291,7 +291,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         mapView.map().setMapPosition(latitude, longitude, currentMapPosition.zoomLevel);
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_LOCATION_PERMISSION) {
