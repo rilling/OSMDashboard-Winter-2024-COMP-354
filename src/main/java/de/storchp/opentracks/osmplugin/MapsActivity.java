@@ -43,6 +43,7 @@ import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
 import org.oscim.android.MapPreferences;
+import org.oscim.android.MapView;
 import org.oscim.backend.CanvasAdapter;
 import org.oscim.core.BoundingBox;
 import org.oscim.core.GeoPoint;
@@ -153,10 +154,18 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private int protocolVersion = 1;
     private TrackPointsDebug trackPointsDebug;
 
+//    private LocationManager locationManager;
+//    private LocationListener locationListener;
+//    private ItemizedLayer userLocationLayer;
+//    private MarkerItem userLocationMarker;
+
+    private MapView mapView;
+    private MapPosition currentMapPosition;
     private LocationManager locationManager;
     private LocationListener locationListener;
-    private ItemizedLayer userLocationLayer;
-    private MarkerItem userLocationMarker;
+
+    private static final int REQUEST_LOCATION_PERMISSION = 1001;
+
 
     @SuppressLint("ServiceCast")
     @Override
@@ -178,7 +187,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
         createMapViews();
         createLayers();
-        map.getMapPosition().setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
+        //map.getMapPosition().setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
 
         binding.map.fullscreenButton.setOnClickListener(v -> switchFullscreen());
 
@@ -194,48 +203,21 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             onNewIntent(intent);
         }
 
-        locationManager=(LocationManager)getSystemService(Context.LOCALE_SERVICE);
-        locationListener=new LocationListener(){
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                onUserLocationReceived(new GeoPoint(location.getLatitude(), location.getLongitude()));
-
-            }
-
-        };
-
-        try{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-
-        }catch (SecurityException e){
-            e.printStackTrace();
-        }
-
-//        Button buttonGetLocation=findViewById(R.id.button_get_location);
-//        buttonGetLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MapsActivity.this, MapCurrentActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
 
-    public void updateUserLocation(GeoPoint userLocation){
-        userLocationLayer.removeAllItems();
-        userLocationMarker=new MarkerItem("", "", userLocation);
-        userLocationMarker.setMarker(MapUtils.createMarkerSymbol(this, R.drawable.custom_location_icon, false, MarkerSymbol.HotspotPlace.CENTER)
-        );
-        userLocationLayer.addItem(userLocationMarker);
+//    public void updateUserLocation(GeoPoint userLocation){
+//        userLocationLayer.removeAllItems();
+//        userLocationMarker=new MarkerItem("", "", userLocation);
+//        userLocationMarker.setMarker(MapUtils.createMarkerSymbol(this, R.drawable.custom_location_icon, false, MarkerSymbol.HotspotPlace.CENTER)
+//        );
+//        userLocationLayer.addItem(userLocationMarker);
+//
+//        MapPosition userPosition=map.getMapPosition().setPosition(userLocation);
+//        userPosition.setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
+//        map.animator().animateTo(userPosition);
+//    }
 
-        MapPosition userPosition=map.getMapPosition().setPosition(userLocation);
-        userPosition.setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
-        map.animator().animateTo(userPosition);
-    }
 
-    private void onUserLocationReceived(GeoPoint userLocation){
-        updateUserLocation(userLocation);
-    }
     private void switchFullscreen() {
         showFullscreen(!fullscreenMode);
     }
