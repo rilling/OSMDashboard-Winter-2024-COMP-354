@@ -222,7 +222,6 @@ public class Run {
     /**
      * Calculates the distance of an entire run given a list of TrackPoints belonging to a run
      * the user skied on (meters).
-     *
      * @param trackPointCollection List of TrackPoints belonging to a run
      * @return user's travelled distance during the entire run in meters
      * @author serbancaia
@@ -251,7 +250,11 @@ public class Run {
         return distanceSum;
     }
 
-    // Method to get the start point of the run
+    /**
+     * Retrieves the start point of the run.
+     * @return The GeoPoint representing the start point of the run, or null if no track points are available.
+     * @author FarnaZ
+     */
     public GeoPoint getStartPoint() {
         if (trackPointCollection != null && !trackPointCollection.isEmpty()) {
             return trackPointCollection.get(0).getLatLong();
@@ -260,7 +263,11 @@ public class Run {
         }
     }
 
-    // Method to get the end point of the run
+    /**
+     * Retrieves the end point of the run.
+     * @return The GeoPoint representing the end point of the run, or null if no track points are available.
+     * @author FarnaZ
+     */
     public GeoPoint getEndPoint() {
         if (trackPointCollection != null && !trackPointCollection.isEmpty()) {
             return trackPointCollection.get(trackPointCollection.size() - 1).getLatLong();

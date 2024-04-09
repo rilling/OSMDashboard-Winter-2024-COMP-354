@@ -101,6 +101,14 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
             runView = itemView.findViewById(R.id.runView);
         }
 
+        /**
+         * Binds the data from a Run object to the UI elements of the ViewHolder.
+         * Sets the name, average speed, max speed, run time, and distance of the run.
+         *
+         * @param run The Run object containing the data to be displayed.
+         * @return void
+         * @author FarnaZ
+         */
         public void bind(Run run) {
             name.setText(run.getName());
             avgSpeed.setText(String.format(Locale.getDefault(), "%.2f km/h", run.getAverageSpeed()));
@@ -156,15 +164,32 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
         }
     }
 
+    /**
+     * Creates a new ItemizedLayer with pushpin symbols for waypoints on the map.
+     *
+     * @return The newly created ItemizedLayer object.
+     * @author FarnaZ
+     */
     private ItemizedLayer createWaypointsLayer() {
         MarkerSymbol symbol = MapUtils.createPushpinSymbol(mapView.getContext());
         return new ItemizedLayer(mapView.map(), symbol);
     }
-
+    /**
+     * Updates the position and rotation of the map based on the provided GeoPoint
+     * @param myPos The GeoPoint representing the new position on the map.
+     * @return void
+     * @author FarnaZ
+     */
     private void updateMapPositionAndRotation(final GeoPoint myPos) {
         mapView.map().getMapPosition().setPosition(myPos).setBearing(mapMode.getHeading(movementDirection));
     }
 
+    /**
+     * Formats the duration in seconds into a human-readable format (e.g., "1:30:00")
+     * @param durationInSeconds The duration in seconds to be formatted.
+     * @return A string representing the formatted duration.
+     * @author FarnaZ
+     */
     private String formatDuration(int durationInSeconds) {
         return DateUtils.formatElapsedTime(durationInSeconds);
     }
