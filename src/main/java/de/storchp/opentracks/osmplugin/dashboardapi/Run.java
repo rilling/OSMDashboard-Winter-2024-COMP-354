@@ -122,6 +122,8 @@ public class Run {
         return selected;
     }
 
+    public List<TrackPoint> getTrackPointCollection() { return this.trackPointCollection; }
+
     //Setters
     public void setName(String name) {
         this.name = name;
@@ -274,6 +276,14 @@ public class Run {
             return trackPointCollection.get(trackPointCollection.size() - 1).getLatLong();
         } else {
             return null; // Or handle this case as per your requirement
+        }
+    }
+
+    public GeoPoint getPoint(int i) {
+        if (trackPointCollection != null && i < trackPointCollection.size()) {
+            return trackPointCollection.get(i).getLatLong();
+        } else {
+            return null; // Or handle this case as epr your requirement
         }
     }
 }

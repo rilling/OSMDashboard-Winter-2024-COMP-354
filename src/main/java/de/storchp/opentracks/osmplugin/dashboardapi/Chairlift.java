@@ -5,16 +5,23 @@ import java.util.List;
 public class Chairlift {
     private String name;
     private double elevationGain;
-    private int waitingTime;
-    private int totalTimeMoving;
+    private double waitingTime;
+    private double totalTimeMoving;
     private double averageSpeed;
 
-    public Chairlift(String name, double eGain, int wTime, int tTimeMoving, double aSpeed) {
+    public Chairlift(String name, double eGain, double wTime, double tTimeMoving, double aSpeed) {
         this.name = name;
         this.elevationGain = eGain;
         this.waitingTime = wTime;
         this.totalTimeMoving = tTimeMoving;
         this.averageSpeed = aSpeed;
+    }
+
+    public Chairlift(String name, double eGain, double wTime, double tTimeMoving) {
+        this.name = name;
+        this.elevationGain = eGain;
+        this.waitingTime = wTime;
+        this.totalTimeMoving = tTimeMoving;
     }
 
     public String getName() {
@@ -33,15 +40,15 @@ public class Chairlift {
         this.elevationGain = elevationGain;
     }
 
-    public int getWaitingTime() {
-        return waitingTime;
+    public long getWaitingTime() {
+        return (long)waitingTime;
     }
 
     public void setWaitingTime(int waitingTime) {
         this.waitingTime = waitingTime;
     }
 
-    public int getTotalTimeMoving() {
+    public double getTotalTimeMoving() {
         return totalTimeMoving;
     }
 
