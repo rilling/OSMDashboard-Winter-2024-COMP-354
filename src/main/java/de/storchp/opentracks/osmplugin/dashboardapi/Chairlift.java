@@ -1,5 +1,8 @@
 package de.storchp.opentracks.osmplugin.dashboardapi;
 
+import org.oscim.core.GeoPoint;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Chairlift {
@@ -9,12 +12,18 @@ public class Chairlift {
     private double totalTimeMoving;
     private double averageSpeed;
 
+    private ArrayList<TrackPoint> trackPointCollection;
+    private double[] lat;
+    private double[] lon;
+
     public Chairlift(String name, double eGain, double wTime, double tTimeMoving, double aSpeed) {
         this.name = name;
         this.elevationGain = eGain;
         this.waitingTime = wTime;
         this.totalTimeMoving = tTimeMoving;
         this.averageSpeed = aSpeed;
+        this.lat = new double[trackPointCollection.size()];
+        this.lon = new double[trackPointCollection.size()];
     }
 
     public Chairlift(String name, double eGain, double wTime, double tTimeMoving) {
@@ -22,6 +31,7 @@ public class Chairlift {
         this.elevationGain = eGain;
         this.waitingTime = wTime;
         this.totalTimeMoving = tTimeMoving;
+        this.trackPointCollection = null;
     }
 
     public String getName() {
@@ -63,4 +73,25 @@ public class Chairlift {
     public void setAverageSpeed(double averageSpeed) {
         this.averageSpeed = averageSpeed;
     }
+
+    // Method to get the end point of the run
+
+    //code adapted/taken from Run class to get start point to implement this functionality for chairlift.
+    public GeoPoint getStartPoint() {
+        if (trackPointCollection != null && !trackPointCollection.isEmpty()) {
+            return trackPointCollection.get(0).getLatLong();
+        }
+        else {
+            return null; //or handle this case as per your requirement
+        }
+    };
+    //code adapted/taken from Run class to get the end point to implement this functionality for chairlift.
+    public GeoPoint getEndPoint() {
+        if (trackPointCollection != null && !trackPointCollection.isEmpty()) {
+            return trackPointCollection.get(trackPointCollection.size()-1).getLatLong();
+        }
+        else {
+            return null; //or handle this case as per your requirement
+        }
+    };
 }
