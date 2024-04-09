@@ -172,6 +172,7 @@ public class ChairliftAdapter extends RecyclerView.Adapter<ChairliftAdapter.Chai
     //code adapted/taken from RunAdapter and SegmentAdapter classes
     private void updateMapPositionAndRotation(final GeoPoint myPos){
         mapView.map().getMapPosition().setPosition(myPos).setBearing(mapMode.getHeading(movementDirection));
+
     }
     //code adapted/taken from RunAdapter class
     private String formatDuration(long durationInSeconds) {

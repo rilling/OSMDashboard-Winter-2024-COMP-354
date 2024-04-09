@@ -8,6 +8,7 @@ import java.util.List;
 public class Chairlift {
     private String name;
     private double elevationGain;
+
     private double waitingTime;
     private double totalTimeMoving;
     private double averageSpeed;
