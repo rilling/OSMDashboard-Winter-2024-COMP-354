@@ -175,8 +175,7 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
         return new ItemizedLayer(mapView.map(), symbol);
     }
     /**
-     * Updates the position and rotation of the map based on the provided GeoPoint.
-     *
+     * Updates the position and rotation of the map based on the provided GeoPoint
      * @param myPos The GeoPoint representing the new position on the map.
      * @return void
      * @author FarnaZ
@@ -186,8 +185,7 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
     }
 
     /**
-     * Formats the duration in seconds into a human-readable format (e.g., "1:30:00").
-     *
+     * Formats the duration in seconds into a human-readable format (e.g., "1:30:00")
      * @param durationInSeconds The duration in seconds to be formatted.
      * @return A string representing the formatted duration.
      * @author FarnaZ

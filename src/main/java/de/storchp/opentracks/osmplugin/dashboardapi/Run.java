@@ -222,7 +222,6 @@ public class Run {
     /**
      * Calculates the distance of an entire run given a list of TrackPoints belonging to a run
      * the user skied on (meters).
-     *
      * @param trackPointCollection List of TrackPoints belonging to a run
      * @return user's travelled distance during the entire run in meters
      * @author serbancaia
@@ -253,7 +252,6 @@ public class Run {
 
     /**
      * Retrieves the start point of the run.
-     *
      * @return The GeoPoint representing the start point of the run, or null if no track points are available.
      * @author FarnaZ
      */
@@ -267,7 +265,6 @@ public class Run {
 
     /**
      * Retrieves the end point of the run.
-     *
      * @return The GeoPoint representing the end point of the run, or null if no track points are available.
      * @author FarnaZ
      */
