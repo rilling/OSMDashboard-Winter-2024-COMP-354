@@ -25,9 +25,9 @@ public class LiftPoint {
         return this.yCoordinate;
     }
 
-    public double getCurrentSpeed() {
-        return this.currentSpeed;
-    }
+    //public double getCurrentSpeed() {
+    //    return this.currentSpeed;
+    //}
 
     public Time getCurrentTime() {
         return this.currentTime;

@@ -119,6 +119,8 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
             runView.setOnClickListener(v -> {
                 Toast.makeText(v.getContext(), run.getName() + " Clicked", Toast.LENGTH_SHORT).show();
                 runView.setBackgroundColor(Color.rgb(212, 221, 232));
+                if (previousRunView != null) previousRunView.setBackgroundColor(Color.WHITE);
+                previousRunView = runView;
 
                 // Removing the previous layer if any
                 mapView.map().layers().remove(polylinesLayer);
@@ -130,36 +132,38 @@ public class RunAdapter extends RecyclerView.Adapter<RunAdapter.RunViewHolder> i
                     }
                 }
 
-                PathLayer line = new PathLayer(mapView.map(), Color.BLUE, 12);
-                // Add points to the PathLayer
-                for (int i = 0; i < run.getTrackPointCollection().size(); i++) {
-                    line.addPoint(run.getPoint(i));
+                if (run.getTrackPointCollection() != null) {
+                    PathLayer line = new PathLayer(mapView.map(), Color.BLUE, 12);
+                    // Add points to the PathLayer
+                    for (int i = 0; i < run.getTrackPointCollection().size(); i++) {
+                        line.addPoint(run.getPoint(i));
+                    }
+                    // Add the PathLayer to the MapView
+                    polylinesLayer.map().layers().add(line);
+                    mapView.map().layers().add(polylinesLayer);
+
+                    List<GeoPoint> latLongs = line.getPoints();
+                    Waypoint startWayPoint = new Waypoint(run.getStartPoint(), "start point");
+                    Waypoint endWayPoint = new Waypoint(run.getEndPoint(), "end point");
+                    final MarkerItem startPin = MapUtils.createTappableMarker(mapView.getContext(), startWayPoint);
+                    final MarkerItem endPin = MapUtils.createTappableMarker(mapView.getContext(), endWayPoint);
+                    MarkerSymbol greenSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_green_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                    MarkerSymbol redSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_red_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                    startPin.setMarker(greenSymbol);
+                    endPin.setMarker(redSymbol);
+
+                    if (waypointsLayer != null) {
+                        mapView.map().layers().remove(waypointsLayer);
+                    }
+                    waypointsLayer = createWaypointsLayer();
+                    mapView.map().layers().add(waypointsLayer);
+                    waypointsLayer.addItem(startPin);
+                    waypointsLayer.addItem(endPin);
+
+                    BoundingBox boundingBox = new BoundingBox(latLongs);
+                    updateMapPositionAndRotation(boundingBox.getCenterPoint());
+                    mapView.map().animator().animateTo(500, boundingBox, Easing.Type.LINEAR, ANIM_MOVE);
                 }
-                // Add the PathLayer to the MapView
-                polylinesLayer.map().layers().add(line);
-                mapView.map().layers().add(polylinesLayer);
-
-                List<GeoPoint> latLongs = line.getPoints();
-                Waypoint startWayPoint = new Waypoint(run.getStartPoint(), "start point");
-                Waypoint endWayPoint = new Waypoint(run.getEndPoint(), "end point");
-                final MarkerItem startPin = MapUtils.createTappableMarker(mapView.getContext(), startWayPoint);
-                final MarkerItem endPin = MapUtils.createTappableMarker(mapView.getContext(), endWayPoint);
-                MarkerSymbol greenSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_green_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
-                MarkerSymbol redSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_red_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
-                startPin.setMarker(greenSymbol);
-                endPin.setMarker(redSymbol);
-
-                if (waypointsLayer != null) {
-                    mapView.map().layers().remove(waypointsLayer);
-                }
-                waypointsLayer = createWaypointsLayer();
-                mapView.map().layers().add(waypointsLayer);
-                waypointsLayer.addItem(startPin);
-                waypointsLayer.addItem(endPin);
-
-                BoundingBox boundingBox = new BoundingBox(latLongs);
-                updateMapPositionAndRotation(boundingBox.getCenterPoint());
-                mapView.map().animator().animateTo(500, boundingBox, Easing.Type.LINEAR, ANIM_MOVE);
             });
         }
     }
