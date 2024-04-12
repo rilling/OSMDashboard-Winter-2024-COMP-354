@@ -66,7 +66,7 @@ public class ChairliftAdapter extends RecyclerView.Adapter<ChairliftAdapter.Chai
     @Override
     public void onBindViewHolder(@NonNull ChairliftViewHolder holder, int position) {
         Chairlift chairlift = chairlifts.get(position);
-        // holder.bind(chairlift); To be implemented.
+        holder.bind(chairlift);
     }
 
     @Override
@@ -89,9 +89,11 @@ public class ChairliftAdapter extends RecyclerView.Adapter<ChairliftAdapter.Chai
 
         private  TextView waitingTime;
 
-        private TextView avgSpeed;
+        private TextView totalTimeMoving;
 
         private TextView elevationGain;
+
+        private TextView distance;
 
         private TableLayout chairliftView;
 
@@ -100,8 +102,9 @@ public class ChairliftAdapter extends RecyclerView.Adapter<ChairliftAdapter.Chai
 
             name = itemView.findViewById(R.id.item_Name);
             waitingTime = itemView.findViewById(R.id.wTime);
-            avgSpeed = itemView.findViewById(R.id.avgSpeedInput);
-            elevationGain = itemView.findViewById(R.id.distanceInput);
+            totalTimeMoving = itemView.findViewById(R.id.tTime);
+            elevationGain = itemView.findViewById(R.id.eGain);
+            distance = itemView.findViewById(R.id.distance);
             chairliftView = itemView.findViewById(R.id.chairLiftView);
         }
 
@@ -110,12 +113,15 @@ public class ChairliftAdapter extends RecyclerView.Adapter<ChairliftAdapter.Chai
         public void bind(Chairlift chairlift) {
             name.setText(chairlift.getName());
             waitingTime.setText(formatDuration(chairlift.getWaitingTime()));
-            avgSpeed.setText(String.format(Locale.getDefault(),"%.2f km/h", chairlift.getAverageSpeed()));
+            totalTimeMoving.setText(formatDuration(chairlift.getTotalTimeMoving()));
             elevationGain.setText(String.format(Locale.getDefault(), "%.2f meters", chairlift.getElevationGain()));
+            distance.setText(String.format(Locale.getDefault(), "%.2f meters", chairlift.getAverageSpeed() * chairlift.getTotalTimeMoving()));
 
             chairliftView.setOnClickListener( v -> {
                 Toast.makeText(v.getContext(), chairlift.getName() + " Clicked", Toast.LENGTH_SHORT).show();
                 chairliftView.setBackgroundColor(Color.rgb(212, 221, 232));
+                if (previousChairliftView != null) previousChairliftView.setBackgroundColor(Color.WHITE);
+                previousChairliftView = chairliftView;
 
                 //Removing previous layer if any
                 mapView.map().layers().remove(polylinesLayer);
@@ -127,40 +133,40 @@ public class ChairliftAdapter extends RecyclerView.Adapter<ChairliftAdapter.Chai
                     }
                 }
 
-                PathLayer line = new PathLayer(mapView.map(), Color.BLUE, 12);
-                //Add points to the PathLayer
-                line.addPoint(chairlift.getStartPoint());
-                line.addPoint(chairlift.getEndPoint());
+                if (chairlift.getTrackPointCollection() != null) {
+                    PathLayer line = new PathLayer(mapView.map(), Color.BLUE, 12);
+                    //Add points to the PathLayer
+                    line.addPoint(chairlift.getStartPoint());
+                    line.addPoint(chairlift.getEndPoint());
 
-                polylinesLayer.map().layers().add(line);
-                mapView.map().layers().add(polylinesLayer);
+                    polylinesLayer.map().layers().add(line);
+                    mapView.map().layers().add(polylinesLayer);
 
-                List<GeoPoint> latLongs = line.getPoints();
-                Waypoint startWayPoint = new Waypoint(chairlift.getStartPoint(), "start point");
-                Waypoint endWayPoint = new Waypoint(chairlift.getEndPoint(), "end point");
+                    List<GeoPoint> latLongs = line.getPoints();
+                    Waypoint startWayPoint = new Waypoint(chairlift.getStartPoint(), "start point");
+                    Waypoint endWayPoint = new Waypoint(chairlift.getEndPoint(), "end point");
 
-                final MarkerItem startPin = MapUtils.createTappableMarker(mapView.getContext(), startWayPoint);
-                final MarkerItem endPin = MapUtils.createTappableMarker(mapView.getContext(), endWayPoint);
-                MarkerSymbol greenSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_green_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
-                MarkerSymbol redSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_red_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
-                startPin.setMarker(greenSymbol);
-                endPin.setMarker(redSymbol);
+                    final MarkerItem startPin = MapUtils.createTappableMarker(mapView.getContext(), startWayPoint);
+                    final MarkerItem endPin = MapUtils.createTappableMarker(mapView.getContext(), endWayPoint);
+                    MarkerSymbol greenSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_green_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                    MarkerSymbol redSymbol = MapUtils.createMarkerSymbol(mapView.getContext(), R.drawable.ic_marker_red_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                    startPin.setMarker(greenSymbol);
+                    endPin.setMarker(redSymbol);
 
-                if (waypointsLayer != null) {
-                    mapView.map().layers().remove(waypointsLayer);
+                    if (waypointsLayer != null) {
+                        mapView.map().layers().remove(waypointsLayer);
+                    }
+
+                    waypointsLayer = createWaypointsLayer();
+                    mapView.map().layers().add(waypointsLayer);
+                    waypointsLayer.addItem(startPin);
+                    waypointsLayer.addItem(endPin);
+
+                    BoundingBox boundingBox = new BoundingBox(latLongs);
+                    updateMapPositionAndRotation(boundingBox.getCenterPoint());
+                    mapView.map().animator().animateTo(500, boundingBox, Easing.Type.LINEAR, ANIM_MOVE);
                 }
-
-                waypointsLayer = createWaypointsLayer();
-                mapView.map().layers().add(waypointsLayer);
-                waypointsLayer.addItem(startPin);
-                waypointsLayer.addItem(endPin);
-
-                BoundingBox boundingBox = new BoundingBox(latLongs);
-                updateMapPositionAndRotation(boundingBox.getCenterPoint());
-                mapView.map().animator().animateTo(500, boundingBox, Easing.Type.LINEAR, ANIM_MOVE);
-
             });
-
         }
     }
 

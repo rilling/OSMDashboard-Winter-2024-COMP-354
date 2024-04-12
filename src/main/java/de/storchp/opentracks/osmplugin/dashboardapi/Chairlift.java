@@ -33,6 +33,7 @@ public class Chairlift {
         this.waitingTime = wTime;
         this.totalTimeMoving = tTimeMoving;
         this.trackPointCollection = null;
+        this.averageSpeed = Math.random() * 10; //to be properly defined later
     }
 
     public String getName() {
@@ -59,8 +60,8 @@ public class Chairlift {
         this.waitingTime = waitingTime;
     }
 
-    public double getTotalTimeMoving() {
-        return totalTimeMoving;
+    public long getTotalTimeMoving() {
+        return (long)totalTimeMoving;
     }
 
     public void setTotalTimeMoving(int totalTimeMoving) {
@@ -73,6 +74,10 @@ public class Chairlift {
 
     public void setAverageSpeed(double averageSpeed) {
         this.averageSpeed = averageSpeed;
+    }
+
+    public List<TrackPoint> getTrackPointCollection() {
+        return this.trackPointCollection;
     }
 
     // Method to get the end point of the run

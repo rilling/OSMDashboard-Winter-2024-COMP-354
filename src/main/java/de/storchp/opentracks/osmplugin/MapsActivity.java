@@ -45,7 +45,7 @@ import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-//import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.ConcatAdapter;
 
 import org.oscim.android.MapPreferences;
 import org.oscim.backend.CanvasAdapter;
@@ -773,9 +773,9 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     // Get info from Group #7
     private void getChairlifts() {
         Chairlift c1 = new Chairlift("L'Étoile", 722, 600, 5.08);
-        Chairlift c2 = new Chairlift("Flèche d’Argent",841, 900, 5.08);
-        Chairlift c3 = new Chairlift("L'Express",672, 700, 5.08);
-        Chairlift c4 = new Chairlift("Le Piedmont",755, 600, 5.08);
+        Chairlift c2 = new Chairlift("Flèche d’Argent",841, 900, 9.08);
+        Chairlift c3 = new Chairlift("L'Express",672, 700, 12.08);
+        Chairlift c4 = new Chairlift("Le Piedmont",755, 600, 64.08);
         chairLifts.add(c1);
         chairLifts.add(c2);
         chairLifts.add(c3);
@@ -794,18 +794,10 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         runsChairliftsTable = findViewById(R.id.runsChairliftsTableView);
         runAdapter = new RunAdapter(runs, binding.map.mapView);
         liftAdapter = new ChairliftAdapter(chairLifts, binding.map.mapView);
-        //val runAndLiftAdapter = ConcatAdapter(runAdapter, liftAdapter); FIND A WAY TO FIX THIS AND HAVE 2 ADAPTERS RUNNING ALONGSIDE EACH OTHER. OTHERWISE CHAIRLIFTS WILL NOT BE DISPLAYED ON TABLE.
+        ConcatAdapter runAndLiftAdapter = new ConcatAdapter(runAdapter, liftAdapter);
         runChairliftLayout.setVisibility(View.GONE);
         runsChairliftsTable.setLayoutManager(new LinearLayoutManager(this));
-        runsChairliftsTable.setAdapter(runAdapter);
-    }
-
-    private void addChairliftsInfo() {
-        runsChairliftsTable = findViewById(R.id.runsChairliftsTableView);
-        liftAdapter = new ChairliftAdapter(chairLifts, binding.map.mapView);
-        runChairliftLayout.setVisibility(View.GONE);
-        runsChairliftsTable.setLayoutManager(new LinearLayoutManager(this));
-        runsChairliftsTable.setAdapter(liftAdapter);
+        runsChairliftsTable.setAdapter(runAndLiftAdapter);
     }
 
     private void resetMapData() {
