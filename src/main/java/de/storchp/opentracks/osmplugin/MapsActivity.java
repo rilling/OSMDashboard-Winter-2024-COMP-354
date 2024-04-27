@@ -4,10 +4,14 @@ package de.storchp.opentracks.osmplugin;
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
 import static java.util.Comparator.comparingInt;
 
+
 import org.oscim.backend.AssetAdapter;
 import org.oscim.layers.tile.buildings.S3DBLayer;
 import org.oscim.map.Viewport;
 import org.oscim.theme.IRenderTheme.ThemeException;
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,11 +20,16 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.opengl.GLException;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
@@ -28,24 +37,30 @@ import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Xml;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
 import org.oscim.android.MapPreferences;
+import org.oscim.android.MapView;
 import org.oscim.backend.CanvasAdapter;
 import org.oscim.core.BoundingBox;
 import org.oscim.core.GeoPoint;
+import org.oscim.core.MapPosition;
 import org.oscim.layers.GroupLayer;
 import org.oscim.layers.PathLayer;
 import org.oscim.layers.marker.ItemizedLayer;
@@ -119,6 +134,12 @@ import de.storchp.opentracks.osmplugin.utils.TrackPointsDebug;
 import de.storchp.opentracks.osmplugin.utils.TrackStatistics;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+//import android.annotation.NonNull;
+//import org.oscim.layers.marker.MarkerItem;
+//import org.oscim.core.GeoPoint;
+//import org.oscim.utils.MapUnitls;
+import org.oscim.core.MapPosition;
+
 
 
 
@@ -161,6 +182,16 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private int protocolVersion = 1;
     private TrackPointsDebug trackPointsDebug;
 
+
+    private MapView mapView;
+    private MapPosition currentMapPosition;
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
+    private static final int REQUEST_LOCATION_PERMISSION = 1001;
+
+
+    @SuppressLint("ServiceCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +199,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Toast.makeText(this,"This screen",Toast.LENGTH_SHORT).show();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         strokeWidth = PreferencesUtils.getStrokeWidth();
@@ -180,8 +212,52 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
         createMapViews();
         createLayers();
-        map.getMapPosition().setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
+        //map.getMapPosition().setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
 
+
+        //zooming in and out of maps
+        mapView = findViewById(R.id.mapView);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        //currentMapPosition=mapView.map().setMapPosition();
+        currentMapPosition = mapView.map().getMapPosition();
+        currentMapPosition.setZoomLevel(100000);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                updateMapPosition(location.getLatitude(), location.getLongitude());
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+            }
+        };
+
+        //Set the button click thing zoomInButton in the map.xml document
+        binding.map.zoomInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                zoomIn();
+            }
+        });
+
+        binding.map.zoomOutButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View V){
+                zoomOut();
+            }
+        });
+        //Check location permissions and request location updates
+        checkLocationPermissionAndRequestUpdate();
+
+        //--------------------------------
         binding.map.fullscreenButton.setOnClickListener(v -> switchFullscreen());
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
@@ -195,7 +271,92 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         if (intent != null) {
             onNewIntent(intent);
         }
+
     }
+
+    private void zoomIn() {
+        int currentZoomLevel = currentMapPosition.getZoomLevel();
+        int newZoomLevel = currentMapPosition.zoomLevel + 80000;
+        currentMapPosition.setZoomLevel(newZoomLevel);
+        mapView.map().setMapPosition(currentMapPosition);
+    }
+
+    private void zoomOut(){
+        int currentZoomLevel=currentMapPosition.getZoomLevel();
+        int newZoomLevel= currentMapPosition.zoomLevel-50000;
+        currentMapPosition.setZoomLevel(newZoomLevel);
+        mapView.map().setMapPosition(currentMapPosition);
+    }
+
+    private void checkLocationPermissionAndRequestUpdate() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Request permissions if they have not been granted
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+        } else {
+            // If permissions have been granted, start requesting location updates
+            requestLocationUpdates();
+        }
+    }
+
+    private void requestLocationUpdates() {
+        // Request a location update
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+
+
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+    }
+
+    private void updateMapPosition(double latitude, double longitude) {
+        GeoPoint userLocation = new GeoPoint(latitude, longitude);
+        mapView.map().setMapPosition(latitude, longitude, currentMapPosition.zoomLevel);
+    }
+
+    private ArrayList<String> usersList = new ArrayList<String>();
+    private int selectedUserPosition = 1;
+
+    private void changeUser()
+    {
+        if (selectedUserPosition == usersList.size() - 1)
+        {
+            selectedUserPosition = 1;
+        }
+        showUserOnMap(selectedUserPosition);
+        selectedUserPosition = selectedUserPosition + 1;
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run()
+            {
+                removePreviousUser(selectedUserPosition - 1);
+                changeUser();
+            }
+        }, 5000);
+    }
+    private void removePreviousUser(int i) {
+    }
+    private void showUserOnMap(int selectedUserPosition) {
+        Log.e(TAG, "User "+selectedUserPosition+" will be shown on map now" );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // User grants location permissions and begins requesting location updates
+                requestLocationUpdates();
+            } else {
+                new AlertDialog.Builder(this)
+                        .setMessage("You have denied location permissions and chosen not to be prompted again. To use this feature, go to Settings to enable location permissions.")
+                        .show();
+            }
+        }
+    }
+
 
     private void switchFullscreen() {
         showFullscreen(!fullscreenMode);
@@ -486,6 +647,11 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     protected void onDestroy() {
         binding.map.mapView.onDestroy();
         super.onDestroy();
+
+        if(locationManager!=null &&locationListener!=null){
+            locationManager.removeUpdates(locationListener);
+        }
+
     }
 
     @Override
@@ -751,8 +917,8 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         } else {
             binding.map.trackpointsDebugInfo.setText("");
         }
-    }
-
+    }//[lat=45.88163,lon=-74.160012]
+    private View infoWindow;
     private void setEndMarker(GeoPoint endPos) {
         synchronized (map.layers()) {
             if (endMarker != null) {
@@ -761,11 +927,88 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                 waypointsLayer.populate();
                 map.render();
             } else {
+
+
+                for(int i=0;i<5;i++){//45.88163, -74.160012
+                    if(i ==0){
+                        MarkerItem dumMarker = new MarkerItem(endPos.toString() + i, "", new GeoPoint(45.88153, -74.159912));
+                        var symNew = MapUtils.createMarkerSymbol(this, R.drawable.ic_marker_orange_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                        dumMarker.setMarker(symNew);
+                        //dumMarker.setRotation(MapUtils.rotateWith(mapMode, movementDirection));
+                        waypointsLayer.addItem(dumMarker);
+                    }else if(i==1){
+                        MarkerItem dumMarker = new MarkerItem(endPos.toString() + i, "", new GeoPoint(45.88173, -74.160112));
+                        var symNew = MapUtils.createMarkerSymbol(this, R.drawable.ic_marker_orange_pushpin_modern, false, MarkerSymbol.HotspotPlace.CENTER);
+                        dumMarker.setMarker(symNew);
+                        //dumMarker.setRotation(MapUtils.rotateWith(mapMode, movementDirection));
+                        waypointsLayer.addItem(dumMarker);
+                    }else if(i==2){
+                        MarkerItem dumMarker = new MarkerItem(endPos.toString() + i, "", new GeoPoint(45.88163, -74.159912));
+                        var symNew = MapUtils.createMarkerSymbol(this, R.drawable.ic_marker_common_green, false, MarkerSymbol.HotspotPlace.CENTER);
+                        dumMarker.setMarker(symNew);
+                        //dumMarker.setRotation(MapUtils.rotateWith(mapMode, movementDirection));
+                        waypointsLayer.addItem(dumMarker);
+                    }else if(i==3){
+                        MarkerItem dumMarker = new MarkerItem(endPos.toString() + i, "", new GeoPoint(45.88163, -74.159912));
+                        var symNew = MapUtils.createMarkerSymbol(this, R.drawable.ic_marker_common_green, false, MarkerSymbol.HotspotPlace.CENTER);
+                        dumMarker.setMarker(symNew);
+                        //dumMarker.setRotation(MapUtils.rotateWith(mapMode, movementDirection));
+                        waypointsLayer.addItem(dumMarker);
+                    }else {
+                        MarkerItem dumMarker = new MarkerItem(endPos.toString() + i, "", new GeoPoint(45.88163, -74.159912));
+                        var symNew = MapUtils.createMarkerSymbol(this, R.drawable.ic_marker_common_green, false, MarkerSymbol.HotspotPlace.CENTER);
+                        dumMarker.setMarker(symNew);
+                        //dumMarker.setRotation(MapUtils.rotateWith(mapMode, movementDirection));
+                        waypointsLayer.addItem(dumMarker);
+
+                    }
+
+                }
+
                 endMarker = new MarkerItem(endPos.toString(), "", endPos);
                 var symbol = MapUtils.createMarkerSymbol(this, R.drawable.ic_compass, false, MarkerSymbol.HotspotPlace.CENTER);
                 endMarker.setMarker(symbol);
                 endMarker.setRotation(MapUtils.rotateWith(mapMode, movementDirection));
                 waypointsLayer.addItem(endMarker);
+
+                waypointsLayer.setOnItemGestureListener(new ItemizedLayer.OnItemGestureListener<MarkerInterface>() {
+                    @Override
+                    public boolean onItemSingleTapUp(int index, MarkerInterface item) {
+
+                        //1,5,0
+                        if(index==2){
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+                            builder.setTitle("Users at Same location");
+                            builder.setMessage("3 Users are at same Location\n\n" +
+                                    "UserID: 2, UserName: Dummy User 2\n" +
+                                    "UserID: 3, UserName: Dummy User 3\n" +
+                                    "UserID: 4, UserName: Dummy User 4\n");
+
+                            // Open app settings when positive button is clicked
+                            builder.setPositiveButton("Ok", (dialog, which) -> {
+                                dialog.dismiss();
+                            });
+
+                            // Close the app when negative button is clicked
+                            builder.setNegativeButton("Cancel", (dialog, which) -> {
+                                dialog.dismiss();
+                            });
+
+                            builder.show();
+                        }
+
+
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onItemLongPress(int index, MarkerInterface item) {
+                        return false;
+                    }
+                });
+
+
+
             }
         }
     }
@@ -775,6 +1018,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         polylinesLayer.layers.add(polyline);
         return this.polyline;
     }
+
 
     private void readWaypoints(Uri data) {
         Log.i(TAG, "Loading waypoints from " + data);

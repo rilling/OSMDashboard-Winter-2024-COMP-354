@@ -95,5 +95,12 @@
     <string name="settings_night_mode_option_night">Night</string>
     <string name="settings_ui_dynamic_colors_title">Dynamic Colors</string>
     <string name="settings_ui_dynamic_colors_summary">Use user-defined Dynamic Colors (Android 12+ only; requires a manual restart)</string>
+    <string name="get_current_locaion" />
+
+    <!--Created several string resources to provide the reference key for the friend notification inside of root_preferences.xml file.-->
+    <string name="notification_friends_nearby">Notification</string>
+    <string name="SHOW_NOTIFICATION_FRIEND">APP_PREF_SHOW_NOTIFICATION_FRIEND</string>
+    <string name="settings_notification_friends_summary">Be notified if one of your friends is skiing in the same resort</string>
+
 
 </resources>
