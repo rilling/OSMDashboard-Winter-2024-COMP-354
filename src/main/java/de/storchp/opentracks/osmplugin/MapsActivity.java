@@ -2,6 +2,7 @@ package de.storchp.opentracks.osmplugin;
 
 
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
+import static org.oscim.map.Viewport.MIN_ZOOM_LEVEL;
 import static java.util.Comparator.comparingInt;
 
 
@@ -20,6 +21,7 @@ import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -32,6 +34,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.text.Html;
 import android.text.SpannableString;
+import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
@@ -44,6 +47,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +61,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.oscim.android.MapPreferences;
 import org.oscim.android.MapView;
 import org.oscim.backend.CanvasAdapter;
@@ -107,8 +118,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.IntBuffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -119,6 +132,10 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.opengles.GL10;
 
 import de.storchp.opentracks.osmplugin.dashboardapi.APIConstants;
+import de.storchp.opentracks.osmplugin.dashboardapi.Chairlift;
+import de.storchp.opentracks.osmplugin.dashboardapi.Run;
+import de.storchp.opentracks.osmplugin.dashboardapi.Segment;
+import de.storchp.opentracks.osmplugin.dashboardapi.SegmentAdapter;
 import de.storchp.opentracks.osmplugin.dashboardapi.Track;
 import de.storchp.opentracks.osmplugin.dashboardapi.TrackPoint;
 import de.storchp.opentracks.osmplugin.dashboardapi.Waypoint;
@@ -174,6 +191,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private boolean fullscreenMode = false;
     private MovementDirection movementDirection = new MovementDirection();
     private MapMode mapMode;
+    private double mapPosScale;
     private OpenTracksContentObserver contentObserver;
     private Uri tracksUri;
     private Uri trackPointsUri;
@@ -182,6 +200,29 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     private int protocolVersion = 1;
     private TrackPointsDebug trackPointsDebug;
 
+    //Dummy data for runs
+    private List<Run> runs = new ArrayList<>();
+    //Dummy data for chairlifts
+    private List<Chairlift> chairLifts = new ArrayList<>();
+
+    private List<Segment> segments = new ArrayList<>();
+
+
+    private TableLayout previousSelectedSegmentView = null;
+
+    private TrackPoint pastTrackPoint = null;
+
+    private int trackPointCounter = 0;
+
+    private ScrollView segmentLayout;
+
+    private ScrollView runChairliftLayout;
+
+    private RecyclerView segmentTable;
+
+    private SegmentAdapter adapter;
+
+    private Float scale;
 
     private MapView mapView;
     private MapPosition currentMapPosition;
@@ -207,6 +248,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
         map = binding.map.mapView.map();
         mapPreferences = new MapPreferences(MapsActivity.class.getName(), this);
+
 
         setSupportActionBar(binding.toolbar.mapsToolbar);
 
@@ -271,6 +313,15 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         if (intent != null) {
             onNewIntent(intent);
         }
+        mapPosScale = map.getMapPosition().getScale();
+        // setting initial table to runs and chairlifts table
+
+        segmentLayout = findViewById(R.id.segments_layout);
+        runChairliftLayout = findViewById(R.id.runs_chairlifts_layout);
+
+        addChairliftsInfo();
+        addRunsInfo();
+        addSegmentInfo();
 
     }
 
@@ -378,9 +429,68 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             showFullscreen(intent.getBooleanExtra(EXTRAS_SHOW_FULLSCREEN, false));
             isOpenTracksRecordingThisTrack = intent.getBooleanExtra(EXTRAS_OPENTRACKS_IS_RECORDING_THIS_TRACK, false);
 
+            //Dummy data
+            for (int i = 1; i <= 4; i++) {
+                try {
+                    JSONObject c = new JSONObject(getIntent().getStringExtra("c"+i));
+                    chairLifts.add(new Chairlift(c.getString("name"),
+                            Integer.parseInt(c.getString("distance")),
+                            Long.parseLong(c.getString("wtime")),
+                            Double.parseDouble(c.getString("speed"))));
+                    JSONObject r = new JSONObject(getIntent().getStringExtra("r"+i));
+                    runs.add(new Run(r.getString("name"),
+                            Double.parseDouble(r.getString("speed")),
+                            Double.parseDouble(r.getString("distance")),
+                            Integer.parseInt(r.getString("duration")),
+                            Double.parseDouble(r.getString("maxSpeed"))));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
             readTrackpoints(trackPointsUri, false, protocolVersion);
             readTracks(tracksUri);
             readWaypoints(waypointsUri);
+
+            // run logic
+            //getRuns();
+
+            //  chairlift logic
+            //getChairlifts();
+
+
+
+            // navigation Buttons
+            LinearLayout containerLayout = findViewById(R.id.container_layout);
+            Button runsChairLiftsButton = findViewById(R.id.runsChairLiftsButton);
+            Button segmentsButton = findViewById(R.id.segmentsButton);
+
+            // TODO: Fix slow performance issue
+
+            // button Listeners
+            runsChairLiftsButton.setOnClickListener(v -> {
+                        //inflateLayout(R.layout.table_runs_chairlifts_taken);
+                        //inflateLayout(R.layout.table_runs_chairlifts_taken);
+                    runChairliftLayout.setVisibility(View.VISIBLE);
+                    segmentLayout.setVisibility(View.GONE);
+                    updateMapPositionAndRotation(boundingBox.getCenterPoint());
+                    for (var layer : map.layers()) {
+                        for (int i = 0; i < map.layers().size(); i++) {
+                            if (map.layers().get(i) instanceof ItemizedLayer) {
+                                if (!waypointsLayer.equals(map.layers().get(i))) {
+                                    map.layers().remove(i);
+                                }
+                            }
+                        }
+                    }
+            });
+
+            segmentsButton.setOnClickListener(v -> {
+                //inflateLayout(R.layout.table_segments);
+                runChairliftLayout.setVisibility(View.GONE);
+                segmentLayout.setVisibility(View.VISIBLE);
+            });
+
         } else if ("geo".equals(intent.getScheme())) {
             Waypoint.fromGeoUri(intent.getData().toString()).ifPresent(waypoint -> {
                 final MarkerItem marker = MapUtils.createTappableMarker(this, waypoint);
@@ -390,6 +500,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             });
         }
     }
+
 
     private class OpenTracksContentObserver extends ContentObserver {
 
@@ -562,8 +673,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             renderer.setPosition(GLViewport.Position.BOTTOM_LEFT);
             renderer.setOffset(5 * CanvasAdapter.getScale(), 0);
             map.layers().add(mapScaleBarLayer);
-
-            map.setTheme(getRenderTheme());
+            renderTheme = map.setTheme(getRenderTheme());
 
         } else if (BuildConfig.offline) {
             new AlertDialog.Builder(this)
@@ -816,6 +926,24 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                             }
                         }
 
+                        // logic to store segment informations and get the real data
+                        if (pastTrackPoint == null) {
+                            pastTrackPoint = trackPoint;
+                            trackPointCounter++;
+                        }
+                        else {
+                            double speed = trackPoint.getSpeed();
+                            long time = Math.abs(trackPoint.getTimeMillis()/1000 - pastTrackPoint.getTimeMillis()/1000);
+                            double slope = (pastTrackPoint.getLatLong().getLatitude() - trackPoint.getLatLong().getLatitude()) /
+                                           (pastTrackPoint.getLatLong().getLongitude() - trackPoint.getLatLong().getLongitude());
+
+
+                            segments.add(new Segment("Segment " + trackPointCounter, speed, time, slope, pastTrackPoint.getLatLong(), trackPoint.getLatLong()));
+                            pastTrackPoint = trackPoint;
+                            trackPointCounter++;
+
+                        }
+
                         endPos = trackPoint.getLatLong();
                         polyline.addPoint(endPos);
                         movementDirection.updatePos(endPos);
@@ -863,6 +991,95 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             }
             updateDebugTrackPoints();
         }
+    }
+
+    // Get info from Group #7
+    private void getRuns() {
+        Run r1 = new Run("La Plagne",18, 1644, 2000, 30.25);
+        Run r2 = new Run("Jay",26, 931, 1100, 40.7);
+        Run r3 = new Run("Grand Élan",23, 1051, 1200, 27.67);
+        Run r4 = new Run("Tom Barbeau",30, 658, 700, 42.6);
+        runs.add(r1);
+        runs.add(r2);
+        runs.add(r3);
+        runs.add(r4);
+    }
+
+
+    // This method creates a row inside the table in OSMDashboard to display user's data about a specific run.*/
+    private void addRunsInfo() {
+        DecimalFormat formatter = new DecimalFormat("#0.00");
+        List<String> headers = new ArrayList<>();
+        headers.add("Avg Speed (km/h)");
+        headers.add("Max Speed (km/h)");
+        headers.add("Run Time (min:sec)");
+        headers.add("Distance (meters)");
+
+        TableLayout runChairliftTable = (TableLayout) findViewById(R.id.runsChairliftsTableView);
+        for (Run run : runs) {
+            TableRow runRow = new TableRow(this);
+            View runView = getLayoutInflater().inflate(R.layout.run_item, null);
+            TextView name = (TextView) runView.findViewById(R.id.item_Name);
+            name.setText(run.getName());
+
+            TextView avgSpeed = (TextView) runView.findViewById(R.id.avgSpeedInput);
+            avgSpeed.setText(formatter.format(run.getAverageSpeed()));
+
+            TextView maxSpeed = (TextView) runView.findViewById(R.id.maxSpeedInput);
+            maxSpeed.setText(formatter.format(run.getMaxSpeed()));
+
+            TextView runTime = (TextView) runView.findViewById(R.id.runTimeInput);
+            runTime.setText(DateUtils.formatElapsedTime(run.getDuration()));
+
+            TextView distance = (TextView) runView.findViewById(R.id.distanceInput);
+            distance.setText(formatter.format(run.getDistance()));
+
+            runChairliftTable.addView(runView);
+        }
+    }
+
+
+    // Get info from Group #7
+
+    // Add chairlifts info
+    private void addChairliftsInfo() {
+        DecimalFormat formatter = new DecimalFormat("#0.00");
+        List<String> headers = new ArrayList<>();
+        headers.add("Speed (m)");
+        headers.add("Wait Time (m:s)");
+        headers.add("Ascent Time (m:s)");
+        headers.add("Distance (m)");
+        TableLayout runChairliftTable = (TableLayout) findViewById(R.id.runsChairliftsTableView);
+
+        for (Chairlift c : chairLifts) {
+            TableRow chairRow = new TableRow(this);
+            View chairliftView = getLayoutInflater().inflate(R.layout.chairlift_item, null);
+            TextView name = (TextView) chairliftView.findViewById(R.id.item_Name);
+            name.setText(c.getName());
+
+            TextView speed = (TextView) chairliftView.findViewById(R.id.speed);
+            speed.setText(formatter.format(c.getAverageSpeed()));
+
+            TextView waitingTime = (TextView) chairliftView.findViewById(R.id.wTime);
+            waitingTime.setText(DateUtils.formatElapsedTime(c.getWaitingTime()));
+
+            TextView aTime = (TextView) chairliftView.findViewById(R.id.aTime);
+            aTime.setText(DateUtils.formatElapsedTime(c.getAscentTime()));
+
+            TextView distance = (TextView) chairliftView.findViewById(R.id.distance);
+            distance.setText(formatter.format(c.getDistance()));
+
+            runChairliftTable.addView(chairliftView);
+        }
+    }
+
+
+    private void addSegmentInfo() {
+        segmentTable = findViewById(R.id.segmentsTableView);
+        adapter = new SegmentAdapter(segments, binding.map.mapView);
+        segmentLayout.setVisibility(View.GONE);
+        segmentTable.setLayoutManager(new LinearLayoutManager(this));
+        segmentTable.setAdapter(adapter);
     }
 
     private void resetMapData() {
@@ -1092,6 +1309,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         binding.map.statisticsLayout.addView(textView);
         binding.map.statistics.addView(textView);
     }
+
 
     @Override
     public void onResume() {
