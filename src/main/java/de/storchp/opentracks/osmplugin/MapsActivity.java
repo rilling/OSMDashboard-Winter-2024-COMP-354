@@ -4,9 +4,15 @@ package de.storchp.opentracks.osmplugin;
 import static android.util.TypedValue.COMPLEX_UNIT_PT;
 import static java.util.Comparator.comparingInt;
 
+
+import org.oscim.backend.AssetAdapter;
+import org.oscim.layers.tile.buildings.S3DBLayer;
+import org.oscim.map.Viewport;
+import org.oscim.theme.IRenderTheme.ThemeException;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -30,6 +36,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,9 +69,11 @@ import org.oscim.layers.marker.MarkerItem;
 import org.oscim.layers.marker.MarkerSymbol;
 import org.oscim.layers.tile.bitmap.BitmapTileLayer;
 import org.oscim.layers.tile.buildings.BuildingLayer;
+import org.oscim.layers.tile.buildings.S3DBLayer;
 import org.oscim.layers.tile.vector.VectorTileLayer;
 import org.oscim.layers.tile.vector.labeling.LabelLayer;
 import org.oscim.map.Map;
+import org.oscim.map.Viewport;
 import org.oscim.renderer.BitmapRenderer;
 import org.oscim.renderer.GLViewport;
 import org.oscim.scalebar.DefaultMapScaleBar;
@@ -76,17 +85,27 @@ import org.oscim.theme.IRenderTheme;
 import org.oscim.theme.StreamRenderTheme;
 import org.oscim.theme.ThemeFile;
 import org.oscim.theme.VtmThemes;
+import org.oscim.theme.XmlRenderThemeMenuCallback;
+import org.oscim.theme.XmlThemeResourceProvider;
 import org.oscim.theme.ZipRenderTheme;
 import org.oscim.theme.ZipXmlThemeResourceProvider;
 import org.oscim.tiling.source.OkHttpEngine;
 import org.oscim.tiling.source.bitmap.DefaultSources;
 import org.oscim.tiling.source.mapfile.MapFileTileSource;
 import org.oscim.tiling.source.mapfile.MultiMapFileTileSource;
+import org.oscim.tiling.source.overpass.OverpassTileSource;
+
+import org.oscim.theme.ThemeLoader;
+import org.oscim.tiling.TileSource.OpenResult;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -120,6 +139,9 @@ import okhttp3.OkHttpClient;
 //import org.oscim.core.GeoPoint;
 //import org.oscim.utils.MapUnitls;
 import org.oscim.core.MapPosition;
+
+
+
 
 
 public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGestureListener<MarkerInterface> {
@@ -442,11 +464,23 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         binding.map.mapView.setClickable(true);
     }
 
+
     protected ThemeFile getRenderTheme() {
         Uri mapTheme = PreferencesUtils.getMapThemeUri();
+        int winterThemeResourceId = getResources().getIdentifier("elevate_winter", "xml", getPackageName());
+        Uri winterThemeUri = Uri.parse("android.resource://" + getPackageName() + "/" + winterThemeResourceId);
         if (mapTheme == null) {
             return VtmThemes.DEFAULT;
         }
+
+        else if(mapTheme.equals(winterThemeUri)){
+            //Log.d(TAG, String.valueOf(mapTheme));
+            //Log.d(TAG, "Winter Enter MODE");
+            //Log.d(TAG, String.valueOf(CustomThemes.WINTER));
+            return new StreamRenderTheme("", AssetAdapter.readFileAsStream("elevate_winter.xml"));
+
+        }
+
         try {
             var renderThemeFile = DocumentFile.fromSingleUri(getApplication(), mapTheme);
             assert renderThemeFile != null;
@@ -504,6 +538,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             renderTheme.dispose();
         }
         renderTheme = map.setTheme(VtmThemes.DEFAULT);
+
     }
 
     protected void createLayers() {
@@ -545,18 +580,44 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     }
 
     private void setOnlineTileLayer() {
-        var tileSource = DefaultSources.OPENSTREETMAP.build();
+        // TODO: Debug overpass source and why its layers aren't visible
+        var tileSource = OverpassTileSource.builder()
+                /*
+                .zoomMin(17)
+                .zoomMax(15)
+                 */
+                .build();
+
+        var bitmapTileSource = DefaultSources.OPENSTREETMAP
+                /*
+                // TODO: uncomment the following when vector layer is visible:
+                // credit to vtm-android-example for specific fade steps and zoom levels
+                .zoomMax(15)
+                .fadeSteps(new BitmapTileLayer.FadeStep[]{
+                        new BitmapTileLayer.FadeStep(15, 16, 1f, 0f),
+                        new BitmapTileLayer.FadeStep(16, Viewport.MAX_ZOOM_LEVEL, 0f, 0f)
+                })
+                */
+                .build();
         var builder = new OkHttpClient.Builder();
+
+        // Cache http information
         var cacheDirectory = new File(getExternalCacheDir(), "tiles");
         int cacheSize = 10 * 1024 * 1024; // 10 MB
         var cache = new Cache(cacheDirectory, cacheSize);
         builder.cache(cache);
 
-        tileSource.setHttpEngine(new OkHttpEngine.OkHttpFactory(builder));
-        tileSource.setHttpRequestHeaders(Collections.singletonMap("User-Agent", getString(R.string.app_name) + ":" + BuildConfig.APPLICATION_ID));
-
-        BitmapTileLayer bitmapLayer = new BitmapTileLayer(map, tileSource);
+        var okHttpEngine = new OkHttpEngine.OkHttpFactory(builder);
+        bitmapTileSource.setHttpEngine(okHttpEngine);
+        bitmapTileSource.setHttpRequestHeaders(Collections.singletonMap("User-Agent", getString(R.string.app_name) + ":" + BuildConfig.APPLICATION_ID));
+        VectorTileLayer vectorTileLayer = map.setBaseMap(tileSource);
+        BitmapTileLayer bitmapLayer = new BitmapTileLayer(map, bitmapTileSource);
+        S3DBLayer databaseLayer = new S3DBLayer(map, vectorTileLayer);
+        LabelLayer labelLayer = new LabelLayer(map, vectorTileLayer);
         map.layers().add(bitmapLayer);
+        map.layers().add(databaseLayer);
+        map.layers().add(labelLayer);
+
     }
 
     private void showOnlineMapConsent() {
