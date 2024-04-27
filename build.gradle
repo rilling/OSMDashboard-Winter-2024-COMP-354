@@ -87,6 +87,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     buildFeatures {
@@ -121,6 +122,8 @@ ext {
 
 dependencies {
 
+
+
     // Desugaring
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
 
@@ -136,6 +139,7 @@ dependencies {
     implementation "org.mapsforge:vtm:$mapsforgeVersion"
     implementation "org.mapsforge:vtm-themes:$mapsforgeVersion"
     implementation "org.mapsforge:vtm-http:$mapsforgeVersion"
+    implementation "org.mapsforge:vtm-extras:$mapsforgeVersion"
     implementation "org.slf4j:slf4j-api:2.0.11"
     runtimeOnly "org.mapsforge:vtm-android:$mapsforgeVersion:natives-armeabi-v7a"
     runtimeOnly "org.mapsforge:vtm-android:$mapsforgeVersion:natives-arm64-v8a"
@@ -154,4 +158,11 @@ dependencies {
     androidTestImplementation("de.mannodermaus.junit5:android-test-core:1.4.0")
 
     androidTestRuntimeOnly("de.mannodermaus.junit5:android-test-runner:1.4.0")
+
+
+
+    implementation("org.osmdroid:osmdroid-android:6.1.7")
+
+
+
 }
