@@ -1,5 +1,6 @@
 package de.storchp.opentracks.osmplugin;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -14,6 +15,8 @@ import androidx.documentfile.provider.DocumentFile;
 import org.oscim.theme.ZipXmlThemeResourceProvider;
 
 import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.zip.ZipInputStream;
@@ -46,9 +49,16 @@ public class ThemeSelectionActivity extends AppCompatActivity {
         if (onlineMapSelected) {
             PreferencesUtils.setMapThemeUri(null);
         }
+        //PreferencesUtils.setMapThemeUri(winterThemeUri);
+        Uri selectedThemeUri = PreferencesUtils.getMapThemeUri();
+        adapter = new ThemeItemAdapter(this, new ArrayList<>(), selectedThemeUri, onlineMapSelected);
 
-        adapter = new ThemeItemAdapter(this, new ArrayList<>(), PreferencesUtils.getMapThemeUri(), onlineMapSelected);
         adapter.add(new FileItem(getString(R.string.default_theme), null));
+
+        int winterThemeResourceId = getResources().getIdentifier("elevate_winter", "xml", getPackageName());
+        Uri winterThemeUri = Uri.parse("android.resource://" + getPackageName() + "/" + winterThemeResourceId);
+        adapter.add(new FileItem(getString(R.string.winter_theme), winterThemeUri));
+
 
         new Thread(new MapThemeDirScanner(this)).start();
 
@@ -126,7 +136,6 @@ public class ThemeSelectionActivity extends AppCompatActivity {
             });
         }
     }
-
     private void readThemeFile(ArrayList<FileItem> items, DocumentFile file) {
         if (file.isFile() && file.getName() != null) {
             if (file.getName().endsWith(".xml")) {
@@ -147,6 +156,7 @@ public class ThemeSelectionActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -154,6 +164,13 @@ public class ThemeSelectionActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    protected void onResume(){
+        super.onResume();
+
+        adapter.setSelectedUri(PreferencesUtils.getMapDirectoryUri());
+        adapter.notifyDataSetChanged();
     }
 
     public void navigateUp() {

@@ -2,6 +2,7 @@
     <string name="app_name_info_screen">OSM Dashboard\nfor OpenTracks</string>
     <string name="copyright_osm">Map data © OpenStreetMap contributors</string>
     <string name="default_theme">Default theme</string>
+    <string name="winter_theme">Winter theme</string>
     <string name="map_info_menu">About</string>
     <string name="map_folder">Map directory</string>
     <string name="theme_folder">Map theme directory</string>
