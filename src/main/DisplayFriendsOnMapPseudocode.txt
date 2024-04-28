@@ -1,0 +1,67 @@
+//NOTE! This implementation is HEAVILY reliant on Group 13. We may / probably will need to change this implementation based on what they do
+
+userObserver usrObs <- User.getUserObserver() // Intializing this variable to clearly state that this is the user's observer object	
+
+//Let's assume that amongst other things, a user observer stores a user's privacy settings (i.e if they want to be displayed on a map, if they want to see their friend, etc), and can notify the map to display a user
+
+int displayAllFriendsOnMap(userObserver usrObs) { //This method triggers when a user opens a map for the first time
+
+   int userWantsToSeeFriendsOnMap <- usrObs.recieveDisplayFriendsOnMapStatus() //Boolean flag meant to signify whether the user wants to see their friends on the map
+   
+   ifuserWantsToSeeFriendsOnMap = 0) {
+       
+      return -1 //Return -1 to indicate that the user opted to not see their friends on the map
+
+   }
+
+   int[] friendUUIDList <- usrObs.getUserFriends() //Temporarily store all of the user's friends by UUID's
+
+   userObserver* tempFriendObserver //Intialize a temporary observer pointer that will be used to recieve information from each friend
+
+   int friendWantsToDisplayInfoOnMap //Boolean flag meant to signify whether a user's friend wants to display their info on the map
+   int friendIsOnline //Boolean flag meant to signify whether a user's friend is online
+   
+   float friendLat //Latitudinal value of the friend's coordinates
+   float friendLong //Longigitudinal value of the friend's coordinate
+   
+   for(int i <- 0; i < size of friendUUIDList; i++) { //Note: (*pointer) is referencing the original object (gets the original object without having to allocate the memory for it)
+
+      tempFriendObserver <- (&userObserver) getUserObserverAddress(friendUUIDList[i]) //Set the memory address for tempFriendObserver to be the address of each friends's observer
+      
+      friendWantsToDisplayInfoOnMap <- (*tempFriendObserver).recieveMapPrivacyStatus() //Access the friends observer to determine if they want to have themselves displayed on the map
+      friendIsOnline <- (*tempFriendObserver).recieveOnlineStatus() //Access the friends observer to determine if they want to have themselves displayed on the map
+
+      if(friendWantsToDisplayInfoOnMap != 0 && friendIsOnline = 1) { //This only executes if the user's friend opts in to recieve notifications AND is online
+     
+         friendLat <- (*tempFriendObserver).recieveCurrentLatitude() //Store the friend's latitude
+         friendLong <- (*tempFriendObserver).recieveCurrentLongitude() //Store the friend's longitude
+
+         usrObs.notifyMapDisplayStatus(friendLat, friendLong, tempFriendObserver) //Update the user's map to show that the friend is at that location
+
+      }
+
+      free() tempFriendObserver //Free the tempFriendObserver for reassignment for the next iteration of the loop
+
+   }
+
+   return 0 //Indicates that the method successfully executed
+
+}
+
+int displayNewFriendsOnMap(userObserver usrObs, userObserver* frenObs) { //This method triggers when a friend who consents to being displayed on the map comes online.
+
+   int userWantsToSeeFriendsOnMap <- usrObs.recieveDisplayFriendsOnMapStatus() //Boolean flag meant to signify whether the user wants to see their friends on the map
+   
+   ifuserWantsToSeeFriendsOnMap = 0) {
+       
+      return -1 //Return -1 to indicate that the user opted to not see their friend on the map
+
+   }
+   
+   //Note: (*pointer) is referencing the original object (gets the original object without having to allocate the memory for it)
+
+   usrObs.notifyMapDisplayStatus((*frenObs).recieveCurrentLatitude(), (*frenObs).recieveCurrentLongitude(), frenObs) //Update the user's map to show that the friend is at that location (gets the friend's lat and long coords in the method)
+
+   return 0 //Indicates that the method successfully executed
+
+}

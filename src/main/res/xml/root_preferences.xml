@@ -21,6 +21,14 @@
             app:defaultValue="@bool/show_pause_markers_default"
             app:title="@string/show_pause_markers" />
 
+        <!-- Creates a preference setting in the app's settings screen labeled "Notification" for nearby friends.-->
+        <SwitchPreferenceCompat
+            android:id="@+id/SHOW_NOTIFICATION_FRIEND"
+            app:key="@string/SHOW_NOTIFICATION_FRIEND"
+            app:defaultValue="@bool/show_friend_notification_default"
+            android:summary="@string/settings_notification_friends_summary"
+            app:title="@string/notification_friends_nearby" />
+
         <ListPreference
             app:key="@string/APP_PREF_TRACK_COLOR_MODE"
             app:defaultValue="@string/track_color_mode_default"
