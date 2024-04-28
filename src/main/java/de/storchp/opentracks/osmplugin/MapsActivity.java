@@ -63,6 +63,7 @@ import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.ConcatAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -133,7 +134,9 @@ import javax.microedition.khronos.opengles.GL10;
 
 import de.storchp.opentracks.osmplugin.dashboardapi.APIConstants;
 import de.storchp.opentracks.osmplugin.dashboardapi.Chairlift;
+import de.storchp.opentracks.osmplugin.dashboardapi.ChairliftAdapter;
 import de.storchp.opentracks.osmplugin.dashboardapi.Run;
+import de.storchp.opentracks.osmplugin.dashboardapi.RunAdapter;
 import de.storchp.opentracks.osmplugin.dashboardapi.Segment;
 import de.storchp.opentracks.osmplugin.dashboardapi.SegmentAdapter;
 import de.storchp.opentracks.osmplugin.dashboardapi.Track;
@@ -220,7 +223,13 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
     private RecyclerView segmentTable;
 
+    private RecyclerView runsChairliftsTable;
+
     private SegmentAdapter adapter;
+
+    private RunAdapter runAdapter;
+
+    private ChairliftAdapter liftAdapter;
 
     private Float scale;
 
@@ -319,8 +328,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         segmentLayout = findViewById(R.id.segments_layout);
         runChairliftLayout = findViewById(R.id.runs_chairlifts_layout);
 
-        addChairliftsInfo();
-        addRunsInfo();
+        addRunsAndChairliftsInfo();
         addSegmentInfo();
 
     }
@@ -451,14 +459,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             readTrackpoints(trackPointsUri, false, protocolVersion);
             readTracks(tracksUri);
             readWaypoints(waypointsUri);
-
-            // run logic
-            //getRuns();
-
-            //  chairlift logic
-            //getChairlifts();
-
-
 
             // navigation Buttons
             LinearLayout containerLayout = findViewById(R.id.container_layout);
@@ -877,6 +877,12 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             int tolerance = PreferencesUtils.getTrackSmoothingTolerance();
 
             try {
+                // run logic
+                getRuns();
+
+                //  chairlift logic
+                getChairlifts();
+
                 var trackpointsBySegments = TrackPoint.readTrackPointsBySegments(getContentResolver(), data, lastTrackPointId, protocolVersion);
                 if (trackpointsBySegments.isEmpty()) {
                     Log.d(TAG, "No new trackpoints received");
@@ -1005,74 +1011,17 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         runs.add(r4);
     }
 
-
-    // This method creates a row inside the table in OSMDashboard to display user's data about a specific run.*/
-    private void addRunsInfo() {
-        DecimalFormat formatter = new DecimalFormat("#0.00");
-        List<String> headers = new ArrayList<>();
-        headers.add("Avg Speed (km/h)");
-        headers.add("Max Speed (km/h)");
-        headers.add("Run Time (min:sec)");
-        headers.add("Distance (meters)");
-
-        TableLayout runChairliftTable = (TableLayout) findViewById(R.id.runsChairliftsTableView);
-        for (Run run : runs) {
-            TableRow runRow = new TableRow(this);
-            View runView = getLayoutInflater().inflate(R.layout.run_item, null);
-            TextView name = (TextView) runView.findViewById(R.id.item_Name);
-            name.setText(run.getName());
-
-            TextView avgSpeed = (TextView) runView.findViewById(R.id.avgSpeedInput);
-            avgSpeed.setText(formatter.format(run.getAverageSpeed()));
-
-            TextView maxSpeed = (TextView) runView.findViewById(R.id.maxSpeedInput);
-            maxSpeed.setText(formatter.format(run.getMaxSpeed()));
-
-            TextView runTime = (TextView) runView.findViewById(R.id.runTimeInput);
-            runTime.setText(DateUtils.formatElapsedTime(run.getDuration()));
-
-            TextView distance = (TextView) runView.findViewById(R.id.distanceInput);
-            distance.setText(formatter.format(run.getDistance()));
-
-            runChairliftTable.addView(runView);
-        }
-    }
-
-
     // Get info from Group #7
-
-    // Add chairlifts info
-    private void addChairliftsInfo() {
-        DecimalFormat formatter = new DecimalFormat("#0.00");
-        List<String> headers = new ArrayList<>();
-        headers.add("Speed (m)");
-        headers.add("Wait Time (m:s)");
-        headers.add("Ascent Time (m:s)");
-        headers.add("Distance (m)");
-        TableLayout runChairliftTable = (TableLayout) findViewById(R.id.runsChairliftsTableView);
-
-        for (Chairlift c : chairLifts) {
-            TableRow chairRow = new TableRow(this);
-            View chairliftView = getLayoutInflater().inflate(R.layout.chairlift_item, null);
-            TextView name = (TextView) chairliftView.findViewById(R.id.item_Name);
-            name.setText(c.getName());
-
-            TextView speed = (TextView) chairliftView.findViewById(R.id.speed);
-            speed.setText(formatter.format(c.getAverageSpeed()));
-
-            TextView waitingTime = (TextView) chairliftView.findViewById(R.id.wTime);
-            waitingTime.setText(DateUtils.formatElapsedTime(c.getWaitingTime()));
-
-            TextView aTime = (TextView) chairliftView.findViewById(R.id.aTime);
-            aTime.setText(DateUtils.formatElapsedTime(c.getAscentTime()));
-
-            TextView distance = (TextView) chairliftView.findViewById(R.id.distance);
-            distance.setText(formatter.format(c.getDistance()));
-
-            runChairliftTable.addView(chairliftView);
-        }
+    private void getChairlifts() {
+        Chairlift c1 = new Chairlift("L'Étoile", 722, 600, 5.08);
+        Chairlift c2 = new Chairlift("Flèche d’Argent",841, 900, 9.08);
+        Chairlift c3 = new Chairlift("L'Express",672, 700, 12.08);
+        Chairlift c4 = new Chairlift("Le Piedmont",755, 600, 64.08);
+        chairLifts.add(c1);
+        chairLifts.add(c2);
+        chairLifts.add(c3);
+        chairLifts.add(c4);
     }
-
 
     private void addSegmentInfo() {
         segmentTable = findViewById(R.id.segmentsTableView);
@@ -1080,6 +1029,16 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
         segmentLayout.setVisibility(View.GONE);
         segmentTable.setLayoutManager(new LinearLayoutManager(this));
         segmentTable.setAdapter(adapter);
+    }
+
+    private void addRunsAndChairliftsInfo() {
+        runsChairliftsTable = findViewById(R.id.runsChairliftsTableView);
+        runAdapter = new RunAdapter(runs, binding.map.mapView);
+        liftAdapter = new ChairliftAdapter(chairLifts, binding.map.mapView);
+        ConcatAdapter runAndLiftAdapter = new ConcatAdapter(runAdapter, liftAdapter);
+        runChairliftLayout.setVisibility(View.GONE);
+        runsChairliftsTable.setLayoutManager(new LinearLayoutManager(this));
+        runsChairliftsTable.setAdapter(runAndLiftAdapter);
     }
 
     private void resetMapData() {
