@@ -194,7 +194,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             onNewIntent(intent);
         }
 
-        locationManager=(LocationManager)getSystemService(Context.LOCALE_SERVICE);
+        locationManager=(LocationManager)getSystemService(Context.LOCATION_SERVICE);
         locationListener=new LocationListener(){
             @Override
             public void onLocationChanged(@NonNull Location location) {
@@ -222,11 +222,14 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     }
 
     public void updateUserLocation(GeoPoint userLocation){
-        userLocationLayer.removeAllItems();
         userLocationMarker=new MarkerItem("", "", userLocation);
         userLocationMarker.setMarker(MapUtils.createMarkerSymbol(this, R.drawable.custom_location_icon, false, MarkerSymbol.HotspotPlace.CENTER)
         );
-        userLocationLayer.addItem(userLocationMarker);
+
+        if (userLocationLayer != null){
+            userLocationLayer.removeAllItems();
+            userLocationLayer.addItem(userLocationMarker);
+        }
 
         MapPosition userPosition=map.getMapPosition().setPosition(userLocation);
         userPosition.setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
