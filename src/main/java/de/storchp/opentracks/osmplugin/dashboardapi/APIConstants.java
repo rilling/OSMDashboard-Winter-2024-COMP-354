@@ -8,6 +8,8 @@ public class APIConstants {
 
     public static final double LAT_LON_FACTOR = 1E6;
 
+    public static final String CHAIRLIFTS = "CHAIRLIFTS";
+
     // NOTE: Needs to be used in AndroidManifest.xml!
     public static final String ACTION_DASHBOARD = "Intent.OpenTracks-Dashboard";
 
