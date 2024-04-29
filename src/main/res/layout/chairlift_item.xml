@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/chairLiftView"
     >
 
@@ -33,17 +33,17 @@
                 <TextView
                     android:layout_column="0"
                     android:padding="3dip"
-                    android:text="Speed (m)"
+                    android:text="Wait Time (min:sec)"
                     android:layout_weight="1" />
                 <TextView
                     android:layout_column="1"
                     android:padding="3dip"
-                    android:text="Wait Time (min:sec)"
+                    android:text="Total Time (min:sec)"
                     android:layout_weight="1" />
                 <TextView
                     android:layout_column="2"
                     android:padding="3dip"
-                    android:text="Ascent Time (min:sec)"
+                    android:text="Elevation Gain (meters)"
                     android:layout_weight="1" />
                 <TextView
                     android:layout_column="3"
@@ -56,19 +56,19 @@
                 <TextView
                     android:layout_column="0"
                     android:padding="3dip"
-                    android:id="@+id/speed"
+                    android:id="@+id/wTime"
                     android:hint="input"
                     android:layout_weight="1" />
                 <TextView
                     android:layout_column="1"
                     android:padding="3dip"
-                    android:id="@+id/wTime"
+                    android:id="@+id/tTime"
                     android:hint="input"
                     android:layout_weight="1" />
                 <TextView
                     android:layout_column="2"
                     android:padding="3dip"
-                    android:id="@+id/aTime"
+                    android:id="@+id/eGain"
                     android:hint="input"
                     android:layout_weight="1" />
                 <TextView

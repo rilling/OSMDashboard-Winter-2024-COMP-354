@@ -101,6 +101,7 @@
     <string name="notification_friends_nearby">Notification</string>
     <string name="SHOW_NOTIFICATION_FRIEND">APP_PREF_SHOW_NOTIFICATION_FRIEND</string>
     <string name="settings_notification_friends_summary">Be notified if one of your friends is skiing in the same resort</string>
+    <string name="hello_blank_fragment">hello blank fragment</string>
 
 
 </resources>
