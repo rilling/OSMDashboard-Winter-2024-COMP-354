@@ -437,6 +437,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             showFullscreen(intent.getBooleanExtra(EXTRAS_SHOW_FULLSCREEN, false));
             isOpenTracksRecordingThisTrack = intent.getBooleanExtra(EXTRAS_OPENTRACKS_IS_RECORDING_THIS_TRACK, false);
 
+            /*
             //Dummy data
             for (int i = 1; i <= 4; i++) {
                 try {
@@ -454,7 +455,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-            }
+            }*/
 
             readTrackpoints(trackPointsUri, false, protocolVersion);
             readTracks(tracksUri);
