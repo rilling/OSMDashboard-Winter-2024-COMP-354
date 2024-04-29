@@ -5,4 +5,7 @@
     <bool name="show_pause_markers_default">true</bool>
     <bool name="online_map_consent_default">false</bool>
     <bool name="settings_ui_dynamic_colors_default" translatable="false">false</bool>
+
+    <!--default value for the notification of showing friend -->
+    <bool name="show_friend_notification_default" translatable="false">false</bool>
 </resources>
