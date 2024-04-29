@@ -235,8 +235,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
     private MapView mapView;
     private MapPosition currentMapPosition;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
 
     private static final int REQUEST_LOCATION_PERMISSION = 1001;
 
@@ -263,34 +261,11 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
         createMapViews();
         createLayers();
-        //map.getMapPosition().setZoomLevel(MAP_DEFAULT_ZOOM_LEVEL);
-
 
         //zooming in and out of maps
         mapView = findViewById(R.id.mapView);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         //currentMapPosition=mapView.map().setMapPosition();
         currentMapPosition = mapView.map().getMapPosition();
-        currentMapPosition.setZoomLevel(100000);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                updateMapPosition(location.getLatitude(), location.getLongitude());
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-            }
-        };
 
         //Set the button click thing zoomInButton in the map.xml document
         binding.map.zoomInButton.setOnClickListener(new View.OnClickListener() {
@@ -335,14 +310,14 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
 
     private void zoomIn() {
         int currentZoomLevel = currentMapPosition.getZoomLevel();
-        int newZoomLevel = currentMapPosition.zoomLevel + 80000;
+        int newZoomLevel = currentMapPosition.zoomLevel + 1;
         currentMapPosition.setZoomLevel(newZoomLevel);
         mapView.map().setMapPosition(currentMapPosition);
     }
 
     private void zoomOut(){
         int currentZoomLevel=currentMapPosition.getZoomLevel();
-        int newZoomLevel= currentMapPosition.zoomLevel-50000;
+        int newZoomLevel= currentMapPosition.zoomLevel-1;
         currentMapPosition.setZoomLevel(newZoomLevel);
         mapView.map().setMapPosition(currentMapPosition);
     }
@@ -363,11 +338,7 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
                         PackageManager.PERMISSION_GRANTED) {
-
-
-            return;
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
 
     private void updateMapPosition(double latitude, double longitude) {
@@ -437,26 +408,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             showFullscreen(intent.getBooleanExtra(EXTRAS_SHOW_FULLSCREEN, false));
             isOpenTracksRecordingThisTrack = intent.getBooleanExtra(EXTRAS_OPENTRACKS_IS_RECORDING_THIS_TRACK, false);
 
-            /*
-            //Dummy data
-            for (int i = 1; i <= 4; i++) {
-                try {
-                    JSONObject c = new JSONObject(getIntent().getStringExtra("c"+i));
-                    chairLifts.add(new Chairlift(c.getString("name"),
-                            Integer.parseInt(c.getString("distance")),
-                            Long.parseLong(c.getString("wtime")),
-                            Double.parseDouble(c.getString("speed"))));
-                    JSONObject r = new JSONObject(getIntent().getStringExtra("r"+i));
-                    runs.add(new Run(r.getString("name"),
-                            Double.parseDouble(r.getString("speed")),
-                            Double.parseDouble(r.getString("distance")),
-                            Integer.parseInt(r.getString("duration")),
-                            Double.parseDouble(r.getString("maxSpeed"))));
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }*/
-
             readTrackpoints(trackPointsUri, false, protocolVersion);
             readTracks(tracksUri);
             readWaypoints(waypointsUri);
@@ -465,8 +416,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
             LinearLayout containerLayout = findViewById(R.id.container_layout);
             Button runsChairLiftsButton = findViewById(R.id.runsChairLiftsButton);
             Button segmentsButton = findViewById(R.id.segmentsButton);
-
-            // TODO: Fix slow performance issue
 
             // button Listeners
             runsChairLiftsButton.setOnClickListener(v -> {
@@ -758,11 +707,6 @@ public class MapsActivity extends BaseActivity implements ItemizedLayer.OnItemGe
     protected void onDestroy() {
         binding.map.mapView.onDestroy();
         super.onDestroy();
-
-        if(locationManager!=null &&locationListener!=null){
-            locationManager.removeUpdates(locationListener);
-        }
-
     }
 
     @Override
